@@ -1,0 +1,49 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import WordFilterWidget from '../components/tools/WordFilterWidget.jsx';
+
+const faq = [
+  {
+    q: 'Can I combine starts-with, ends-with and contains at once?',
+    a: 'Yes — fill in as many filters as you like and results have to match all of them together.',
+  },
+  {
+    q: 'Why would I search by exact length?',
+    a: 'It’s useful for crosswords and word games where you know exactly how many letters fit, on top of a starting or ending pattern.',
+  },
+  {
+    q: 'Is this the same dictionary as the word unscrambler?',
+    a: 'Yes, the same general English word list powers both tools, so results stay consistent between them.',
+  },
+  {
+    q: 'How many results can I see?',
+    a: 'Up to 300 matches are shown at once. Add another filter or a length to narrow a very broad search down further.',
+  },
+];
+---
+<ToolPage slug="words-starting-with" faq={faq}>
+  <WordFilterWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Find every dictionary word that starts with, ends with, or contains a
+    particular set of letters — with an optional exact-length filter for
+    when you know precisely how many letters you need.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Every filter you fill in is applied together against a large English
+      word list: a word only appears in the results if it satisfies all of
+      them at once. Leave a field blank to ignore that filter entirely.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Searching "starts with qu" and "length 5" returns words like
+      <em>quart</em>, <em>quash</em> and <em>quilt</em> — useful for
+      crosswords, word games, or just curiosity about a tricky letter
+      combination.
+    </p>
+  </div>
+</ToolPage>

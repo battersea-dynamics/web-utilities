@@ -1,0 +1,46 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import TextReverserWidget from '../components/tools/TextReverserWidget.jsx';
+
+const faq = [
+  {
+    q: 'What’s the difference between the three modes?',
+    a: 'Letter by letter reverses each line’s characters (great for palindromes and novelty text), word by word keeps words intact but reverses their order, and line by line keeps each line intact but flips the order of the lines.',
+  },
+  {
+    q: 'Can I use this to check if something is a palindrome?',
+    a: 'Yes — reverse a word or phrase letter by letter and compare it to the original. If they match (ignoring spaces and punctuation), it’s a palindrome.',
+  },
+  {
+    q: 'Does it work on multiple lines at once?',
+    a: 'Yes, letter-by-letter and word-by-word modes reverse each line individually; line-by-line mode reverses the order of the lines themselves.',
+  },
+];
+---
+<ToolPage slug="text-reverser" faq={faq}>
+  <TextReverserWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Reverse text letter by letter, word by word, or line by line — useful
+    for checking palindromes, creating novelty text, or reordering a list
+    that came in backwards.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Letter-by-letter mode flips the character order within each line.
+      Word-by-word mode splits each line into words and reverses their
+      order while keeping each word spelled correctly. Line-by-line mode
+      leaves every line untouched but reverses the order the lines appear
+      in.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      "Was it a car or a cat I saw" reversed letter by letter becomes
+      "was I tac a ro rac a ti saW" — close enough to the original palindrome
+      to show the effect, once spacing and case are ignored.
+    </p>
+  </div>
+</ToolPage>

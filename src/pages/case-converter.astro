@@ -1,0 +1,51 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import CaseConverterWidget from '../components/tools/CaseConverterWidget.jsx';
+
+const faq = [
+  {
+    q: 'What’s the difference between camelCase and PascalCase?',
+    a: 'camelCase starts with a lowercase letter (myVariableName); PascalCase starts with an uppercase letter (MyVariableName). Both are common in programming for variable, function and class names.',
+  },
+  {
+    q: 'Does Title Case handle small words like "a" and "the" correctly?',
+    a: 'This converter capitalises every word, which matches most style guides closely enough for everyday use, but doesn’t apply the exceptions some strict style guides use for articles and short prepositions.',
+  },
+  {
+    q: 'Can I convert straight back to normal text?',
+    a: 'Yes — paste the converted text back in and choose Sentence case or lowercase to undo most transformations.',
+  },
+  {
+    q: 'Is anything uploaded or stored?',
+    a: 'No, all conversion happens locally in your browser.',
+  },
+];
+---
+<ToolPage slug="case-converter" faq={faq}>
+  <CaseConverterWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Type or paste text once and see it instantly converted into every common
+    case format — useful for headlines, code identifiers, and cleaning up
+    text pasted from somewhere with inconsistent capitalisation.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Each case format applies its own rule: uppercase and lowercase change
+      every letter, Title Case and Sentence case add capitals at word or
+      sentence boundaries, and the programming cases (camelCase, PascalCase,
+      snake_case, kebab-case) strip punctuation and rejoin words using the
+      convention's separator.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Typing <code>hello world example</code> gives you
+      <code>HELLO WORLD EXAMPLE</code>, <code>Hello World Example</code>,
+      <code>helloWorldExample</code>, <code>HelloWorldExample</code> and
+      <code>hello_world_example</code> all at once.
+    </p>
+  </div>
+</ToolPage>

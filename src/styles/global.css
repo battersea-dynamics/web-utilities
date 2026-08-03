@@ -256,6 +256,48 @@ h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
 .cat-block h2 { margin-bottom: 0.15rem; }
 .cat-block .blurb { color: var(--ink-soft); margin: 0; font-size: 0.9375rem; }
 
+/* ---------- homepage category cards ---------- */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.25rem 1.1rem;
+  height: 100%;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.category-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.category-card .cat-name {
+  font-weight: 650;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+.category-card .cat-blurb {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.category-card .cat-count {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.8125rem;
+  font-family: var(--font-num);
+  color: var(--accent);
+}
+
 /* ---------- ad slot ---------- */
 
 .ad-slot {

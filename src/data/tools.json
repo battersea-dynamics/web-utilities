@@ -72,6 +72,128 @@
       "keywords": ["compound interest calculator", "savings growth calculator"],
       "related": ["mortgage-calculator"],
       "published": false
+    },
+
+    {
+      "slug": "word-unscrambler",
+      "title": "Word Unscrambler",
+      "h1": "Word Unscrambler",
+      "category": "text",
+      "metaDescription": "Unscramble letters into every valid word they can make, from short two-letter words up to the full jumble. Free, instant, no sign-up.",
+      "keywords": ["word unscrambler", "unscramble words", "unscramble letters"],
+      "related": ["anagram-solver", "words-starting-with", "scrabble-word-finder"],
+      "published": true
+    },
+    {
+      "slug": "anagram-solver",
+      "title": "Anagram Solver",
+      "h1": "Anagram Solver",
+      "category": "text",
+      "metaDescription": "Find every anagram of a set of letters, plus every shorter word hidden inside them. Free, instant, no sign-up.",
+      "keywords": ["anagram solver", "anagram finder", "solve anagram"],
+      "related": ["word-unscrambler", "words-starting-with", "words-with-friends-cheat"],
+      "published": true
+    },
+    {
+      "slug": "words-starting-with",
+      "title": "Words Starting With",
+      "h1": "Words Starting, Ending or Containing Letters",
+      "category": "text",
+      "metaDescription": "Find dictionary words that start with, end with or contain a set of letters, with an optional exact-length filter.",
+      "keywords": ["words that start with", "words starting with", "words ending in", "words containing"],
+      "related": ["word-unscrambler", "anagram-solver"],
+      "published": true
+    },
+    {
+      "slug": "scrabble-word-finder",
+      "title": "Scrabble Word Finder",
+      "h1": "Scrabble Word Finder",
+      "category": "text",
+      "metaDescription": "Find the highest-scoring Scrabble words from your tiles, with letter values worked out for you.",
+      "keywords": ["scrabble word finder", "scrabble cheat", "scrabble helper"],
+      "related": ["word-unscrambler", "words-with-friends-cheat"],
+      "published": false
+    },
+    {
+      "slug": "words-with-friends-cheat",
+      "title": "Words With Friends Cheat",
+      "h1": "Words With Friends Word Finder",
+      "category": "text",
+      "metaDescription": "Find the best-scoring Words With Friends plays from your letters, using the Words With Friends dictionary and tile values.",
+      "keywords": ["words with friends cheat", "words with friends word finder", "wwf cheat"],
+      "related": ["word-unscrambler", "scrabble-word-finder"],
+      "published": false
+    },
+
+    {
+      "slug": "word-counter",
+      "title": "Word Counter",
+      "h1": "Word Counter",
+      "category": "text",
+      "metaDescription": "Count words, characters, sentences and paragraphs as you type, with reading time and speaking time estimates.",
+      "keywords": ["word counter", "character counter", "word count tool"],
+      "related": ["case-converter", "duplicate-line-remover", "remove-extra-spaces"],
+      "published": true
+    },
+    {
+      "slug": "case-converter",
+      "title": "Case Converter",
+      "h1": "Case Converter",
+      "category": "text",
+      "metaDescription": "Convert text between UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case and more, instantly.",
+      "keywords": ["case converter", "text case converter", "uppercase to lowercase"],
+      "related": ["word-counter", "text-reverser"],
+      "published": true
+    },
+    {
+      "slug": "text-diff-checker",
+      "title": "Text Diff Checker",
+      "h1": "Text Diff Checker",
+      "category": "text",
+      "metaDescription": "Compare two blocks of text and see exactly what changed, line by line and word by word.",
+      "keywords": ["text diff checker", "compare text online", "diff checker"],
+      "related": ["duplicate-line-remover", "word-counter"],
+      "published": true
+    },
+    {
+      "slug": "duplicate-line-remover",
+      "title": "Duplicate Line Remover",
+      "h1": "Duplicate Line Remover",
+      "category": "text",
+      "metaDescription": "Remove duplicate lines from a list or block of text, with options to ignore case and trim whitespace.",
+      "keywords": ["duplicate line remover", "remove duplicate lines"],
+      "related": ["remove-extra-spaces", "text-diff-checker"],
+      "published": true
+    },
+    {
+      "slug": "remove-extra-spaces",
+      "title": "Remove Extra Spaces",
+      "h1": "Remove Extra Spaces & Line Breaks",
+      "category": "text",
+      "metaDescription": "Strip extra spaces, tabs and blank lines from text, ready to paste somewhere clean.",
+      "keywords": ["remove extra spaces", "remove line breaks", "clean up text"],
+      "related": ["duplicate-line-remover", "word-counter"],
+      "published": true
+    },
+    {
+      "slug": "lorem-ipsum-generator",
+      "title": "Lorem Ipsum Generator",
+      "h1": "Lorem Ipsum Generator",
+      "category": "text",
+      "metaDescription": "Generate placeholder Lorem Ipsum text by paragraphs, sentences or words, for mockups and layouts.",
+      "keywords": ["lorem ipsum generator", "lorem ipsum text", "placeholder text generator"],
+      "related": ["word-counter", "case-converter"],
+      "published": true
+    },
+    {
+      "slug": "text-reverser",
+      "title": "Text Reverser",
+      "h1": "Text Reverser",
+      "category": "text",
+      "metaDescription": "Reverse text letter by letter, word by word, or line by line.",
+      "keywords": ["text reverser", "reverse text online", "flip text"],
+      "related": ["case-converter", "word-counter"],
+      "published": true
     }
   ]
 }

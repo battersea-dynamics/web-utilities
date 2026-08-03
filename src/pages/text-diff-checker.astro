@@ -1,0 +1,49 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import TextDiffWidget from '../components/tools/TextDiffWidget.jsx';
+
+const faq = [
+  {
+    q: 'Does this compare word by word or line by line?',
+    a: 'Line by line. Each line is matched against the other version, and lines that don’t match are marked as added or removed.',
+  },
+  {
+    q: 'Why does one small edit show a whole line as changed?',
+    a: 'Because the comparison works at the line level — editing one word inside a line marks that whole line as removed and its replacement as added, rather than highlighting the single word.',
+  },
+  {
+    q: 'Can I compare code with this?',
+    a: 'Yes, it works for any plain text, including code, though it isn’t syntax-aware.',
+  },
+  {
+    q: 'Is either version of my text sent anywhere?',
+    a: 'No, the comparison runs entirely in your browser.',
+  },
+];
+---
+<ToolPage slug="text-diff-checker" faq={faq}>
+  <TextDiffWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Paste an original and a changed version of some text to see exactly
+    which lines were added, removed or left the same — useful for spotting
+    edits in documents, emails or config files.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The two texts are compared line by line using a longest-common-subsequence
+      approach: the tool finds the longest run of lines that appear
+      unchanged in the same order in both versions, then marks everything
+      else as added (in the changed version) or removed (from the original).
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Paste a paragraph on the left, then paste a lightly edited version on
+      the right — the tool marks the untouched lines as unchanged and
+      highlights only the lines that actually differ.
+    </p>
+  </div>
+</ToolPage>

@@ -19,30 +19,25 @@ const liveCount = tools.filter((t) => t.published).length;
       </p>
     </div>
 
-    {categories.map((c) => {
-      const inCat = tools.filter((t) => t.category === c.slug);
-      const live = inCat.filter((t) => t.published);
-      if (inCat.length === 0) return null;
-      return (
-        <section class="cat-block">
-          <a class="cat-link" href={`/${c.slug}`}><h2>{c.name}</h2></a>
-          <p class="blurb">{c.blurb}</p>
-          <ul class="card-grid">
-            {live.map((t) => (
-              <li>
-                <a class="card" href={`/${t.slug}`}>
-                  <span class="name">{t.title}</span>
-                  <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
-                </a>
-              </li>
-            ))}
-            {live.length === 0 && (
-              <li><span class="card soon"><span class="name">Coming soon</span></span></li>
-            )}
-          </ul>
-        </section>
-      );
-    })}
+    <ul class="category-grid">
+      {categories.map((c) => {
+        const inCat = tools.filter((t) => t.category === c.slug);
+        const liveInCat = inCat.filter((t) => t.published).length;
+        return (
+          <li>
+            <a class="category-card" href={`/${c.slug}`}>
+              <span class="cat-name">{c.name}</span>
+              <span class="cat-blurb">{c.blurb}</span>
+              <span class="cat-count">
+                {liveInCat > 0
+                  ? `${liveInCat} tool${liveInCat === 1 ? '' : 's'}`
+                  : 'Coming soon'}
+              </span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
 
     <section class="cat-block">
       <h2>About these tools</h2>

@@ -1,0 +1,49 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import WordCounterWidget from '../components/tools/WordCounterWidget.jsx';
+
+const faq = [
+  {
+    q: 'How is reading time calculated?',
+    a: 'Using an average adult silent reading speed of 200 words per minute. Actual speed varies with the difficulty of the text and the reader.',
+  },
+  {
+    q: 'How is speaking time calculated?',
+    a: 'Using an average spoken pace of 130 words per minute, a common benchmark for presentations and speeches.',
+  },
+  {
+    q: 'Does this count words as I type?',
+    a: 'Yes, every count updates live with no need to click anything.',
+  },
+  {
+    q: 'Is my text sent anywhere?',
+    a: 'No. Counting happens entirely in your browser — nothing you type is transmitted or stored.',
+  },
+];
+---
+<ToolPage slug="word-counter" faq={faq}>
+  <WordCounterWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Paste or type text to see live counts of words, characters, sentences and
+    paragraphs, plus estimated reading and speaking time — handy for essays,
+    speeches, subtitles and word-limited forms.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Words are counted by splitting on whitespace. Sentences are counted by
+      looking for sentence-ending punctuation (. ! ?), and paragraphs by
+      blank lines. Reading and speaking time are estimated from the word
+      count using standard average speeds.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A 500-word article takes roughly 2.5 minutes to read silently and just
+      under 4 minutes to read aloud — useful for checking a speech fits its
+      time slot before you're standing at the podium.
+    </p>
+  </div>
+</ToolPage>

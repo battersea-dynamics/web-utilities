@@ -1,0 +1,53 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import UnscrambleWidget from '../components/tools/UnscrambleWidget.jsx';
+
+const faq = [
+  {
+    q: 'What counts as a true anagram?',
+    a: 'A word or phrase made by rearranging every letter of the original, using each one exactly once. This tool shows those full-length matches first, separate from shorter words hidden inside your letters.',
+  },
+  {
+    q: 'Why do I also see shorter words?',
+    a: 'Because they’re often useful too — especially for word games, where using only some of your letters is still a valid move. They’re shown underneath the full anagrams so the two aren’t mixed up.',
+  },
+  {
+    q: 'Does letter order matter?',
+    a: 'No. Type the letters in any order — anagram-finding is about which letters you have, not the order you typed them.',
+  },
+  {
+    q: 'Can I solve an anagram of a phrase, with spaces?',
+    a: 'Enter the phrase and the tool will strip spaces and punctuation automatically, treating it as one set of letters.',
+  },
+  {
+    q: 'What dictionary is this checked against?',
+    a: 'A large general English word list. A small number of proper nouns, abbreviations or very obscure words won’t be included.',
+  },
+];
+---
+<ToolPage slug="anagram-solver" faq={faq}>
+  <UnscrambleWidget client:load mode="anagram" slot="tool" />
+
+  <p slot="intro">
+    Enter a set of letters and this tool finds every true anagram — words
+    that use all of them — plus every shorter word hiding inside the same
+    letters, in case a partial match is what you actually need.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Anagram-finding works by checking every possible arrangement of your
+      letters against a dictionary. Full anagrams use every letter you
+      entered exactly once; the tool also checks every smaller combination,
+      so you get shorter valid words as a bonus.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Enter <code>listen</code> and the full anagram <em>silent</em> comes
+      back immediately, alongside shorter words like <em>lines</em>,
+      <em>nest</em> and <em>tin</em>.
+    </p>
+  </div>
+</ToolPage>

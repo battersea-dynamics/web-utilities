@@ -1,0 +1,63 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import UnscrambleWidget from '../components/tools/UnscrambleWidget.jsx';
+
+const faq = [
+  {
+    q: 'How many letters can I enter?',
+    a: 'Up to 15. That covers every standard word-game rack with plenty of room to spare.',
+  },
+  {
+    q: 'Do I have to use every letter?',
+    a: 'No — this tool finds every valid word using any subset of the letters you type, from two-letter words up to using them all.',
+  },
+  {
+    q: 'Can I use a blank or wildcard tile?',
+    a: 'Not yet. For now, enter only the letters you actually have; wildcard support may be added later.',
+  },
+  {
+    q: 'Why is a word I know missing from the results?',
+    a: 'The dictionary behind this tool is a large general English word list, not the specific Scrabble or Words With Friends tournament dictionaries, so a small number of valid game words won’t appear yet.',
+  },
+  {
+    q: 'Does this work for any word game?',
+    a: 'It works for finding valid English words in general — Scrabble, Words With Friends, Wordscapes and similar games. Game-specific letter scoring is coming in dedicated Scrabble and Words With Friends tools.',
+  },
+  {
+    q: 'Can I unscramble letters in another language?',
+    a: 'A language switcher is built into the tool. Only English has a dictionary behind it right now — other languages are listed and will switch on as their word lists are added.',
+  },
+];
+---
+<ToolPage slug="word-unscrambler" faq={faq}>
+  <UnscrambleWidget client:load mode="unscramble" slot="tool" />
+
+  <p slot="intro">
+    Type the letters you have and this tool finds every word hiding inside
+    them — not just the full jumble, but every shorter word too, grouped by
+    length. Useful for word games, crosswords, or just settling an argument
+    about whether a word is real.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Your letters are checked against a dictionary of English words. Rather
+      than only looking for a single arrangement, the tool considers every
+      possible subset of your letters — so seven letters can turn up two,
+      three, four, five, six and seven-letter words all at once.
+    </p>
+    <p>
+      Results are grouped by word length, longest first, so the strongest
+      plays are easy to spot.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Enter <code>tresalp</code> and you'll get seven-letter words like
+      <em>plaster</em>, six-letter words like <em>petals</em>, plus dozens of
+      shorter ones such as <em>rest</em>, <em>pale</em>, <em>slap</em> and
+      <em>art</em>.
+    </p>
+  </div>
+</ToolPage>

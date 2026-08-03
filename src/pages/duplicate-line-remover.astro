@@ -1,0 +1,50 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import DuplicateLineRemoverWidget from '../components/tools/DuplicateLineRemoverWidget.jsx';
+
+const faq = [
+  {
+    q: 'Does this keep the first or last copy of a duplicate?',
+    a: 'The first occurrence is kept; later duplicates are removed. The order of the remaining lines is otherwise unchanged.',
+  },
+  {
+    q: 'What does "ignore case" do?',
+    a: 'With it on, "Apple" and "apple" are treated as the same line and only the first is kept. Turn it off if capitalisation should count as a difference.',
+  },
+  {
+    q: 'What does "trim whitespace" do?',
+    a: 'It strips leading and trailing spaces from each line before comparing, so "cat" and " cat " count as duplicates.',
+  },
+  {
+    q: 'Is there a size limit?',
+    a: 'No hard limit — very large lists (tens of thousands of lines) may take a moment longer, but everything still runs locally in your browser.',
+  },
+];
+---
+<ToolPage slug="duplicate-line-remover" faq={faq}>
+  <DuplicateLineRemoverWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Paste a list or block of text and remove every duplicate line, keeping
+    the first occurrence of each. Useful for cleaning up mailing lists,
+    spreadsheet exports, or any list that's been merged from multiple
+    sources.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Each line is compared against every line seen before it. The first
+      time a line appears it's kept; every later line that matches it is
+      dropped. Matching can ignore case and surrounding whitespace, or treat
+      lines exactly as typed.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A list of <code>cat, dog, Cat, dog, bird</code> becomes
+      <code>cat, dog, bird</code> with "ignore case" on, or
+      <code>cat, dog, Cat, bird</code> with it off.
+    </p>
+  </div>
+</ToolPage>

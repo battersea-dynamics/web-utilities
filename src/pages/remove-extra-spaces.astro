@@ -1,0 +1,49 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import WhitespaceCleanerWidget from '../components/tools/WhitespaceCleanerWidget.jsx';
+
+const faq = [
+  {
+    q: 'What does "collapse repeated spaces" do?',
+    a: 'It turns any run of two or more spaces into a single space, which is the most common mess left behind by copy-pasting from PDFs or formatted documents.',
+  },
+  {
+    q: 'What does "collapse blank lines" do?',
+    a: 'It shrinks any run of three or more line breaks down to a single blank line, so paragraphs stay separated without large empty gaps.',
+  },
+  {
+    q: 'Does this remove tabs too?',
+    a: 'Yes, tab characters are converted to spaces before any other cleanup runs.',
+  },
+  {
+    q: 'Will this change the words themselves?',
+    a: 'No, only whitespace is affected. Letters, numbers and punctuation are left exactly as typed.',
+  },
+];
+---
+<ToolPage slug="remove-extra-spaces" faq={faq}>
+  <WhitespaceCleanerWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Paste text that's picked up messy spacing — from a PDF, an email, or a
+    formatted document — and strip the extra spaces, tabs and blank lines
+    so it's clean before you paste it somewhere else.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Tabs are converted to spaces, each line is optionally trimmed of
+      leading and trailing whitespace, repeated spaces are collapsed to one,
+      and runs of three or more blank lines are collapsed to a single blank
+      line — each step can be switched off individually.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Text copied from a PDF that reads "This   is    a   sentence." with
+      inconsistent gaps becomes "This is a sentence." with a single space
+      between each word.
+    </p>
+  </div>
+</ToolPage>
