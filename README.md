@@ -1,105 +1,74 @@
-# gazza-tools
+# web-utilities
 
 The utilities site behind **gazza.ltd**. Astro (static HTML) with React islands for the interactive widgets.
 
+**Repo:** `github.com/battersea-dynamics/web-utilities`
+**Hosting:** Cloudflare Pages (not yet connected — see Step 2 below)
+
 ---
 
-## Step 1 — Install
-
-A working `package.json` is included and this scaffold has been build-tested, so the quick route is:
+## Running it locally
 
 ```bash
-cd gazza-tools
 npm install
-```
-
-Then skip to Step 3.
-
-If you'd rather have Astro generate everything itself, do this instead — in the folder where you keep projects:
-
-```bash
-npm create astro@latest gazza-tools
-```
-
-Answer the prompts:
-
-| Prompt | Answer |
-|---|---|
-| How would you like to start? | **Empty** |
-| Install dependencies? | **Yes** |
-| TypeScript? | **No** |
-| Initialise a git repository? | **Yes** |
-
-Then add the two integrations:
-
-```bash
-cd gazza-tools
-npx astro add react
-npx astro add sitemap
-```
-
-Say yes to each prompt. This installs React and writes `astro.config.mjs` for you.
-
-## Step 2 — Copy these files in
-
-Copy everything from this folder into your new `gazza-tools` folder, overwriting when asked. That gives you:
-
-```
-src/data/tools.json                       the master tool list
-src/styles/global.css                     design tokens + all styling
-src/layouts/Base.astro                    header, footer, meta tags
-src/layouts/ToolPage.astro                the ranking skeleton
-src/components/tools/MortgageWidget.jsx   the calculator (React)
-src/pages/index.astro                     homepage
-src/pages/[category]/index.astro          all hub pages, generated
-src/pages/mortgage-calculator.astro       the first tool
-public/robots.txt, public/favicon.svg
-astro.config.mjs
-```
-
-## Step 3 — Run it locally
-
-```bash
 npm run dev
 ```
 
-Open http://localhost:4321 — you should see the homepage, `/finance`, and a working mortgage calculator.
+Open http://localhost:4321. Leave `npm run dev` running while you work — edits appear instantly in the browser.
 
-Leave this running while you work. Edits appear instantly in the browser.
+```bash
+npm run dev       # local preview at :4321
+npm run build     # production build into dist/
+npm run preview   # serve the built site locally
+```
 
-## Step 4 — Push to GitHub
+---
 
-Create an empty repo on GitHub called `gazza-tools`, then:
+## What's built so far
+
+**Homepage** — a brand facade only: category cards, no individual tool content. Every tool lives on its own flat URL.
+
+**Money & Property** — mortgage calculator. Stamp duty, take-home pay and compound interest are scaffolded in `tools.json` but unpublished.
+
+**Text Tools** — word unscrambler, anagram solver, words starting with, word counter, case converter, text diff checker, duplicate line remover, remove extra spaces, lorem ipsum generator, text reverser. Scrabble word finder and Words With Friends cheat are scaffolded but unpublished (they need their own scoring tables and game-specific dictionaries).
+
+**Site pages** — `/about` and `/privacy-policy`, both linked in the footer. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
+
+---
+
+## Still to do
+
+### Step 1 — Push (routine)
 
 ```bash
 git add .
-git commit -m "Phase 1: scaffold + mortgage calculator"
-git remote add origin https://github.com/YOURNAME/gazza-tools.git
-git branch -M main
-git push -u origin main
+git commit -m "your message"
+git push
 ```
 
-## Step 5 — Deploy on Cloudflare Pages
+### Step 2 — Deploy on Cloudflare Pages
 
 1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. Pick the `gazza-tools` repo
+2. Pick the **`web-utilities`** repo
 3. Build settings:
    - Framework preset: **Astro**
    - Build command: `npm run build`
    - Output directory: `dist`
 4. **Save and Deploy**
 
-Every `git push` to `main` now redeploys automatically.
+Every `git push` to `main` then redeploys automatically.
 
-## Step 6 — Point the domain
+Free-tier limits are not a concern at this size: unlimited bandwidth, 500 builds/month, 20,000 files per site, 25 MiB max per file. The largest asset here is the word dictionary at under 2 MB.
 
-1. In Cloudflare Pages → your project → **Custom domains** → add `gazza.ltd`
+### Step 3 — Point the domain
+
+1. Cloudflare Pages → your project → **Custom domains** → add `gazza.ltd`
 2. Cloudflare gives you nameservers or DNS records
 3. In **Spaceship**, open the DNS settings for `gazza.ltd` and enter them
 
 Allow up to a few hours for DNS to propagate.
 
-## Step 7 — Google Search Console
+### Step 4 — Google Search Console
 
 Add `gazza.ltd` as a property, verify it (DNS TXT record via Spaceship is easiest), and submit:
 
@@ -109,9 +78,15 @@ https://gazza.ltd/sitemap-index.xml
 
 Do this on day one. The clock on ranking starts when Google finds the site.
 
+### Step 5 — AdSense (later)
+
+Google needs a live site with real content and some traffic history before approving an account — applying too early usually gets rejected. Once approved, swap the placeholder `<div class="ad-slot">Ad</div>` stubs in `ToolPage.astro` for real ad unit code, and tighten `/privacy-policy` from "once ads are enabled" to describe what's actually running.
+
+Also worth doing before applying: point `hello@gazza.ltd` (used on `/about` and `/privacy-policy`) at a real mailbox.
+
 ---
 
-## Adding tool number two
+## Adding a new tool
 
 Three steps, every time:
 
@@ -130,13 +105,34 @@ Three steps, every time:
 }
 ```
 
-That alone puts it on the homepage, the `/finance` hub, the footer and the sitemap.
+That alone puts it on the category hub, the footer and the sitemap.
 
 **2. Write the widget** at `src/components/tools/CompoundWidget.jsx` — plain React, same pattern as the mortgage one.
 
-**3. Create the page** at `src/pages/compound-interest-calculator.astro`, copying the mortgage page and swapping the widget, the FAQ array and the three prose slots.
+**3. Create the page** at `src/pages/compound-interest-calculator.astro`, copying an existing tool page and swapping the widget, the FAQ array and the three prose slots.
 
 The filename must match the `slug` exactly. That's what makes the URL.
+
+---
+
+## The word-game dictionaries
+
+The word tools read two static JSON files that are **generated, not hand-edited**:
+
+```
+public/data/en/word-index.json    sorted-letters → words, for anagram/subset lookup
+public/data/en/words.json         flat list, for prefix/suffix/contains search
+```
+
+Both are checked into the repo, so a normal `npm install && npm run build` needs nothing extra. Only re-run the generator if the source word list changes:
+
+```bash
+node scripts/build-word-index.mjs
+```
+
+Source is the `wordlist-english` package (SCOWL-derived), using frequency tiers 10–60 — everyday recognisable English. Tier 70+ is deliberately excluded: that's where dialect, archaic and obscure entries live, which is wrong for a general unscrambler even though it's exactly right for a competitive Scrabble dictionary. When the Scrabble and Words With Friends tools get built, they'll want their own separate, fuller dictionaries.
+
+Data is namespaced by language (`public/data/<lang>/`) and the widgets have a language picker with English live and French/Spanish/German listed as coming soon. Adding a language means: source a word list, add a case to the generator, regenerate.
 
 ---
 
@@ -145,12 +141,5 @@ The filename must match the `slug` exactly. That's what makes the URL.
 - **Tools are flat files** in `src/pages/`. Hubs are folders. Changing this changes your URLs.
 - **Every tool needs all seven parts** — H1, tool, intro, how it works, worked example, FAQ, related. The layout enforces the shape; you supply the content. Skipping the prose is the difference between ranking and not.
 - **`tools.json` is the source of truth.** Never hard-code a tool name or link in a template.
+- **The homepage stays a facade.** Category cards only, no individual tool content.
 - Keep `"published": false` on anything unfinished. It stays off the sitemap and out of the nav.
-
-## Commands
-
-```bash
-npm run dev       # local preview at :4321
-npm run build     # production build into dist/
-npm run preview   # serve the built site locally
-```
