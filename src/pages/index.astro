@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import data from '../data/tools.json';
+
+const { categories, tools } = data;
+const liveCount = tools.filter((t) => t.published).length;
+---
+<Base
+  title="gazza.ltd — Free Online Calculators & Tools"
+  description="Free calculators and everyday tools: mortgages, tax, dates, conversions, text and developer utilities. No sign-up, nothing stored."
+>
+  <div class="wrap">
+    <div style="padding-top:2.5rem;">
+      <h1>Calculators that show their working</h1>
+      <p class="standfirst">
+        Free, fast tools for the questions a search box can't answer in one line —
+        mortgages, take-home pay, dates, conversions and more. Every tool explains
+        the method underneath, so you can check the number rather than trust it.
+      </p>
+    </div>
+
+    {categories.map((c) => {
+      const inCat = tools.filter((t) => t.category === c.slug);
+      const live = inCat.filter((t) => t.published);
+      if (inCat.length === 0) return null;
+      return (
+        <section class="cat-block">
+          <a class="cat-link" href={`/${c.slug}`}><h2>{c.name}</h2></a>
+          <p class="blurb">{c.blurb}</p>
+          <ul class="card-grid">
+            {live.map((t) => (
+              <li>
+                <a class="card" href={`/${t.slug}`}>
+                  <span class="name">{t.title}</span>
+                  <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
+                </a>
+              </li>
+            ))}
+            {live.length === 0 && (
+              <li><span class="card soon"><span class="name">Coming soon</span></span></li>
+            )}
+          </ul>
+        </section>
+      );
+    })}
+
+    <section class="cat-block">
+      <h2>About these tools</h2>
+      <div class="prose">
+        <p>
+          There are {liveCount} tools live so far, with more added regularly.
+          Everything runs in your browser — nothing you type is sent anywhere or
+          stored, and there is no sign-up.
+        </p>
+        <p>
+          Each tool page shows the formula it uses and a worked example with real
+          numbers, because a figure you can't check isn't much use.
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>

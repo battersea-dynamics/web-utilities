@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import data from '../../data/tools.json';
+
+export function getStaticPaths() {
+  return data.categories.map((c) => ({
+    params: { category: c.slug },
+    props: { category: c },
+  }));
+}
+
+const { category } = Astro.props;
+const tools = data.tools.filter((t) => t.category === category.slug);
+const live = tools.filter((t) => t.published);
+const soon = tools.filter((t) => !t.published);
+---
+<Base
+  title={`${category.name} Tools | gazza.ltd`}
+  description={category.blurb}
+>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> › <span>{category.name}</span>
+    </nav>
+
+    <h1>{category.name}</h1>
+    <p class="standfirst">{category.blurb}</p>
+
+    {live.length > 0 && (
+      <ul class="card-grid">
+        {live.map((t) => (
+          <li>
+            <a class="card" href={`/${t.slug}`}>
+              <span class="name">{t.title}</span>
+              <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {live.length === 0 && (
+      <p class="standfirst">Nothing published in this category yet.</p>
+    )}
+
+    {soon.length > 0 && (
+      <section style="margin-top:2.5rem;">
+        <h2>Coming next</h2>
+        <ul class="card-grid">
+          {soon.map((t) => (
+            <li>
+              <span class="card soon">
+                <span class="name">{t.title}</span>
+                <span class="desc">In development</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</Base>

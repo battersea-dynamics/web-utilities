@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import data from '../data/tools.json';
+
+const { title, description, canonicalPath = Astro.url.pathname } = Astro.props;
+
+const site = 'https://gazza.ltd';
+const canonical = new URL(canonicalPath, site).href;
+const categories = data.categories;
+const published = data.tools.filter((t) => t.published);
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+
+  <body>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="brand" href="/">gazza<span>.ltd</span></a>
+        <nav class="site-nav" aria-label="Categories">
+          {categories.map((c) => <a href={`/${c.slug}`}>{c.name}</a>)}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap foot-cols">
+        {categories.map((c) => (
+          <div>
+            <h3>{c.name}</h3>
+            <ul>
+              {published
+                .filter((t) => t.category === c.slug)
+                .map((t) => <li><a href={`/${t.slug}`}>{t.title}</a></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div class="wrap" style="margin-top:1.75rem;">
+        <p style="margin:0;">Free online tools. No sign-up, nothing stored.</p>
+      </div>
+    </footer>
+  </body>
+</html>

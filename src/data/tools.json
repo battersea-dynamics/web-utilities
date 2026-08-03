@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "slug": "finance",
+      "name": "Money & Property",
+      "blurb": "Mortgages, tax, pay and savings — worked out properly, with the numbers shown."
+    },
+    {
+      "slug": "health",
+      "name": "Health & Body",
+      "blurb": "Body measurements, training numbers and everyday health reference figures."
+    },
+    {
+      "slug": "dates",
+      "name": "Time & Dates",
+      "blurb": "Ages, date differences, working days and countdowns."
+    },
+    {
+      "slug": "converters",
+      "name": "Converters",
+      "blurb": "Units, sizes, cooking measures and temperatures."
+    },
+    {
+      "slug": "text",
+      "name": "Text Tools",
+      "blurb": "Counting, cleaning and transforming text."
+    },
+    {
+      "slug": "developer",
+      "name": "Developer Tools",
+      "blurb": "Encoders, formatters, generators and validators."
+    }
+  ],
+
+  "tools": [
+    {
+      "slug": "mortgage-calculator",
+      "title": "Mortgage Calculator",
+      "h1": "Mortgage Calculator",
+      "category": "finance",
+      "metaDescription": "Work out your monthly mortgage repayment from the property price, deposit, interest rate and term. Includes overpayments and total interest.",
+      "keywords": ["mortgage calculator", "mortgage repayment calculator", "monthly mortgage payment"],
+      "related": ["stamp-duty-calculator", "take-home-pay-calculator", "compound-interest-calculator"],
+      "published": true
+    },
+    {
+      "slug": "stamp-duty-calculator",
+      "title": "Stamp Duty Calculator",
+      "h1": "Stamp Duty Calculator",
+      "category": "finance",
+      "metaDescription": "Calculate UK stamp duty land tax on a property purchase, including the first-time buyer and additional property rates.",
+      "keywords": ["stamp duty calculator", "sdlt calculator"],
+      "related": ["mortgage-calculator"],
+      "published": false
+    },
+    {
+      "slug": "take-home-pay-calculator",
+      "title": "Take-Home Pay Calculator",
+      "h1": "Take-Home Pay Calculator",
+      "category": "finance",
+      "metaDescription": "Work out your salary after income tax, National Insurance and pension contributions.",
+      "keywords": ["take home pay calculator", "salary after tax"],
+      "related": ["mortgage-calculator"],
+      "published": false
+    },
+    {
+      "slug": "compound-interest-calculator",
+      "title": "Compound Interest Calculator",
+      "h1": "Compound Interest Calculator",
+      "category": "finance",
+      "metaDescription": "See how savings grow over time with compound interest and regular monthly contributions.",
+      "keywords": ["compound interest calculator", "savings growth calculator"],
+      "related": ["mortgage-calculator"],
+      "published": false
+    }
+  ]
+}

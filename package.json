@@ -1,0 +1,22 @@
+{
+  "name": "gazza-tools",
+  "version": "1.0.0",
+  "description": "The utilities site behind **gazza.ltd**. Astro (static HTML) with React islands for the interactive widgets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/react": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.6",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

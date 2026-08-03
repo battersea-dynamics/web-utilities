@@ -1,0 +1,103 @@
+---
+import Base from './Base.astro';
+import data from '../data/tools.json';
+
+const { slug } = Astro.props;
+
+const tool = data.tools.find((t) => t.slug === slug);
+if (!tool) throw new Error(`No entry in tools.json for slug "${slug}"`);
+
+const category = data.categories.find((c) => c.slug === tool.category);
+const related = (tool.related || [])
+  .map((s) => data.tools.find((t) => t.slug === s))
+  .filter((t) => t && t.published);
+
+// FAQ schema is built from the faq slot's data passed via props
+const faq = Astro.props.faq || [];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: tool.title,
+  description: tool.metaDescription,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Any',
+  url: `https://gazza.ltd/${tool.slug}`,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+};
+
+const faqSchema = faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }
+  : null;
+---
+<Base title={`${tool.title} | gazza.ltd`} description={tool.metaDescription}>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> ›
+      <a href={`/${category.slug}`}>{category.name}</a> ›
+      <span>{tool.title}</span>
+    </nav>
+
+    <!-- 1. H1 = the exact search term -->
+    <h1>{tool.h1}</h1>
+
+    <!-- 2. The tool, immediately, above the fold -->
+    <div class="tool-panel">
+      <slot name="tool" />
+    </div>
+
+    <div class="ad-slot">Ad</div>
+
+    <!-- 3–5. Explanation, method, worked example -->
+    <div class="prose">
+      <slot name="intro" />
+
+      <h2>How it works</h2>
+      <slot name="how-it-works" />
+
+      <h2>Worked example</h2>
+      <slot name="example" />
+    </div>
+
+    <!-- 6. FAQ -->
+    {faq.length > 0 && (
+      <section class="prose">
+        <h2>Common questions</h2>
+        {faq.map((f) => (
+          <div class="faq-item">
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <!-- 7. Related tools -->
+    {related.length > 0 && (
+      <section>
+        <h2>Related tools</h2>
+        <ul class="card-grid">
+          {related.map((r) => (
+            <li>
+              <a class="card" href={`/${r.slug}`}>
+                <span class="name">{r.title}</span>
+                <span class="desc">{r.metaDescription.slice(0, 70)}…</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+</Base>

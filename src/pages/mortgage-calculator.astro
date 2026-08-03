@@ -1,0 +1,69 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import MortgageWidget from '../components/tools/MortgageWidget.jsx';
+
+const faq = [
+  {
+    q: 'What interest rate should I use?',
+    a: 'Use the rate on the deal you have been offered. If you are still looking, use the average rate for your loan-to-value band — the smaller your deposit, the higher the rate you will typically be offered.',
+  },
+  {
+    q: 'Does this include fees, insurance or ground rent?',
+    a: 'No. This shows the mortgage repayment only. Arrangement fees, buildings insurance, service charges and ground rent are all separate and should be budgeted on top.',
+  },
+  {
+    q: 'What happens when my fixed rate ends?',
+    a: 'You move onto the lender’s standard variable rate unless you remortgage. That rate is usually higher, so it is worth re-running this calculator with a higher rate to see what the payment would become.',
+  },
+  {
+    q: 'Is there a limit on overpayments?',
+    a: 'Most fixed-rate deals allow you to overpay up to 10% of the outstanding balance each year without penalty. Above that, an early repayment charge usually applies. Check your mortgage offer.',
+  },
+  {
+    q: 'Why does a shorter term cost less overall but more each month?',
+    a: 'A shorter term means each payment repays more of the capital, so less interest accrues over the life of the loan. The trade-off is a higher monthly commitment.',
+  },
+];
+---
+<ToolPage slug="mortgage-calculator" faq={faq}>
+  <MortgageWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Enter the property price, your deposit, the interest rate and the term to see
+    what a repayment mortgage would cost each month. Add a monthly overpayment to
+    see how much interest it saves and how many years it takes off the term.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      A repayment mortgage is worked out with the standard annuity formula. Each
+      monthly payment covers the interest that accrued that month, and whatever is
+      left reduces the capital.
+    </p>
+    <p><code>M = P × r ÷ (1 − (1 + r)^−n)</code></p>
+    <ul>
+      <li><strong>M</strong> — the monthly payment</li>
+      <li><strong>P</strong> — the amount borrowed (price minus deposit)</li>
+      <li><strong>r</strong> — the monthly interest rate (annual rate ÷ 12 ÷ 100)</li>
+      <li><strong>n</strong> — the total number of monthly payments (years × 12)</li>
+    </ul>
+    <p>
+      Overpayments are handled by amortising the loan month by month rather than
+      using the formula once, because every extra pound of capital repaid reduces
+      all the interest that would have accrued on it afterwards.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      On a £300,000 property with a £45,000 deposit, you borrow £255,000 — a
+      loan-to-value of 85%. At 4.5% over 25 years, the monthly payment is about
+      £1,417, and you repay roughly £425,000 in total. About £170,000 of that is
+      interest.
+    </p>
+    <p>
+      Overpay by £200 a month and the same mortgage clears in a little over 21
+      years, saving roughly £30,000 in interest.
+    </p>
+  </div>
+</ToolPage>
