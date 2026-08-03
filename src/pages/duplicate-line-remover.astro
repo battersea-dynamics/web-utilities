@@ -19,6 +19,10 @@ const faq = [
     q: 'Is there a size limit?',
     a: 'No hard limit — very large lists (tens of thousands of lines) may take a moment longer, but everything still runs locally in your browser.',
   },
+  {
+    q: 'Does this sort the list too?',
+    a: 'No, the original order is preserved — only exact duplicates are dropped. If you need the result sorted afterward, paste it into a spreadsheet or a dedicated sort tool.',
+  },
 ];
 ---
 <ToolPage slug="duplicate-line-remover" faq={faq}>
@@ -45,6 +49,12 @@ const faq = [
       A list of <code>cat, dog, Cat, dog, bird</code> becomes
       <code>cat, dog, bird</code> with "ignore case" on, or
       <code>cat, dog, Cat, bird</code> with it off.
+    </p>
+    <p>
+      A common real-world case: merging two exported contact lists where the
+      same email address shows up with different capitalisation in each
+      export. "Ignore case" catches those as duplicates that an exact-match
+      comparison would miss.
     </p>
   </div>
 </ToolPage>

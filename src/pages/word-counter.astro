@@ -19,6 +19,10 @@ const faq = [
     q: 'Is my text sent anywhere?',
     a: 'No. Counting happens entirely in your browser — nothing you type is transmitted or stored.',
   },
+  {
+    q: 'Why does my word count differ slightly from Microsoft Word or Google Docs?',
+    a: 'Word processors have their own rules for what counts as a "word" — how they treat hyphenated terms, numbers, or standalone punctuation can differ slightly between tools. The counts here use a straightforward whitespace-split, which matches most word processors closely but not always exactly.',
+  },
 ];
 ---
 <ToolPage slug="word-counter" faq={faq}>
@@ -44,6 +48,13 @@ const faq = [
       A 500-word article takes roughly 2.5 minutes to read silently and just
       under 4 minutes to read aloud — useful for checking a speech fits its
       time slot before you're standing at the podium.
+    </p>
+    <p>
+      Word-limited platforms make this genuinely useful too — a job
+      application field capped at 250 words, a social post capped at a
+      character count, or an academic abstract with a strict limit are all
+      easier to hit exactly when the count updates as you type instead of
+      after you submit.
     </p>
   </div>
 </ToolPage>

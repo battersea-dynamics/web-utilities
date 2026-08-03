@@ -19,6 +19,10 @@ const faq = [
     q: 'Is anything uploaded or stored?',
     a: 'No, all conversion happens locally in your browser.',
   },
+  {
+    q: 'Which case should I use for a variable name?',
+    a: 'It depends on the language and style guide you’re following. JavaScript and Java typically use camelCase for variables and functions, Python typically uses snake_case, and most languages use PascalCase for class names — check your project’s existing conventions if you’re unsure.',
+  },
 ];
 ---
 <ToolPage slug="case-converter" faq={faq}>
@@ -46,6 +50,12 @@ const faq = [
       <code>HELLO WORLD EXAMPLE</code>, <code>Hello World Example</code>,
       <code>helloWorldExample</code>, <code>HelloWorldExample</code> and
       <code>hello_world_example</code> all at once.
+    </p>
+    <p>
+      This is also a fast way to fix text that arrived in the wrong case
+      entirely — a heading pasted in from a spreadsheet that's stuck in
+      Caps Lock, for instance, converts cleanly to Sentence case or Title
+      Case in one step rather than retyping it.
     </p>
   </div>
 </ToolPage>

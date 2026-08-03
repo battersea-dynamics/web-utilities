@@ -19,6 +19,10 @@ const faq = [
     q: 'How many results can I see?',
     a: 'Up to 300 matches are shown at once. Add another filter or a length to narrow a very broad search down further.',
   },
+  {
+    q: 'Can I search for words with a letter in a specific position, not just start or end?',
+    a: 'Not yet — today’s filters cover starts-with, ends-with, contains anywhere, and exact length. Position-specific search (useful for Wordle-style puzzles) is a natural next addition.',
+  },
 ];
 ---
 <ToolPage slug="words-starting-with" faq={faq}>
@@ -35,6 +39,11 @@ const faq = [
       Every filter you fill in is applied together against a large English
       word list: a word only appears in the results if it satisfies all of
       them at once. Leave a field blank to ignore that filter entirely.
+    </p>
+    <p>
+      This tool uses the same curated everyday-English dictionary as the
+      word unscrambler and anagram solver, so a word that appears here will
+      also turn up in those tools' results, and vice versa.
     </p>
   </div>
 

@@ -54,8 +54,11 @@ const published = data.tools.filter((t) => t.published);
           </div>
         ))}
       </div>
-      <div class="wrap" style="margin-top:1.75rem;">
+      <div class="wrap" style="margin-top:1.75rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">
         <p style="margin:0;">Free online tools. No sign-up, nothing stored.</p>
+        <nav aria-label="Site">
+          <a href="/about">About</a> &nbsp;·&nbsp; <a href="/privacy-policy">Privacy Policy</a>
+        </nav>
       </div>
     </footer>
   </body>

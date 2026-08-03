@@ -21,7 +21,11 @@ const faq = [
   },
   {
     q: 'What dictionary is this checked against?',
-    a: 'A large general English word list. A small number of proper nouns, abbreviations or very obscure words won’t be included.',
+    a: 'A curated, everyday English word list. A small number of proper nouns, abbreviations or very obscure words won’t be included, by design — the goal is words most people would recognise, not a full competitive tournament dictionary.',
+  },
+  {
+    q: 'What’s a good use for this beyond word games?',
+    a: 'Anagram solving is a common warm-up in puzzle hunts and cryptic crosswords, and it’s also a quick way to check whether a name, brand or phrase happens to spell out something else worth knowing about before you commit to it.',
   },
 ];
 ---
@@ -40,6 +44,12 @@ const faq = [
       letters against a dictionary. Full anagrams use every letter you
       entered exactly once; the tool also checks every smaller combination,
       so you get shorter valid words as a bonus.
+    </p>
+    <p>
+      Full anagrams are listed separately from the rest, since they're
+      usually what someone searching for "anagram solver" specifically
+      wants — the everything-else words are there for when a full match
+      doesn't exist or doesn't fit what you need.
     </p>
   </div>
 

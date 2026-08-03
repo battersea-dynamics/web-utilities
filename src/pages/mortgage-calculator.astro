@@ -23,6 +23,14 @@ const faq = [
     q: 'Why does a shorter term cost less overall but more each month?',
     a: 'A shorter term means each payment repays more of the capital, so less interest accrues over the life of the loan. The trade-off is a higher monthly commitment.',
   },
+  {
+    q: 'How much deposit do I actually need?',
+    a: 'Most lenders ask for a minimum of 5-10% of the property price, but the rate you are offered improves in bands as your deposit grows — 15%, 25% and 40% deposits typically unlock progressively better rates, because the lender is taking less risk.',
+  },
+  {
+    q: 'Does a bigger deposit always mean a lower rate?',
+    a: 'Almost always, but the improvement isn’t smooth — lenders price mortgages in loan-to-value bands, so pushing your deposit just over a threshold (say from 24% to 25%) can unlock a noticeably better rate, while extra money below that threshold doesn’t help as much.',
+  },
 ];
 ---
 <ToolPage slug="mortgage-calculator" faq={faq}>
@@ -64,6 +72,11 @@ const faq = [
     <p>
       Overpay by £200 a month and the same mortgage clears in a little over 21
       years, saving roughly £30,000 in interest.
+    </p>
+    <p>
+      That saving grows the earlier you start: the same £200 overpayment made
+      from year one saves more interest than starting it in year ten, because
+      it reduces the capital balance interest is charged on for longer.
     </p>
   </div>
 </ToolPage>

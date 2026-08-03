@@ -19,6 +19,10 @@ const faq = [
     q: 'Is either version of my text sent anywhere?',
     a: 'No, the comparison runs entirely in your browser.',
   },
+  {
+    q: 'What’s a good use for this besides checking documents?',
+    a: 'Comparing two versions of a contract clause, checking what changed between two drafts of an email before sending, or spotting exactly what a colleague edited in a shared document are all common uses — anywhere you have "before" and "after" text and want to know precisely what moved.',
+  },
 ];
 ---
 <ToolPage slug="text-diff-checker" faq={faq}>
@@ -44,6 +48,12 @@ const faq = [
       Paste a paragraph on the left, then paste a lightly edited version on
       the right — the tool marks the untouched lines as unchanged and
       highlights only the lines that actually differ.
+    </p>
+    <p>
+      For the clearest results, keep each logical change on its own line —
+      the comparison is more precise when a sentence or item is one line
+      rather than wrapped across several, since matching happens line by
+      line.
     </p>
   </div>
 </ToolPage>

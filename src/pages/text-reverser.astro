@@ -15,6 +15,10 @@ const faq = [
     q: 'Does it work on multiple lines at once?',
     a: 'Yes, letter-by-letter and word-by-word modes reverse each line individually; line-by-line mode reverses the order of the lines themselves.',
   },
+  {
+    q: 'What’s line-by-line reversal actually useful for?',
+    a: 'Flipping a list that came out in the wrong order — a chat export, a log file, or a list pasted in reverse-chronological order when you needed the opposite — without retyping or manually dragging every row.',
+  },
 ];
 ---
 <ToolPage slug="text-reverser" faq={faq}>
@@ -41,6 +45,12 @@ const faq = [
       "Was it a car or a cat I saw" reversed letter by letter becomes
       "was I tac a ro rac a ti saW" — close enough to the original palindrome
       to show the effect, once spacing and case are ignored.
+    </p>
+    <p>
+      Word-by-word reversal is a different effect entirely — "the quick
+      brown fox" becomes "fox brown quick the", with each word spelled
+      normally but the order flipped, which is more useful for novelty
+      text or testing than for palindrome checking.
     </p>
   </div>
 </ToolPage>

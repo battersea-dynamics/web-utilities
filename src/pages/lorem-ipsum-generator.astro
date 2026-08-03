@@ -19,6 +19,10 @@ const faq = [
     q: 'Is the output different every time?',
     a: 'Yes, sentences are assembled from the classic Lorem Ipsum word bank in random order each time, so no two generations are identical.',
   },
+  {
+    q: 'Why not just use real sentences instead?',
+    a: 'Real, readable text pulls a reviewer’s attention toward the words themselves — they start editing the copy instead of judging the layout. Lorem Ipsum’s Latin-like but meaningless structure keeps the focus on spacing, hierarchy and typography, which is the point at the mockup stage.',
+  },
 ];
 ---
 <ToolPage slug="lorem-ipsum-generator" faq={faq}>
@@ -45,6 +49,12 @@ const faq = [
       Ask for 3 paragraphs and you'll get three blocks of randomly generated
       Latin-style filler text, each several sentences long, separated by
       blank lines — ready to paste straight into a design tool.
+    </p>
+    <p>
+      Word count matters for layout testing too: a card component that
+      looks fine with a 6-word placeholder title might break with a
+      realistic 15-word one, so it's worth generating a few different
+      lengths rather than testing with just one.
     </p>
   </div>
 </ToolPage>

@@ -27,6 +27,10 @@ const faq = [
     q: 'Can I unscramble letters in another language?',
     a: 'A language switcher is built into the tool. Only English has a dictionary behind it right now — other languages are listed and will switch on as their word lists are added.',
   },
+  {
+    q: 'What’s the difference between this and an anagram solver?',
+    a: 'An unscrambler treats every subset word as equally useful — two-letter words alongside the full jumble. An anagram solver specifically separates out the words that use every letter you entered. Both tools use the same dictionary; use whichever framing matches what you need.',
+  },
 ];
 ---
 <ToolPage slug="word-unscrambler" faq={faq}>
@@ -49,6 +53,13 @@ const faq = [
     <p>
       Results are grouped by word length, longest first, so the strongest
       plays are easy to spot.
+    </p>
+    <p>
+      The word list behind this tool is a curated, everyday English
+      dictionary rather than a full competitive Scrabble word list — it's
+      built to return words you'd actually recognise, not obscure dialect
+      or archaic entries that happen to be technically valid in tournament
+      play.
     </p>
   </div>
 

@@ -19,6 +19,10 @@ const faq = [
     q: 'Will this change the words themselves?',
     a: 'No, only whitespace is affected. Letters, numbers and punctuation are left exactly as typed.',
   },
+  {
+    q: 'Why do PDFs create this kind of messy spacing in the first place?',
+    a: 'PDFs store text by position on the page rather than as a flowing document, so copying text out of one can insert extra spaces or line breaks wherever the original layout had gaps — column breaks, justified text, or table cells are common culprits.',
+  },
 ];
 ---
 <ToolPage slug="remove-extra-spaces" faq={faq}>
@@ -44,6 +48,12 @@ const faq = [
       Text copied from a PDF that reads "This   is    a   sentence." with
       inconsistent gaps becomes "This is a sentence." with a single space
       between each word.
+    </p>
+    <p>
+      Cleaning text before pasting it into a CMS, an email, or a document
+      also avoids a subtler problem: some platforms preserve extra spaces
+      exactly as pasted, which can throw off formatting or search matching
+      later even though the extra spaces are invisible at a glance.
     </p>
   </div>
 </ToolPage>
