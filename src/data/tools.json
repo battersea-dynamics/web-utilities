@@ -2,22 +2,22 @@
   "categories": [
     {
       "slug": "finance",
-      "name": "Money & Property",
+      "name": "Financial Calculators",
       "blurb": "Mortgages, tax, pay and savings — worked out properly, with the numbers shown."
     },
     {
       "slug": "health",
-      "name": "Health & Body",
+      "name": "Health & Fitness Calculators",
       "blurb": "Body measurements, training numbers and everyday health reference figures."
     },
     {
       "slug": "dates",
-      "name": "Time & Dates",
+      "name": "Date & Time Calculators",
       "blurb": "Ages, date differences, working days and countdowns."
     },
     {
       "slug": "converters",
-      "name": "Converters",
+      "name": "Unit Converters",
       "blurb": "Units, sizes, cooking measures and temperatures."
     },
     {
@@ -31,8 +31,8 @@
       "blurb": "Encoders, formatters, generators and validators."
     },
     {
-      "slug": "files",
-      "name": "PDF & Files",
+      "slug": "pdf",
+      "name": "PDF Tools",
       "blurb": "Merge, split and edit PDFs entirely in your browser — no upload, no sign-up."
     }
   ],
@@ -45,7 +45,27 @@
       "category": "finance",
       "metaDescription": "Work out your monthly mortgage repayment from the property price, deposit, interest rate and term. Includes overpayments and total interest.",
       "keywords": ["mortgage calculator", "mortgage repayment calculator", "monthly mortgage payment"],
-      "related": ["stamp-duty-calculator", "take-home-pay-calculator", "compound-interest-calculator"],
+      "related": ["mortgage-comparison-calculator", "mortgage-overpayment-calculator", "stamp-duty-calculator"],
+      "published": true
+    },
+    {
+      "slug": "mortgage-comparison-calculator",
+      "title": "Mortgage Comparison Calculator",
+      "h1": "Compare Mortgages Side by Side",
+      "category": "finance",
+      "metaDescription": "Compare two or three mortgage deals side by side, including fees, to see which is genuinely cheapest rather than which has the lowest monthly payment.",
+      "keywords": ["mortgage comparison calculator", "compare mortgages", "compare mortgage deals"],
+      "related": ["mortgage-calculator", "mortgage-overpayment-calculator", "stamp-duty-calculator"],
+      "published": true
+    },
+    {
+      "slug": "mortgage-overpayment-calculator",
+      "title": "Mortgage Overpayment Calculator",
+      "h1": "Mortgage Overpayment Calculator",
+      "category": "finance",
+      "metaDescription": "See how much interest you save and how many years you cut off your mortgage by overpaying monthly or with a lump sum.",
+      "keywords": ["mortgage overpayment calculator", "overpay mortgage", "mortgage overpayment savings"],
+      "related": ["mortgage-calculator", "mortgage-comparison-calculator", "compound-interest-calculator"],
       "published": true
     },
     {
@@ -205,7 +225,7 @@
       "slug": "merge-pdf",
       "title": "Merge PDF",
       "h1": "Merge PDF Files",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Combine several PDFs into one file, in any order you choose. Runs in your browser — your files are never uploaded.",
       "keywords": ["merge pdf", "combine pdf", "join pdf files"],
       "related": ["split-pdf", "delete-pdf-pages", "reorder-pdf-pages"],
@@ -215,7 +235,7 @@
       "slug": "split-pdf",
       "title": "Split PDF",
       "h1": "Split PDF — Extract Pages",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Pull selected pages out of a PDF into a new file. Choose single pages or ranges. Nothing is uploaded.",
       "keywords": ["split pdf", "extract pdf pages", "separate pdf pages"],
       "related": ["merge-pdf", "delete-pdf-pages", "rotate-pdf"],
@@ -225,7 +245,7 @@
       "slug": "delete-pdf-pages",
       "title": "Delete PDF Pages",
       "h1": "Delete Pages from a PDF",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Remove unwanted pages from a PDF and download the trimmed file. Runs entirely in your browser.",
       "keywords": ["delete pdf pages", "remove pages from pdf"],
       "related": ["split-pdf", "merge-pdf", "reorder-pdf-pages"],
@@ -235,7 +255,7 @@
       "slug": "rotate-pdf",
       "title": "Rotate PDF",
       "h1": "Rotate PDF Pages",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Turn sideways or upside-down PDF pages the right way up, individually or all at once. No upload needed.",
       "keywords": ["rotate pdf", "turn pdf pages", "fix pdf orientation"],
       "related": ["split-pdf", "merge-pdf", "delete-pdf-pages"],
@@ -245,7 +265,7 @@
       "slug": "reorder-pdf-pages",
       "title": "Reorder PDF Pages",
       "h1": "Reorder PDF Pages",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Rearrange the pages of a PDF into any order you like and download the result. Processed on your device.",
       "keywords": ["reorder pdf pages", "rearrange pdf", "change pdf page order"],
       "related": ["merge-pdf", "split-pdf", "delete-pdf-pages"],
@@ -255,7 +275,7 @@
       "slug": "images-to-pdf",
       "title": "Images to PDF",
       "h1": "Convert Images to PDF",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Turn JPG and PNG images into a single PDF, one image per page, with page size and margin options.",
       "keywords": ["images to pdf", "jpg to pdf", "png to pdf", "photo to pdf"],
       "related": ["merge-pdf", "add-page-numbers", "watermark-pdf"],
@@ -265,7 +285,7 @@
       "slug": "add-page-numbers",
       "title": "Add Page Numbers to PDF",
       "h1": "Add Page Numbers to a PDF",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Add page numbers to a PDF in the position and format you want, with the option to skip a cover page.",
       "keywords": ["add page numbers to pdf", "number pdf pages", "pdf page numbering"],
       "related": ["watermark-pdf", "merge-pdf", "images-to-pdf"],
@@ -275,7 +295,7 @@
       "slug": "watermark-pdf",
       "title": "Watermark PDF",
       "h1": "Add a Watermark to a PDF",
-      "category": "files",
+      "category": "pdf",
       "metaDescription": "Stamp text such as DRAFT or CONFIDENTIAL across every page of a PDF, with adjustable opacity and angle.",
       "keywords": ["watermark pdf", "add watermark to pdf", "stamp pdf draft"],
       "related": ["add-page-numbers", "merge-pdf", "split-pdf"],

@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects. One rule per line: from  to  status
+#
+# The PDF hub moved from /files to /pdf. Individual tool URLs were flat and
+# unchanged, so only the hub needs redirecting.
+/files      /pdf      301
+/files/*    /pdf/:splat  301

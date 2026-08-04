@@ -1,0 +1,86 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import MortgageOverpaymentWidget from '../components/tools/MortgageOverpaymentWidget.jsx';
+
+const faq = [
+  {
+    q: 'How much can I overpay without a penalty?',
+    a: 'Most fixed-rate deals allow up to 10% of the outstanding balance each year before an early repayment charge applies. The tool warns you when your overpayments cross that threshold, but the exact allowance is set by your lender — check your mortgage offer.',
+  },
+  {
+    q: 'Should I shorten the term or lower the payment?',
+    a: 'Shortening the term saves far more interest, because you keep paying the same amount against a smaller balance. Lowering the payment saves less but frees up monthly cash. The choice depends on whether you want the money now or the saving later.',
+  },
+  {
+    q: 'Why does overpaying early save so much more?',
+    a: 'Interest is charged on the outstanding balance, so a pound repaid in year one avoids interest for every remaining year of the mortgage. The same pound repaid in the final year avoids almost none. This is why timing matters as much as amount.',
+  },
+  {
+    q: 'Is overpaying better than putting the money in savings?',
+    a: 'It depends on the rates. Overpaying effectively earns you a guaranteed, tax-free return equal to your mortgage rate. If a savings account pays more than that after tax, saving may come out ahead — and savings stay accessible, whereas money paid into a mortgage generally does not.',
+  },
+  {
+    q: 'Will my lender reduce my payment automatically?',
+    a: 'Practice varies. Some lenders keep the payment the same and shorten the term by default; others recalculate the payment downwards. If you want a specific outcome you usually have to ask for it.',
+  },
+  {
+    q: 'Does the tool assume the overpayment continues to the end?',
+    a: 'Yes. The monthly overpayment runs from the start month you choose until the mortgage clears. A lump sum is applied once, in the month you specify.',
+  },
+  {
+    q: 'Is this financial advice?',
+    a: 'No. It is a calculator that shows the arithmetic of overpaying, so you can see the numbers for yourself. Whether overpaying is right for your circumstances is a different question, and worth discussing with a qualified adviser.',
+  },
+];
+---
+<ToolPage slug="mortgage-overpayment-calculator" faq={faq}>
+  <MortgageOverpaymentWidget client:load slot="tool" />
+
+  <p slot="intro">
+    See exactly what overpaying your mortgage is worth — how much interest you
+    avoid, and how many years it takes off the term. Model a regular monthly
+    overpayment, a one-off lump sum, or both together, and compare shortening
+    the term against lowering the payment.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The mortgage is amortised twice: once as it stands, and once with your
+      overpayments applied. The difference between the two totals is what you
+      save. Every extra pound goes straight against the capital, so it removes
+      not just itself but all the interest that pound would have attracted for
+      the rest of the term.
+    </p>
+    <p>
+      <strong>Shorten the term</strong> keeps your payment where it is, so the
+      balance falls faster and the mortgage ends early.{' '}
+      <strong>Lower the payment</strong> keeps the original end date and
+      recalculates the required monthly amount downwards after each overpayment.
+      The first saves considerably more interest; the second improves monthly
+      cash flow.
+    </p>
+    <p>
+      The 10% warning is based on the outstanding balance you enter, which is the
+      allowance most UK fixed deals use. It is a prompt to check your paperwork,
+      not a statement about your particular lender.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      On £180,000 outstanding at 4.5% with 22 years to run, the normal payment is
+      £1,075 a month and the remaining interest comes to about £103,900.
+      Overpaying £200 a month clears the mortgage roughly five years early and
+      saves around £27,100 in interest. You will have paid about £40,400 extra to
+      achieve that, so each £1 overpaid avoids roughly 67p of interest — and it
+      comes back to you as a mortgage that ends five years sooner.
+    </p>
+    <p>
+      A single £3,000 lump sum in month six removes about £4,800 of interest on
+      the same mortgage and takes seven months off the term. Paying that identical
+      £3,000 fifteen years later saves only around £1,000. Same money, a fifth of
+      the benefit — which is the clearest illustration of why timing matters more
+      than amount.
+    </p>
+  </div>
+</ToolPage>

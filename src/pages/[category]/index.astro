@@ -1,9 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import data from '../../data/tools.json';
+import { visibleCategories } from '../../data/site.js';
 
+// Only categories with at least one published tool get a hub page at all.
+// No page means no sitemap entry and no crawlable dead end.
 export function getStaticPaths() {
-  return data.categories.map((c) => ({
+  return visibleCategories.map((c) => ({
     params: { category: c.slug },
     props: { category: c },
   }));

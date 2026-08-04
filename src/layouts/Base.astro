@@ -1,13 +1,13 @@
 ---
 import '../styles/global.css';
-import data from '../data/tools.json';
+import { visibleCategories, publishedTools } from '../data/site.js';
 
 const { title, description, canonicalPath = Astro.url.pathname } = Astro.props;
 
 const site = 'https://gazza.ltd';
 const canonical = new URL(canonicalPath, site).href;
-const categories = data.categories;
-const published = data.tools.filter((t) => t.published);
+const categories = visibleCategories;
+const published = publishedTools;
 ---
 <!doctype html>
 <html lang="en-GB">

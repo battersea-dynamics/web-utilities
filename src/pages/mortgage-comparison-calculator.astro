@@ -1,0 +1,83 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import MortgageCompareWidget from '../components/tools/MortgageCompareWidget.jsx';
+
+const faq = [
+  {
+    q: 'Why is the deal with the lowest monthly payment not always the cheapest?',
+    a: 'Two things get in the way. A longer term lowers the monthly payment but means far more interest overall, and a low headline rate is often paired with a large arrangement fee. Comparing the interest-plus-fees row rather than the monthly row is what tells you which deal actually costs less.',
+  },
+  {
+    q: 'Should I include the arrangement fee in the comparison?',
+    a: 'Yes. A deal at 4.2% with a £999 fee and one at 4.5% with no fee can easily end up within a few hundred pounds of each other, and which wins depends on how much you are borrowing. The fee row exists precisely so that comparison is visible.',
+  },
+  {
+    q: 'How do I compare a two-year fix against a five-year fix?',
+    a: 'This tool compares deals over the full term at a constant rate, which is the right way to see the underlying cost. To model what happens when a short fix ends and reverts to a higher rate, use the rate-change option on the main mortgage calculator instead.',
+  },
+  {
+    q: 'Can I compare different property prices or deposits?',
+    a: 'Yes — each column has its own price and deposit, so you can compare buying at two different price points, or the effect of putting down a larger deposit on the same property.',
+  },
+  {
+    q: 'Does this account for early repayment charges?',
+    a: 'No. Early repayment charges only apply if you leave a deal before it ends, and they vary by lender, so they are not modelled here. Check the offer document if you expect to remortgage or move partway through.',
+  },
+  {
+    q: 'Are these figures a quote?',
+    a: 'No. They are estimates based on the numbers you enter, using the standard repayment formula. A lender’s illustration is the only figure that binds anyone, and this is not financial advice.',
+  },
+];
+---
+<ToolPage slug="mortgage-comparison-calculator" faq={faq}>
+  <MortgageCompareWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Put two or three mortgage deals side by side and see which one genuinely
+    costs less — including fees, which is where the cheapest-looking rate often
+    stops being the cheapest deal. Each column has its own price, deposit, rate,
+    term and fees.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Each deal is amortised separately using the standard repayment formula,
+      then the results are lined up row by row. The monthly payment comes from
+      the first month of the schedule; the total interest is accumulated across
+      every month of the full term.
+    </p>
+    <p>
+      The row that matters most is <strong>interest + fees</strong>. That is the
+      true cost of borrowing under each deal — what you hand over beyond the
+      amount you actually borrowed. The tool highlights the lowest monthly
+      payment and the lowest overall cost separately, because they are often two
+      different deals.
+    </p>
+    <p>
+      Fees are treated as paid upfront rather than added to the loan. If your
+      lender adds the fee to the balance you will pay interest on it too, which
+      makes the gap slightly wider than shown here.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Take £255,000 borrowed over 25 years. Deal A is 4.5% with no fee; Deal B is
+      4.2% with a £999 fee. Deal B has the lower monthly payment — £1,374 against
+      £1,417 — and saves about £12,900 in interest over the full term. Even after
+      the fee that is roughly £11,900 ahead, so paying it is comfortably worth it.
+    </p>
+    <p>
+      Now borrow £50,000 over 10 years instead. The same 0.3% rate difference is
+      only worth about £864 in interest over that shorter, smaller loan — less
+      than the £999 fee. Deal B still has the lower monthly payment, but Deal A is
+      about £135 cheaper overall. The ranking reverses purely because of the size
+      and length of the loan.
+    </p>
+    <p>
+      Between those two extremes the gap narrows gradually: at £80,000 over 10
+      years, Deal B wins by under £400. That is the whole argument for comparing
+      with your own figures rather than picking the lowest rate.
+    </p>
+  </div>
+</ToolPage>

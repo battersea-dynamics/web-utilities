@@ -31,6 +31,22 @@ const faq = [
     q: 'Does a bigger deposit always mean a lower rate?',
     a: 'Almost always, but the improvement isn’t smooth — lenders price mortgages in loan-to-value bands, so pushing your deposit just over a threshold (say from 24% to 25%) can unlock a noticeably better rate, while extra money below that threshold doesn’t help as much.',
   },
+  {
+    q: 'How do I see what I will be paying in a specific month?',
+    a: 'Use the "show me month" box under the results. It gives you that month’s payment split into interest and capital, the balance still outstanding, the interest paid to date, and the equity you hold in the property.',
+  },
+  {
+    q: 'What does the year-by-year schedule show?',
+    a: 'One row per year of the mortgage: the interest and capital paid during that year, the total paid, and the balance left at the end of it. It is the clearest way to see how the interest portion shrinks and the capital portion grows over time.',
+  },
+  {
+    q: 'Can I model my fixed rate ending?',
+    a: 'Yes. Under "more options", set the rate it changes to and the month it changes in. A five-year fix ending would be month 61. The payment is recalculated at that point over the remaining term.',
+  },
+  {
+    q: 'Should the arrangement fee be added to the loan or paid upfront?',
+    a: 'Adding it to the loan spreads the cost but means paying interest on it for the whole term, so it costs more overall. Paying upfront costs less in total but needs the cash on completion. The tool handles both — untick the box to pay it upfront.',
+  },
 ];
 ---
 <ToolPage slug="mortgage-calculator" faq={faq}>
@@ -59,6 +75,14 @@ const faq = [
       Overpayments are handled by amortising the loan month by month rather than
       using the formula once, because every extra pound of capital repaid reduces
       all the interest that would have accrued on it afterwards.
+    </p>
+    <p>
+      The same month-by-month approach is what makes the snapshot and the
+      year-by-year schedule possible. A common shortcut is to take the first
+      month's capital repayment and multiply it by twelve to estimate a year's
+      progress, but that understates it: the capital portion grows every month as
+      the interest portion shrinks, so real progress is faster than the shortcut
+      suggests.
     </p>
   </div>
 
