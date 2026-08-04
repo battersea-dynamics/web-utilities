@@ -44,6 +44,23 @@ export function amortise({
   overpayMode = 'reduce-term',
 }) {
   const termMonths = Math.max(1, Math.round(years * 12));
+
+  // Nothing to amortise. This happens routinely while someone is still typing
+  // — deleting a digit from the price can momentarily make the deposit larger
+  // than the price — so it must return a well-formed result rather than an
+  // empty schedule that callers then index into.
+  if (!(principal > 0)) {
+    return {
+      ok: false,
+      reason: 'Nothing to borrow — check the price and deposit.',
+      schedule: [],
+      months: 0,
+      totalInterest: 0,
+      totalPaid: 0,
+      basePayment: 0,
+    };
+  }
+
   const basePayment = monthlyPayment(principal, annualRate, termMonths);
 
   const lumpByMonth = new Map();

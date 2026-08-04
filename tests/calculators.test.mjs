@@ -211,18 +211,58 @@ describe('mortgage: edge cases', () => {
     near(r.schedule.reduce((a, x) => a + x.principal, 0), 1, 1e-6, 'capital repaid');
   });
 
-  test('zero principal produces an empty schedule (deposit >= price)', () => {
+  test('zero principal reports failure rather than an indexable empty result', () => {
+    // Regression: this previously returned ok:true with an empty schedule, and
+    // every mortgage widget then read schedule[0], throwing and blanking the UI.
     const r = amortise({ principal: 0, annualRate: 4.5, years: 25 });
-    assert.equal(r.months, 0, 'no payments are due');
-    assert.equal(r.schedule.length, 0, 'schedule is empty');
-    // Documented so callers remember to guard: ok is true but there is no
-    // schedule[0] to read.
-    assert.equal(r.ok, true);
+    assert.equal(r.ok, false, 'must not claim success');
+    assert.match(r.reason, /nothing to borrow/i);
+    assert.equal(r.schedule.length, 0);
+    assert.equal(r.months, 0);
   });
 
-  test('negative principal is treated as nothing owed', () => {
+  test('negative principal reports failure', () => {
     const r = amortise({ principal: -5000, annualRate: 4.5, years: 25 });
+    assert.equal(r.ok, false);
     assert.equal(r.schedule.length, 0);
+  });
+
+  test('NaN principal reports failure (empty or junk input while typing)', () => {
+    const r = amortise({ principal: NaN, annualRate: 4.5, years: 25 });
+    assert.equal(r.ok, false, 'NaN must not slip through as a valid loan');
+  });
+
+  test('regression: every intermediate value while retyping a price is safe', () => {
+    // Changing 300000 to 190000 passes through 30000, 3000, 300, 30, 3 and ''.
+    // With a 45000 deposit several of those make the borrowing zero, which is
+    // what crashed the widget.
+    const deposit = 45000;
+    const typed = [300000, 30000, 3000, 300, 30, 3, 0, NaN, 190000];
+    for (const price of typed) {
+      const borrowed = Math.max(0, price - deposit);
+      const r = amortise({ principal: borrowed, annualRate: 4.5, years: 25 });
+      assert.equal(typeof r.ok, 'boolean', `price ${price}: returns a usable result`);
+      if (r.ok) {
+        assert.ok(r.schedule.length > 0, `price ${price}: ok implies a schedule exists`);
+        assert.ok(r.schedule[0].payment > 0, `price ${price}: schedule[0] is readable`);
+      } else {
+        assert.equal(r.schedule.length, 0, `price ${price}: failure has no schedule`);
+        assert.ok(r.reason, `price ${price}: failure explains itself`);
+      }
+    }
+  });
+
+  test('ok:true always guarantees schedule[0] is readable', () => {
+    // The invariant every widget relies on.
+    const cases = [
+      { principal: 1, annualRate: 0, years: 1 },
+      { principal: 255000, annualRate: 4.5, years: 25 },
+      { principal: 0.01, annualRate: 20, years: 40 },
+    ];
+    for (const c of cases) {
+      const r = amortise(c);
+      if (r.ok) assert.ok(r.schedule[0] && r.schedule[0].payment >= 0);
+    }
   });
 
   test('interest-swamped payment is reported rather than looping forever', () => {

@@ -100,9 +100,11 @@ export default function MortgageOverpaymentWidget() {
         </div>
       </div>
 
-      {!ok && <p className="saving-note" style={{ marginTop: '1rem' }}>
-        The payment does not cover the interest at this rate.
-      </p>}
+      {!ok && (
+        <p className="saving-note" style={{ marginTop: '1rem' }}>
+          {base.reason || withOverpay.reason || 'Check the figures entered.'}
+        </p>
+      )}
 
       {ok && (
         <>
