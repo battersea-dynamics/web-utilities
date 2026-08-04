@@ -62,7 +62,7 @@
         "stamp-duty-calculator"
       ],
       "published": true,
-      "contentStatus": "partial"
+      "contentStatus": "complete"
     },
     {
       "slug": "mortgage-comparison-calculator",
@@ -82,7 +82,7 @@
         "stamp-duty-calculator"
       ],
       "published": true,
-      "contentStatus": "partial"
+      "contentStatus": "complete"
     },
     {
       "slug": "mortgage-overpayment-calculator",
@@ -102,7 +102,7 @@
         "compound-interest-calculator"
       ],
       "published": true,
-      "contentStatus": "partial"
+      "contentStatus": "complete"
     },
     {
       "slug": "stamp-duty-calculator",
@@ -116,10 +116,12 @@
         "sdlt calculator"
       ],
       "related": [
-        "mortgage-calculator"
+        "mortgage-calculator",
+        "take-home-pay-calculator",
+        "mortgage-comparison-calculator"
       ],
-      "published": false,
-      "contentStatus": "stub"
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "take-home-pay-calculator",
@@ -133,10 +135,12 @@
         "salary after tax"
       ],
       "related": [
-        "mortgage-calculator"
+        "mortgage-calculator",
+        "compound-interest-calculator",
+        "stamp-duty-calculator"
       ],
-      "published": false,
-      "contentStatus": "stub"
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "compound-interest-calculator",
@@ -150,10 +154,12 @@
         "savings growth calculator"
       ],
       "related": [
+        "mortgage-overpayment-calculator",
+        "take-home-pay-calculator",
         "mortgage-calculator"
       ],
-      "published": false,
-      "contentStatus": "stub"
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "word-unscrambler",

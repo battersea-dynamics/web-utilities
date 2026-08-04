@@ -1,0 +1,77 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import CompoundInterestWidget from '../components/tools/CompoundInterestWidget.jsx';
+
+const faq = [
+  {
+    q: 'What is compound interest, in plain terms?',
+    a: 'Interest that earns interest. Simple interest always pays on the original amount, so £1,000 at 5% earns £50 every year forever. Compound interest pays on the balance, so year two earns interest on £1,050, year three on more again — and each year’s growth is slightly larger than the last.',
+  },
+  {
+    q: 'How often is interest compounded here?',
+    a: 'Monthly, with contributions added at the end of each month. Monthly compounding produces slightly more than annual compounding at the same headline rate — £1,000 at 5% over 30 years reaches about £4,468 monthly against roughly £4,322 annually.',
+  },
+  {
+    q: 'Why does the interest share grow so much in later years?',
+    a: 'Because growth is proportional to the balance, and the balance is largest at the end. In a long projection the final few years often add more than the first decade, which is the whole argument for starting early rather than saving harder later.',
+  },
+  {
+    q: 'What does "increase contributions" do?',
+    a: 'It raises what you pay in each year by the percentage you set, which models keeping your saving in step with pay rises. Even a modest yearly uplift makes a substantial difference over long periods.',
+  },
+  {
+    q: 'Are these figures adjusted for inflation?',
+    a: 'No. Everything is in today’s pounds at face value. If you want a rough sense of real spending power, subtract expected inflation from the interest rate — 5% growth with 2.5% inflation behaves roughly like 2.5% in real terms.',
+  },
+  {
+    q: 'Does this account for tax on the interest?',
+    a: 'No. Interest earned outside an ISA or pension may be taxable depending on your personal savings allowance and income. The figures shown are gross.',
+  },
+];
+---
+<ToolPage slug="compound-interest-calculator" faq={faq}>
+  <CompoundInterestWidget client:load slot="tool" />
+
+  <p slot="intro">
+    See how savings grow over time when interest compounds and you keep adding
+    to the pot. Set a starting amount, a monthly contribution, a rate and a
+    term, and the year-by-year table shows exactly how much came from your own
+    money and how much the interest added.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The projection runs month by month rather than using a single formula.
+      Each month the balance earns one twelfth of the annual rate, then the
+      contribution is added, and the new balance carries into the following
+      month. That ordering matters — money added at the end of a month has not
+      had time to earn anything during it.
+    </p>
+    <p>
+      This is the same arithmetic as the mortgage calculator, running in the
+      opposite direction. A mortgage is compound interest working against you;
+      a savings pot is the identical mechanism working in your favour.
+    </p>
+    <p>
+      The comparison line under the results strips the growth out entirely,
+      showing what the same payments would total under a mattress, so the
+      contribution of compounding is separated from the contribution of simply
+      saving diligently.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Start with £1,000, add £200 a month at 5% for 20 years and you finish
+      with about £84,900. Of that, £49,000 is money you paid in and roughly
+      £35,900 is interest — so more than 40% of the final pot was earned rather
+      than saved.
+    </p>
+    <p>
+      Stretch the same plan to 30 years and the balance almost exactly doubles
+      to around £170,900, even though you have only paid in 49% more of your
+      own money. That disproportion is the entire point of compounding, and it
+      is why the last decade of a long savings plan does so much of the work.
+    </p>
+  </div>
+</ToolPage>

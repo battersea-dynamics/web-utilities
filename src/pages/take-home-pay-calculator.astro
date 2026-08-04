@@ -1,0 +1,77 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import TakeHomePayWidget from '../components/tools/TakeHomePayWidget.jsx';
+
+const faq = [
+  {
+    q: 'Why does Scotland have different figures?',
+    a: 'Income tax rates and bands are devolved to the Scottish Parliament, which uses six bands rather than three. National Insurance is not devolved, so it is identical wherever you live in the UK. Wales and Northern Ireland use the same income tax bands as England.',
+  },
+  {
+    q: 'What is the 60% tax trap?',
+    a: 'Between £100,000 and £125,140 the personal allowance is withdrawn by £1 for every £2 earned. That means each extra pound is taxed at 40% and also costs you 50p of tax-free allowance, producing an effective rate of 60% — or 62% once National Insurance is counted. The marginal rate shown under the results makes this visible.',
+  },
+  {
+    q: 'How is the pension contribution treated?',
+    a: 'As a net-pay workplace arrangement: it comes out of your salary before income tax is calculated, but National Insurance is still charged on the full amount. That is the most common setup. Salary sacrifice works differently and would also cut your National Insurance, so it is not modelled here.',
+  },
+  {
+    q: 'Does this include student loan repayments?',
+    a: 'No. Student loan repayments depend on which plan you are on and each has its own threshold, so they are excluded. Subtract them separately if they apply to you.',
+  },
+  {
+    q: 'Why does my payslip differ slightly?',
+    a: 'Payroll calculates National Insurance for each pay period rather than annually, so irregular pay, bonuses or starting mid-year can shift the figures. Your tax code also matters — this assumes a standard code with the full personal allowance and a single job.',
+  },
+  {
+    q: 'Is the personal allowance always £12,570?',
+    a: 'It is the standard amount, and it has been frozen for several years. It falls above £100,000 as described above, and can differ if you claim Marriage Allowance, Blind Person’s Allowance, or have adjustments carried in your tax code.',
+  },
+];
+---
+<ToolPage slug="take-home-pay-calculator" faq={faq}>
+  <TakeHomePayWidget client:load slot="tool" />
+
+  <p slot="intro">
+    See what actually lands in your account after income tax, National
+    Insurance and pension contributions — monthly and annually, with a full
+    breakdown of where each deduction goes. Scotland has its own income tax
+    bands, so choose where you live first.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Your personal allowance is subtracted first, then whatever remains is
+      taxed in slices. England, Wales and Northern Ireland use three bands —
+      20%, 40% and 45%. Scotland uses six, starting at 19% and reaching 48%,
+      with the higher rate biting earlier at £43,663 rather than £50,271.
+    </p>
+    <p>
+      National Insurance is calculated separately on your gross salary, not on
+      the amount left after tax: 8% between £12,570 and £50,270, then 2% on
+      everything above. Notice that it falls at the point income tax rises,
+      which is why the jump at the higher-rate threshold is smaller than people
+      expect.
+    </p>
+    <p>
+      Above £100,000 the personal allowance tapers away, which is handled here
+      rather than ignored — it is the single most common reason a salary
+      calculator disagrees with a payslip in that range.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      On £35,000 in England the personal allowance covers the first £12,570,
+      leaving £22,430 taxed at 20%. Put 5% into a pension and the taxable
+      figure falls to £20,680, leaving about £2,277 a month in your account
+      after tax, National Insurance and the pension itself.
+    </p>
+    <p>
+      The regional gap grows with income. At £50,000 the difference between
+      England and Scotland is around £1,500 a year; at £100,000 it is closer to
+      £3,300 — driven by Scotland's higher rate starting some £6,600 earlier and
+      its extra advanced band.
+    </p>
+  </div>
+</ToolPage>

@@ -4,7 +4,7 @@ Tracks how finished each tool page is, so nothing gets forgotten. The
 `contentStatus` field in `src/data/tools.json` is the source of truth; this
 file is the readable view of it.
 
-**Last audited:** 4 August 2026 — 26 tools: 18 complete, 3 partial, 5 stubs.
+**Last audited:** 4 August 2026 — 26 tools: 24 complete, 0 partial, 2 stubs.
 
 ---
 
@@ -26,9 +26,30 @@ what the three partials below are blocked on.
 
 ---
 
-## Complete (18)
+## Complete (24)
 
 Nothing outstanding on these.
+
+### Financial Calculators (6)
+
+| Tool | FAQs | Related |
+|---|---|---|
+| Mortgage Calculator | 11 | 3 |
+| Mortgage Comparison Calculator | 6 | 3 |
+| Mortgage Overpayment Calculator | 7 | 3 |
+| Stamp Duty Calculator | 6 | 3 |
+| Take-Home Pay Calculator | 6 | 3 |
+| Compound Interest Calculator | 6 | 3 |
+
+The three mortgage pages were previously blocked at "partial" for want of a
+third published sibling. Publishing Stamp Duty resolved all three, exactly as
+predicted.
+
+**These six carry a maintenance obligation the other tools don't.** Stamp duty
+and take-home pay depend on rates that change with Budgets. Every figure lives
+in `src/components/tools/taxData.js` with its official source URL and a
+`LAST_VERIFIED` date that is displayed on the pages. When a Budget lands, that
+one file is what needs updating — nothing else.
 
 ### Text Tools (10)
 
@@ -60,36 +81,16 @@ Nothing outstanding on these.
 
 ---
 
-## Partial (3)
+## Partial (0)
 
-All three are content-complete in every other respect — tool, intro, method,
-worked example and FAQs are all done. They render only **2 related links**
-because Financial Calculators has just three published tools, so each mortgage
-page has only two published siblings to point at.
-
-| Tool | FAQs | Related | Blocked on |
-|---|---|---|---|
-| Mortgage Calculator | 11 | 2 / 3 | Any second finance tool going live |
-| Mortgage Comparison Calculator | 6 | 2 / 3 | Same |
-| Mortgage Overpayment Calculator | 7 | 2 / 3 | Same |
-
-**This resolves itself.** Publishing Stamp Duty (already listed as a related on
-the main calculator) flips all three to complete with no further work.
+None outstanding.
 
 ---
 
-## Stubs (5)
+## Stubs (2)
 
 Entry exists in `tools.json` with `"published": false`. No page, no widget.
 Invisible to the site and the sitemap until built.
-
-### Financial Calculators (3)
-
-| Tool | Why it's worth building |
-|---|---|
-| Stamp Duty Calculator | UK-specific, changes with budgets, high commercial intent. Unblocks the three mortgage partials. |
-| Take-Home Pay Calculator | High volume, multi-input, country-specific — hard for Google to answer inline. |
-| Compound Interest Calculator | Simple to build, natural sibling to the mortgage cluster. |
 
 ### Text Tools (2)
 
@@ -102,14 +103,25 @@ Invisible to the site and the sitemap until built.
 
 ## Suggested order
 
-1. **Stamp Duty Calculator** — clears the three partials as a side effect, and is the strongest remaining finance query.
-2. **Scrabble Word Finder** and **Words With Friends** — needs a scoring dictionary sourcing first; they share the work.
-3. **Take-Home Pay** and **Compound Interest** — round out the finance cluster.
+1. **Scrabble Word Finder** and **Words With Friends** — the two remaining stubs. Both need a tournament word list and tile-value table sourced first; they share that work, so build them together.
+2. **PDF→images, extract text, page count** — the second PDF batch. Needs PDF.js alongside pdf-lib.
+3. **Developer quick wins** — JWT decoder, hash generator, regex tester, QR generator, CSV↔JSON. These would bring the currently empty Developer Tools category to life, and none needs external data.
 
-Beyond the current stubs, the next clusters worth opening are PDF→images and
-text extraction (needs PDF.js alongside pdf-lib), then the developer quick wins
-— JWT decoder, hash generator, regex tester, QR generator, CSV↔JSON — which
-would bring the empty Developer Tools category to life.
+Deliberately not built: **PDF compress** and **PDF password protect**. pdf-lib
+cannot meaningfully do either — no image recompression, no encryption — and a
+tool that claims to compress but shaves 2% is worse than no tool at all.
+
+---
+
+## Keeping the tax figures current
+
+The finance tools are the only ones on the site that can silently go wrong
+without any code changing. Rates move at Budgets, typically in the spring.
+
+- All figures live in **`src/components/tools/taxData.js`**, each with the official source URL it came from.
+- Update `LAST_VERIFIED` in the same file — it is rendered on the pages, so visitors can see how current the numbers are.
+- `npm test` checks the engine against worked examples published by HMRC and Revenue Scotland. If a rate changes, those expected values change too, and the tests will tell you which.
+- Never edit a rate from memory. Check the source first.
 
 ---
 

@@ -1,0 +1,77 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import StampDutyWidget from '../components/tools/StampDutyWidget.jsx';
+
+const faq = [
+  {
+    q: 'Is stamp duty the same across the UK?',
+    a: 'No — there are three separate taxes. England and Northern Ireland charge Stamp Duty Land Tax, Scotland charges Land and Buildings Transaction Tax, and Wales charges Land Transaction Tax. The thresholds, rates and reliefs all differ, which is why this calculator asks where the property is before anything else.',
+  },
+  {
+    q: 'Do first-time buyers pay stamp duty?',
+    a: 'It depends where you are buying. In England and Northern Ireland first-time buyers pay nothing up to £300,000 and 5% between £300,001 and £500,000, with the relief withdrawn entirely above £500,000. Scotland raises the nil-rate band to £175,000, worth up to £600. Wales has no first-time buyer relief at all.',
+  },
+  {
+    q: 'What happens if I buy a second home?',
+    a: 'Every nation charges more, but they do it differently. England and Northern Ireland add 5 percentage points to each band. Wales uses a completely separate higher-rates table. Scotland adds an 8% Additional Dwelling Supplement charged on the whole purchase price rather than band by band, which makes it noticeably steeper.',
+  },
+  {
+    q: 'Why is it charged in bands rather than one rate?',
+    a: 'Because a single rate would create absurd cliff edges — a pound more on the price could cost thousands more in tax. Each slice of the price is taxed at its own rate, so crossing a threshold only affects the money above it.',
+  },
+  {
+    q: 'Is the surcharge charged on the whole price?',
+    a: 'In Scotland, yes — the Additional Dwelling Supplement is 8% of the entire price. In England, Northern Ireland and Wales the higher rates still work band by band. All three only apply from £40,000 upwards.',
+  },
+  {
+    q: 'Does this include the non-resident surcharge?',
+    a: 'No. Buyers who have not been in the UK for at least 183 days in the previous 12 months pay a further 2% in England and Northern Ireland. That is not modelled here, so add it separately if it applies to you.',
+  },
+];
+---
+<ToolPage slug="stamp-duty-calculator" faq={faq}>
+  <StampDutyWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Work out the property transaction tax due anywhere in Great Britain or
+    Northern Ireland. Choose the nation first, because the three taxes are
+    genuinely different — not just different numbers, but different structures,
+    reliefs and surcharges.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      All three taxes work in slices. The price is divided into bands and each
+      slice is taxed at its own rate, then the results are added together. A
+      £295,000 purchase in England pays nothing on the first £125,000, 2% on the
+      next £125,000, and 5% on the remaining £45,000 — £4,750 in total.
+    </p>
+    <p>
+      The band table under the result shows exactly which slice attracted which
+      rate, so the figure can be checked line by line rather than taken on
+      trust.
+    </p>
+    <p>
+      Reliefs work differently in each nation. England and Northern Ireland
+      replace the whole band table with a first-time buyer table. Scotland
+      simply raises the nil-rate band from £145,000 to £175,000 and keeps the
+      rest as is. Wales offers no first-time buyer relief, which surprises
+      plenty of buyers.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      On a £300,000 home the same purchase costs very different amounts. In
+      England and Northern Ireland it is £5,000, in Scotland £4,600, and in
+      Wales £4,500. A first-time buyer pays nothing in England, £4,000 in
+      Scotland, and the full £4,500 in Wales.
+    </p>
+    <p>
+      Buy that same £300,000 property as a second home and the gap widens
+      sharply: £20,000 in England and Northern Ireland, £16,950 in Wales, and
+      £28,600 in Scotland — where the 8% supplement applies to the whole price
+      on top of the normal bands.
+    </p>
+  </div>
+</ToolPage>
