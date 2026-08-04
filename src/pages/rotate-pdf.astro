@@ -1,0 +1,67 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfPagesWidget from '../components/tools/PdfPagesWidget.jsx';
+
+const faq = [
+  {
+    q: 'Can I rotate only some pages?',
+    a: 'Yes. List the pages in the box — for example "3, 7-9". Leave it blank and every page in the document is rotated instead.',
+  },
+  {
+    q: 'What if different pages need rotating different ways?',
+    a: 'Run the tool more than once. Rotate the first set, then feed the downloaded file back in and rotate the second set by a different amount.',
+  },
+  {
+    q: 'Does rotating re-save the images and lose quality?',
+    a: 'No. Rotation is stored as an instruction in the page’s properties rather than by redrawing anything, so there is no quality loss at all and the file size barely changes.',
+  },
+  {
+    q: 'Why does my PDF look right on screen but print sideways?',
+    a: 'Some PDFs carry a rotation value that certain viewers apply and others ignore. Rotating with this tool writes a corrected value into the file itself, which usually resolves the inconsistency.',
+  },
+  {
+    q: 'Is the file uploaded anywhere?',
+    a: 'No. Everything happens in your browser and the document never leaves your device.',
+  },
+];
+---
+<ToolPage slug="rotate-pdf" faq={faq}>
+  <PdfPagesWidget client:load mode="rotate" slot="tool" />
+
+  <p slot="intro">
+    Turn sideways or upside-down PDF pages the right way up — either the whole
+    document or just the pages that need it. Rotation is lossless and runs
+    entirely in your browser.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Every PDF page carries a rotation property, measured in degrees. Rather
+      than redrawing the page, this tool reads that existing value, adds your
+      chosen amount, and writes the result back — so a page already at 90°
+      rotated by another 90° ends up at 180°.
+    </p>
+    <p>
+      Because only a number changes, nothing is re-compressed. Text stays
+      selectable, images keep their exact original quality, and the file size is
+      effectively unchanged.
+    </p>
+    <p>
+      Rotation wraps around at 360°, so rotating four times by 90° returns a page
+      to where it started.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      You've scanned a stack of documents and a few sheets went through the
+      feeder the wrong way round, so pages 4, 9 and 10 appear sideways. Entering
+      <code>4, 9-10</code> and choosing 90° anticlockwise fixes just those,
+      leaving the rest untouched.
+    </p>
+    <p>
+      For a document scanned entirely upside down, leave the page box blank and
+      choose 180° to flip everything in one pass.
+    </p>
+  </div>
+</ToolPage>

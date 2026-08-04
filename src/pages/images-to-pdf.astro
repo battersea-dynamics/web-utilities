@@ -1,0 +1,72 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import ImagesToPdfWidget from '../components/tools/ImagesToPdfWidget.jsx';
+
+const faq = [
+  {
+    q: 'Which image formats can I use?',
+    a: 'JPG and PNG. These are the two formats PDF supports natively, which is what lets the conversion happen in your browser without re-encoding anything. HEIC photos from an iPhone need converting to JPG first.',
+  },
+  {
+    q: 'Will my photos lose quality?',
+    a: 'No. Each image is embedded into the PDF exactly as it is, not recompressed. A page looks identical to the original file.',
+  },
+  {
+    q: 'What does the "Match each image" orientation setting do?',
+    a: 'It looks at each image and chooses portrait or landscape to suit it, so a mixed batch of photos doesn’t end up with wide shots squeezed onto tall pages.',
+  },
+  {
+    q: 'Why is my PDF so large?',
+    a: 'Because the images are embedded at full quality. A dozen modern phone photos can easily produce a 40 MB PDF. Resize or compress the images before converting if you need a smaller file.',
+  },
+  {
+    q: 'What is the margin measured in?',
+    a: 'Points, the standard PDF unit — 72 points to an inch. The default of 36 gives a half-inch border. Set it to 0 for edge-to-edge images.',
+  },
+  {
+    q: 'Are my photos uploaded anywhere?',
+    a: 'No. Everything is processed in your browser, which matters more than usual here, since photos and scanned documents are often personal.',
+  },
+];
+---
+<ToolPage slug="images-to-pdf" faq={faq}>
+  <ImagesToPdfWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Turn a set of JPG or PNG images into a single PDF, one image per page. Handy
+    for sending photos of receipts, turning phone snaps of a document into
+    something printable, or bundling scanned pages into one file.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      PDF supports JPG and PNG data directly, so each image can be embedded into
+      the document as-is rather than being converted or re-compressed. That's why
+      this runs instantly in your browser and why quality is preserved exactly.
+    </p>
+    <p>
+      For each image the tool creates a page at your chosen size, then scales the
+      image to fit inside the margins while keeping its proportions, and centres
+      it. Nothing is stretched or cropped.
+    </p>
+    <p>
+      With orientation set to match each image, portrait photos get portrait
+      pages and landscape photos get landscape pages, which avoids large empty
+      bands on a mixed batch.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      You've photographed six paper receipts for an expenses claim. Adding all
+      six, leaving the page size at A4 and orientation on "match each image",
+      produces a six-page PDF with each receipt centred on its own page — one
+      attachment instead of six.
+    </p>
+    <p>
+      For a document photographed page by page, put the images in reading order
+      using the arrows before creating the PDF, since the page order follows the
+      list exactly.
+    </p>
+  </div>
+</ToolPage>

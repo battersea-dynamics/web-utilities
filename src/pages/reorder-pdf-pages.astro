@@ -1,0 +1,66 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfPagesWidget from '../components/tools/PdfPagesWidget.jsx';
+
+const faq = [
+  {
+    q: 'How do I describe the new order?',
+    a: 'List every page in the order you want it to appear — for example "3, 1, 2" puts the third page first. You can use ranges too, so "5-8, 1-4" swaps two halves of an eight-page document.',
+  },
+  {
+    q: 'What happens to pages I don’t mention?',
+    a: 'They’re dropped. This tool builds the new document strictly from the list you give it, so anything left out won’t appear. End your list with a range like "9-" to sweep up the remaining pages.',
+  },
+  {
+    q: 'Can I repeat a page?',
+    a: 'Yes. Listing the same number twice includes that page twice, which is occasionally handy for duplicating a cover or a separator sheet.',
+  },
+  {
+    q: 'Is this different from splitting a PDF?',
+    a: 'Only in intent. Both build a new file from a list of pages, so the split tool can reorder and this tool can drop pages. Use whichever framing matches what you’re trying to do.',
+  },
+  {
+    q: 'Does my file get uploaded?',
+    a: 'No. The reordering happens in your browser and your document never leaves your device.',
+  },
+];
+---
+<ToolPage slug="reorder-pdf-pages" faq={faq}>
+  <PdfPagesWidget client:load mode="reorder" slot="tool" />
+
+  <p slot="intro">
+    Rearrange the pages of a PDF into any order you like. Move a page to the
+    front, swap two sections around, or rebuild the whole document from
+    scratch — all in your browser, with nothing uploaded.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      You describe the finished document as a list of page numbers. The tool
+      creates a new empty PDF and copies pages across in exactly that sequence,
+      so the list you write <em>is</em> the output order.
+    </p>
+    <p>
+      Ranges are expanded in the direction you write them, and the shorthand
+      "9-" means "page 9 through to the end" — handy for putting one page at the
+      front without listing everything else individually.
+    </p>
+    <p>
+      Pages are copied intact, so text stays selectable and image quality is
+      unchanged. Your original file isn't modified.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A 12-page report has its executive summary stranded on page 7, but it
+      should open the document. Entering <code>7, 1-6, 8-</code> moves that page
+      to the front and keeps everything else in its existing order.
+    </p>
+    <p>
+      Another case: a double-sided scan that came out with all the odd pages
+      first and all the even pages after. Listing the pages in interleaved order
+      rebuilds the document correctly.
+    </p>
+  </div>
+</ToolPage>

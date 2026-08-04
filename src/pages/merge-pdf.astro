@@ -1,0 +1,74 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfMergeWidget from '../components/tools/PdfMergeWidget.jsx';
+
+const faq = [
+  {
+    q: 'Are my files uploaded anywhere?',
+    a: 'No. The merge happens inside your browser using your own computer’s processing power. Your PDFs never leave your device, which is the main difference between this and most online PDF services.',
+  },
+  {
+    q: 'Is there a file size or page limit?',
+    a: 'There’s no fixed limit, but very large files are constrained by your device’s memory rather than by us. A few hundred pages is comfortable on a normal laptop; several thousand may be slow on an older phone.',
+  },
+  {
+    q: 'How do I control the order of the merged file?',
+    a: 'Use the up and down arrows next to each file. The finished PDF follows the order shown in the list, top to bottom.',
+  },
+  {
+    q: 'Can I merge a password-protected PDF?',
+    a: 'Usually not. If a PDF requires a password to open, it can’t be read and the merge will fail with an error. Remove the password in your PDF reader first, then merge.',
+  },
+  {
+    q: 'Does merging reduce the quality of the pages?',
+    a: 'No. Pages are copied across intact, so text stays selectable and images keep their original resolution. The merged file is roughly the sum of the originals in size.',
+  },
+  {
+    q: 'Do bookmarks and form fields survive the merge?',
+    a: 'Page content, text and images carry over reliably. Document-level extras such as bookmarks, annotations and interactive form fields may not, so check the result if your originals rely on them.',
+  },
+];
+---
+<ToolPage slug="merge-pdf" faq={faq}>
+  <PdfMergeWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Combine two or more PDFs into a single file, in whatever order you choose.
+    Everything runs in your browser, so your documents are never uploaded to a
+    server — useful when the files are contracts, invoices, medical letters or
+    anything else you'd rather not hand to a website.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Each PDF you add is read into memory on your own device. A new empty
+      document is created, then every page from each file is copied into it in
+      the order shown in your list, and the result is offered back to you as a
+      download.
+    </p>
+    <p>
+      Because the pages are copied rather than re-rendered, nothing is
+      re-compressed: text remains real text you can select and search, and
+      images keep the resolution they had in the original file.
+    </p>
+    <p>
+      No copy of your document is created anywhere outside your browser tab.
+      Closing the tab discards everything.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Say you're submitting an expenses claim made up of a covering letter, six
+      separate receipts saved as individual PDFs, and a summary page. Add all
+      eight files, drag the covering letter to the top and the summary to the
+      bottom, and you get one tidy document to attach to an email instead of
+      eight.
+    </p>
+    <p>
+      The same applies to scanned documents: many scanners produce one PDF per
+      page, and merging them back into a single file makes the result far easier
+      to send, print and archive.
+    </p>
+  </div>
+</ToolPage>

@@ -1,0 +1,73 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfWatermarkWidget from '../components/tools/PdfWatermarkWidget.jsx';
+
+const faq = [
+  {
+    q: 'What opacity should I use?',
+    a: 'Around 0.15 is the usual choice — clearly visible but still easy to read the text underneath. Push it towards 0.3 if the watermark needs to be unmistakable, or down to 0.08 for something subtle.',
+  },
+  {
+    q: 'Can the watermark be removed by someone else?',
+    a: 'Yes. It is drawn as ordinary page content, so anyone with a PDF editor can take it out. Treat it as a clear label of intent, not as security or copy protection.',
+  },
+  {
+    q: 'Can I use an image or logo instead of text?',
+    a: 'Not in this tool — it handles text watermarks only. An image watermark needs a different approach and may be added later.',
+  },
+  {
+    q: 'Why is my watermark cut off at the edge?',
+    a: 'The text is too long or too large for the page at that angle. Shorten the text or reduce the font size — a diagonal watermark has more room than a horizontal one, so an angle around 45° helps too.',
+  },
+  {
+    q: 'Does the watermark go on every page?',
+    a: 'Yes, all pages get the same watermark. If you need it on only some pages, split those pages out first, watermark them, then merge the document back together.',
+  },
+  {
+    q: 'Is my file uploaded?',
+    a: 'No. The watermark is applied in your browser and your document never leaves your device.',
+  },
+];
+---
+<ToolPage slug="watermark-pdf" faq={faq}>
+  <PdfWatermarkWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Stamp text such as DRAFT, CONFIDENTIAL or a company name diagonally across
+    every page of a PDF, with control over opacity, angle and size. Runs
+    entirely in your browser.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The tool embeds the standard Helvetica Bold font, then draws your text
+      across the middle of each page at the angle and transparency you choose.
+      Opacity is a real PDF property, so the underlying content stays fully
+      readable through the mark rather than being covered up.
+    </p>
+    <p>
+      Placement accounts for the rotation: the text is measured, then its centre
+      point is offset along the angle so the watermark sits centred on the page
+      rather than drifting towards a corner as the angle changes.
+    </p>
+    <p>
+      The watermark becomes part of the page content, so it prints and appears in
+      every PDF reader — but for the same reason it can also be edited out by
+      anyone with the right software.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      You're circulating a proposal for comment and don't want an early version
+      mistaken for the final one. Watermarking it with "DRAFT" at 45° and 0.15
+      opacity makes the status obvious on every page and in every printout,
+      without making the document harder to read.
+    </p>
+    <p>
+      For a document going to an external party, something like "CONFIDENTIAL —
+      NOT FOR DISTRIBUTION" at a smaller font size sets expectations clearly on
+      each page.
+    </p>
+  </div>
+</ToolPage>

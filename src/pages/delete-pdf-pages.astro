@@ -1,0 +1,63 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfPagesWidget from '../components/tools/PdfPagesWidget.jsx';
+
+const faq = [
+  {
+    q: 'How do I specify which pages to delete?',
+    a: 'Use commas and hyphens — for example "2, 5-7, 11". Everything you list is removed and everything else is kept in its original order.',
+  },
+  {
+    q: 'Can I delete every page?',
+    a: 'No. If your selection would remove all the pages, the tool stops and tells you, since an empty PDF isn’t a useful result.',
+  },
+  {
+    q: 'Do the remaining pages get renumbered?',
+    a: 'The pages themselves keep whatever numbers are printed on them — that’s part of the page content. Only their position in the file changes. If you need fresh numbering, use the add page numbers tool afterwards.',
+  },
+  {
+    q: 'Is my file uploaded to a server?',
+    a: 'No. The document is processed entirely in your browser and never leaves your device.',
+  },
+  {
+    q: 'What if I delete the wrong pages?',
+    a: 'Your original file is never modified, so just run the tool again with a corrected selection. The download is always a separate new file.',
+  },
+];
+---
+<ToolPage slug="delete-pdf-pages" faq={faq}>
+  <PdfPagesWidget client:load mode="delete" slot="tool" />
+
+  <p slot="intro">
+    Remove pages you don't want from a PDF and download the trimmed result.
+    Useful for stripping out blank scanner pages, adverts, or sections that
+    aren't relevant to whoever you're sending the file to.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The tool reads your PDF on your own device and works out which pages are
+      not in your delete list. It then creates a new document and copies those
+      survivors across in their original order, leaving the source file
+      untouched.
+    </p>
+    <p>
+      Deleting is simply the inverse of extracting: whatever you don't name is
+      what you keep. If it's easier to describe the pages you want than the ones
+      you don't, use the split tool instead — the result is identical.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A scanned 30-page report has a blank back-of-page after every scanned
+      sheet, landing on pages 2, 4, 6 and so on. Entering those even numbers
+      leaves a clean 15-page document at roughly half the file size.
+    </p>
+    <p>
+      Another everyday case: a downloaded invoice with two pages of terms and
+      conditions at the end. Entering <code>4-5</code> leaves just the invoice
+      itself for your records.
+    </p>
+  </div>
+</ToolPage>

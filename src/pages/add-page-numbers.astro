@@ -1,0 +1,72 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfPageNumbersWidget from '../components/tools/PdfPageNumbersWidget.jsx';
+
+const faq = [
+  {
+    q: 'Can I skip numbering the cover page?',
+    a: 'Yes. Tick "skip the first page" and numbering starts on page two, which is what most reports and dissertations need.',
+  },
+  {
+    q: 'Can I start counting from a number other than 1?',
+    a: 'Yes. Set "start numbering at" to whatever you need — useful when a document is one chapter of something larger and needs to continue from a previous file.',
+  },
+  {
+    q: 'What if the page already has content where the number goes?',
+    a: 'The number is drawn on top of whatever is there. If it collides with existing text or a footer, choose a different position or a smaller font size.',
+  },
+  {
+    q: 'Which font is used?',
+    a: 'Helvetica, one of the standard fonts every PDF reader is required to support. That keeps the file small and guarantees the numbers display correctly everywhere.',
+  },
+  {
+    q: 'Can I put numbers in the margin or use Roman numerals?',
+    a: 'Not currently. The tool offers six positions and four common formats. Roman numerals and custom placement would need a full PDF editor.',
+  },
+  {
+    q: 'Is my document uploaded?',
+    a: 'No. The numbering is applied in your browser and the file never leaves your device.',
+  },
+];
+---
+<ToolPage slug="add-page-numbers" faq={faq}>
+  <PdfPageNumbersWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Add page numbers to a PDF that doesn't have them — in the corner or centre,
+    top or bottom, with the option to skip a cover page and start counting from
+    any number you like.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The tool opens your PDF, embeds the standard Helvetica font, then walks
+      through the pages drawing the number in your chosen position. Because
+      Helvetica is one of the fonts built into every PDF reader, nothing extra
+      needs to be bundled into the file.
+    </p>
+    <p>
+      Position is worked out from each page's own dimensions, so a document
+      mixing A4 and landscape pages still gets its numbers placed consistently
+      relative to each page's edges. The text is measured before it's drawn,
+      which is what keeps centred and right-aligned numbers properly aligned.
+    </p>
+    <p>
+      Existing page content is left completely untouched — the number is simply
+      drawn over the top.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A 40-page report has a title page that shouldn't be numbered, and the body
+      should begin at 1. Tick "skip the first page", leave the start value at 1,
+      and choose bottom centre: the title page stays clean and the following 39
+      pages read 1 to 39.
+    </p>
+    <p>
+      For a chapter that continues from an earlier document ending at page 82,
+      set "start numbering at" to 83 so the two files read as one sequence.
+    </p>
+  </div>
+</ToolPage>

@@ -16,6 +16,7 @@
     "@astrojs/react": "^6.0.2",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.1.6",
+    "pdf-lib": "^1.17.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

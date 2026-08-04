@@ -29,6 +29,11 @@
       "slug": "developer",
       "name": "Developer Tools",
       "blurb": "Encoders, formatters, generators and validators."
+    },
+    {
+      "slug": "files",
+      "name": "PDF & Files",
+      "blurb": "Merge, split and edit PDFs entirely in your browser — no upload, no sign-up."
     }
   ],
 
@@ -193,6 +198,87 @@
       "metaDescription": "Reverse text letter by letter, word by word, or line by line.",
       "keywords": ["text reverser", "reverse text online", "flip text"],
       "related": ["case-converter", "word-counter"],
+      "published": true
+    },
+
+    {
+      "slug": "merge-pdf",
+      "title": "Merge PDF",
+      "h1": "Merge PDF Files",
+      "category": "files",
+      "metaDescription": "Combine several PDFs into one file, in any order you choose. Runs in your browser — your files are never uploaded.",
+      "keywords": ["merge pdf", "combine pdf", "join pdf files"],
+      "related": ["split-pdf", "delete-pdf-pages", "reorder-pdf-pages"],
+      "published": true
+    },
+    {
+      "slug": "split-pdf",
+      "title": "Split PDF",
+      "h1": "Split PDF — Extract Pages",
+      "category": "files",
+      "metaDescription": "Pull selected pages out of a PDF into a new file. Choose single pages or ranges. Nothing is uploaded.",
+      "keywords": ["split pdf", "extract pdf pages", "separate pdf pages"],
+      "related": ["merge-pdf", "delete-pdf-pages", "rotate-pdf"],
+      "published": true
+    },
+    {
+      "slug": "delete-pdf-pages",
+      "title": "Delete PDF Pages",
+      "h1": "Delete Pages from a PDF",
+      "category": "files",
+      "metaDescription": "Remove unwanted pages from a PDF and download the trimmed file. Runs entirely in your browser.",
+      "keywords": ["delete pdf pages", "remove pages from pdf"],
+      "related": ["split-pdf", "merge-pdf", "reorder-pdf-pages"],
+      "published": true
+    },
+    {
+      "slug": "rotate-pdf",
+      "title": "Rotate PDF",
+      "h1": "Rotate PDF Pages",
+      "category": "files",
+      "metaDescription": "Turn sideways or upside-down PDF pages the right way up, individually or all at once. No upload needed.",
+      "keywords": ["rotate pdf", "turn pdf pages", "fix pdf orientation"],
+      "related": ["split-pdf", "merge-pdf", "delete-pdf-pages"],
+      "published": true
+    },
+    {
+      "slug": "reorder-pdf-pages",
+      "title": "Reorder PDF Pages",
+      "h1": "Reorder PDF Pages",
+      "category": "files",
+      "metaDescription": "Rearrange the pages of a PDF into any order you like and download the result. Processed on your device.",
+      "keywords": ["reorder pdf pages", "rearrange pdf", "change pdf page order"],
+      "related": ["merge-pdf", "split-pdf", "delete-pdf-pages"],
+      "published": true
+    },
+    {
+      "slug": "images-to-pdf",
+      "title": "Images to PDF",
+      "h1": "Convert Images to PDF",
+      "category": "files",
+      "metaDescription": "Turn JPG and PNG images into a single PDF, one image per page, with page size and margin options.",
+      "keywords": ["images to pdf", "jpg to pdf", "png to pdf", "photo to pdf"],
+      "related": ["merge-pdf", "add-page-numbers", "watermark-pdf"],
+      "published": true
+    },
+    {
+      "slug": "add-page-numbers",
+      "title": "Add Page Numbers to PDF",
+      "h1": "Add Page Numbers to a PDF",
+      "category": "files",
+      "metaDescription": "Add page numbers to a PDF in the position and format you want, with the option to skip a cover page.",
+      "keywords": ["add page numbers to pdf", "number pdf pages", "pdf page numbering"],
+      "related": ["watermark-pdf", "merge-pdf", "images-to-pdf"],
+      "published": true
+    },
+    {
+      "slug": "watermark-pdf",
+      "title": "Watermark PDF",
+      "h1": "Add a Watermark to a PDF",
+      "category": "files",
+      "metaDescription": "Stamp text such as DRAFT or CONFIDENTIAL across every page of a PDF, with adjustable opacity and angle.",
+      "keywords": ["watermark pdf", "add watermark to pdf", "stamp pdf draft"],
+      "related": ["add-page-numbers", "merge-pdf", "split-pdf"],
       "published": true
     }
   ]
