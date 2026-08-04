@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import { PDFDocument, StandardFonts, degrees, rgb } from 'pdf-lib';
-import {
-  readFile,
-  download,
-  formatBytes,
-  pdfName,
-  dropzoneStyle,
-  buttonStyle,
-  secondaryButtonStyle,
-} from './pdfHelpers.js';
+import { readFile, download, formatBytes, pdfName } from './pdfHelpers.js';
 
 export default function PdfWatermarkWidget() {
   const [file, setFile] = useState(null);
@@ -80,27 +72,25 @@ export default function PdfWatermarkWidget() {
 
   return (
     <div>
-      <label style={dropzoneStyle} htmlFor="pdfwm">
-        <input id="pdfwm" type="file" accept="application/pdf,.pdf" style={{ display: 'none' }}
+      <label className="dropzone" htmlFor="pdfwm">
+        <input id="pdfwm" type="file" accept="application/pdf,.pdf" hidden
           onChange={(e) => { pick(e.target.files); e.target.value = ''; }} />
         <strong>{file ? 'Choose a different PDF' : 'Choose a PDF'}</strong>
-        <div style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', marginTop: '0.25rem' }}>
-          Processed on your device — nothing is uploaded.
-        </div>
+        <span className="dropzone-hint">Processed on your device — nothing is uploaded.</span>
       </label>
 
       {file && (
-        <p style={{ margin: '0.9rem 0 0', fontSize: '0.9375rem' }}>
+        <p className="stack">
           <strong>{file.name}</strong>{' '}
-          <span style={{ color: 'var(--ink-soft)' }}>
+          <span className="muted">
             {formatBytes(file.size)}{pageCount ? ` · ${pageCount} pages` : ''}
           </span>
         </p>
       )}
 
       {file && (
-        <div className="field-grid" style={{ marginTop: '1rem' }}>
-          <div className="field" style={{ gridColumn: '1 / -1' }}>
+        <div className="field-grid stack">
+          <div className="field field-wide">
             <label htmlFor="wmtext">Watermark text</label>
             <input id="wmtext" type="text" value={text} maxLength={40}
               onChange={(e) => setText(e.target.value)} />
@@ -123,14 +113,14 @@ export default function PdfWatermarkWidget() {
         </div>
       )}
 
-      {error && <p className="saving-note" style={{ marginTop: '1rem' }}>{error}</p>}
+      {error && <p className="note note-warn">{error}</p>}
 
       {file && (
-        <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem' }}>
-          <button type="button" style={buttonStyle} onClick={run} disabled={busy}>
+        <div className="row stack-lg">
+          <button type="button" className="btn" onClick={run} disabled={busy}>
             {busy ? 'Working…' : 'Add watermark'}
           </button>
-          <button type="button" style={secondaryButtonStyle}
+          <button type="button" className="btn-ghost"
             onClick={() => { setFile(null); setPageCount(0); setError(''); }}>
             Start over
           </button>

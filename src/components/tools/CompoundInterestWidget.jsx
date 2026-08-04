@@ -49,14 +49,13 @@ export default function CompoundInterestWidget() {
         </div>
         <div className="field">
           <label htmlFor="inc">Increase contributions (% a year)</label>
-          <input id="inc" type="number" min="0" max="20" step="0.5" value={annualContributionIncrease}
+          <input id="inc" type="number" min="0" max="20" step="0.5"
+            value={annualContributionIncrease}
             onChange={(e) => setIncrease(Number(e.target.value))} />
         </div>
       </div>
 
-      {!result.ok && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>{result.reason}</p>
-      )}
+      {!result.ok && <p className="note stack">{result.reason}</p>}
 
       {result.ok && (
         <>
@@ -85,7 +84,7 @@ export default function CompoundInterestWidget() {
           </div>
 
           {result.totalInterest > 0 && (
-            <p className="saving-note">
+            <p className="note">
               Under a mattress the same money would be{' '}
               <strong>{gbp(withoutGrowth)}</strong>. Compounding added{' '}
               <strong>{gbp(result.finalBalance - withoutGrowth)}</strong> on top of what you
@@ -93,33 +92,25 @@ export default function CompoundInterestWidget() {
             </p>
           )}
 
-          <details open={showTable} onToggle={(e) => setShowTable(e.currentTarget.open)}
-            style={{ marginTop: '1.25rem' }}>
-            <summary style={{ cursor: 'pointer', fontSize: '0.9375rem', fontWeight: 600 }}>
-              Year-by-year growth
-            </summary>
-            <div style={{ overflowX: 'auto', marginTop: '0.75rem' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse',
-                fontFamily: 'var(--font-num)', fontSize: '0.8125rem' }}>
+          <details className="disclosure" open={showTable}
+            onToggle={(e) => setShowTable(e.currentTarget.open)}>
+            <summary>Year-by-year growth</summary>
+            <div className="table-scroll">
+              <table className="data-table">
                 <thead>
                   <tr>
                     {['Year', 'Paid in', 'Interest', 'Balance'].map((h) => (
-                      <th key={h} style={{ textAlign: 'right', padding: '0.35rem 0.5rem',
-                        borderBottom: '1px solid var(--rule)', color: 'var(--ink-soft)', fontWeight: 600 }}>
-                        {h}
-                      </th>
+                      <th key={h}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {result.yearly.map((y) => (
                     <tr key={y.year}>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>
-                        {Number.isInteger(y.year) ? y.year : y.year.toFixed(1)}
-                      </td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.contributed)}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.interest)}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.balance)}</td>
+                      <td>{Number.isInteger(y.year) ? y.year : y.year.toFixed(1)}</td>
+                      <td>{gbp(y.contributed)}</td>
+                      <td>{gbp(y.interest)}</td>
+                      <td>{gbp(y.balance)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -127,7 +118,7 @@ export default function CompoundInterestWidget() {
             </div>
           </details>
 
-          <p style={{ marginTop: '1rem', fontSize: '0.8125rem', color: 'var(--ink-soft)' }}>
+          <p className="muted-block">
             Interest is compounded monthly and contributions are added at the end of each month.
             Figures are before inflation and before any tax on the interest.
           </p>

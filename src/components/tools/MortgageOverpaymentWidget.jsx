@@ -37,9 +37,7 @@ export default function MortgageOverpaymentWidget() {
 
   // Total extra actually handed over: the monthly amount only counts for the
   // months it was actually paid, which is from startMonth until the loan clears.
-  const overpayMonths = ok
-    ? Math.max(0, withOverpay.months - startMonth + 1)
-    : 0;
+  const overpayMonths = ok ? Math.max(0, withOverpay.months - startMonth + 1) : 0;
   const totalOverpaid = ok
     ? monthlyOverpay * overpayMonths + (lumpAmount > 0 ? lumpAmount : 0)
     : 0;
@@ -70,7 +68,7 @@ export default function MortgageOverpaymentWidget() {
         </div>
       </div>
 
-      <div className="field-grid" style={{ marginTop: '1rem' }}>
+      <div className="field-grid stack">
         <div className="field">
           <label htmlFor="mo">Monthly overpayment (£)</label>
           <input id="mo" type="number" min="0" step="25" value={monthlyOverpay}
@@ -101,7 +99,7 @@ export default function MortgageOverpaymentWidget() {
       </div>
 
       {!ok && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>
+        <p className="note note-warn stack">
           {base.reason || withOverpay.reason || 'Check the figures entered.'}
         </p>
       )}
@@ -114,9 +112,7 @@ export default function MortgageOverpaymentWidget() {
               <div className="value">{gbp(interestSaved)}</div>
             </div>
             <div className="result">
-              <div className="label">
-                {mode === 'reduce-term' ? 'Time saved' : 'Time saved'}
-              </div>
+              <div className="label">Time saved</div>
               <div className="value">{monthsSaved > 0 ? monthsToText(monthsSaved) : '—'}</div>
             </div>
             <div className="result">
@@ -138,7 +134,7 @@ export default function MortgageOverpaymentWidget() {
           </div>
 
           {interestSaved > 0 && totalOverpaid > 0 && (
-            <p className="saving-note">
+            <p className="note">
               You pay <strong>{gbp(totalOverpaid)}</strong> extra over the life of the
               mortgage and avoid <strong>{gbp(interestSaved)}</strong> of interest — about{' '}
               <strong>{gbp(savedPerPound, 2)}</strong> saved for every £1 overpaid, plus a
@@ -148,7 +144,7 @@ export default function MortgageOverpaymentWidget() {
           )}
 
           {overAllowance && (
-            <p className="saving-note" style={{ background: '#fdeceb', color: '#8a2b25' }}>
+            <p className="note note-warn">
               That's {gbp(annualOverpayment)} in a year, above the {gbp(allowance)} that a
               typical 10% annual allowance would permit. Most fixed-rate deals charge an
               early repayment penalty above that — check your mortgage offer.
@@ -156,7 +152,7 @@ export default function MortgageOverpaymentWidget() {
           )}
 
           {mode === 'reduce-payment' && (
-            <p style={{ fontSize: '0.8125rem', color: 'var(--ink-soft)', marginTop: '0.75rem' }}>
+            <p className="muted-block">
               In this mode the lender recalculates your required payment downwards after each
               overpayment. If you keep paying the extra on top of the reduced amount, you'll
               still finish ahead of schedule.
@@ -165,11 +161,9 @@ export default function MortgageOverpaymentWidget() {
         </>
       )}
 
-      <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-        <a className="card" href="/mortgage-calculator"
-          style={{ padding: '0.6rem 1rem', fontWeight: 600 }}>← Single mortgage calculator</a>
-        <a className="card" href="/mortgage-comparison-calculator"
-          style={{ padding: '0.6rem 1rem', fontWeight: 600 }}>Compare mortgages →</a>
+      <div className="tool-actions">
+        <a className="card" href="/mortgage-calculator">← Single mortgage calculator</a>
+        <a className="card" href="/mortgage-comparison-calculator">Compare mortgages →</a>
       </div>
     </div>
   );

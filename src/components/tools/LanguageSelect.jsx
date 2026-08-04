@@ -2,7 +2,7 @@ import { LANGUAGES } from './languages.js';
 
 export default function LanguageSelect({ value, onChange }) {
   return (
-    <div className="field" style={{ maxWidth: '12rem' }}>
+    <div className="field field-narrow">
       <label htmlFor="lang">Language</label>
       <select id="lang" value={value} onChange={(e) => onChange(e.target.value)}>
         {LANGUAGES.map((l) => (

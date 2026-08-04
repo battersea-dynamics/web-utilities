@@ -20,6 +20,7 @@ const soon = tools.filter((t) => !t.published);
 <Base
   title={`${category.name} | gazza.ltd`}
   description={category.metaDescription || category.blurb}
+  category={category.slug}
 >
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb">

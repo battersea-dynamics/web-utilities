@@ -32,25 +32,15 @@ export default function TextReverserWidget() {
     setTimeout(() => setCopied(false), 1200);
   };
 
-  const areaStyle = {
-    font: 'inherit',
-    padding: '0.7rem',
-    border: '1px solid var(--rule)',
-    borderRadius: '4px',
-    background: 'var(--paper)',
-    color: 'var(--ink)',
-    width: '100%',
-    resize: 'vertical',
-  };
-
   return (
     <div>
       <div className="field">
         <label htmlFor="text">Your text</label>
-        <textarea id="text" rows={6} style={areaStyle} value={text} onChange={(e) => setText(e.target.value)} />
+        <textarea id="text" className="textarea" rows={6} value={text}
+          onChange={(e) => setText(e.target.value)} />
       </div>
 
-      <div className="field-grid" style={{ marginTop: '1rem' }}>
+      <div className="field-grid stack">
         <div className="field">
           <label htmlFor="mode">Reverse by</label>
           <select id="mode" value={mode} onChange={(e) => setMode(e.target.value)}>
@@ -61,27 +51,13 @@ export default function TextReverserWidget() {
         </div>
       </div>
 
-      <div className="results" style={{ display: 'block' }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
-          <button
-            type="button"
-            onClick={copy}
-            disabled={!text}
-            style={{
-              font: 'inherit',
-              fontSize: '0.8125rem',
-              padding: '0.4rem 0.7rem',
-              border: '1px solid var(--rule)',
-              borderRadius: '4px',
-              background: 'var(--surface)',
-              color: 'var(--ink)',
-              cursor: text ? 'pointer' : 'default',
-            }}
-          >
+      <div className="results results-block">
+        <div className="row-end stack-sm">
+          <button type="button" className="btn-ghost" onClick={copy} disabled={!text}>
             {copied ? 'Copied' : 'Copy result'}
           </button>
         </div>
-        <textarea readOnly rows={6} style={areaStyle} value={output} />
+        <textarea readOnly className="textarea" rows={6} value={output} />
       </div>
     </div>
   );

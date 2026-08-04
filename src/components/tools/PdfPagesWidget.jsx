@@ -1,15 +1,6 @@
 import { useState } from 'react';
 import { PDFDocument, degrees } from 'pdf-lib';
-import {
-  readFile,
-  download,
-  parsePageRanges,
-  formatBytes,
-  pdfName,
-  dropzoneStyle,
-  buttonStyle,
-  secondaryButtonStyle,
-} from './pdfHelpers.js';
+import { readFile, download, parsePageRanges, formatBytes, pdfName } from './pdfHelpers.js';
 
 /**
  * One widget, four tools. All of them are "pick a PDF, choose some pages,
@@ -85,7 +76,6 @@ export default function PdfPagesWidget({ mode = 'extract' }) {
       const selected = parsePageRanges(ranges, total);
 
       if (mode === 'rotate') {
-        // Rotate in place, then save the same document.
         const targets = selected.length ? selected : src.getPageIndices();
         for (const i of targets) {
           const page = src.getPage(i);
@@ -127,27 +117,17 @@ export default function PdfPagesWidget({ mode = 'extract' }) {
 
   return (
     <div>
-      <label style={dropzoneStyle} htmlFor="pdf">
-        <input
-          id="pdf"
-          type="file"
-          accept="application/pdf,.pdf"
-          style={{ display: 'none' }}
-          onChange={(e) => {
-            pick(e.target.files);
-            e.target.value = '';
-          }}
-        />
+      <label className="dropzone" htmlFor="pdf">
+        <input id="pdf" type="file" accept="application/pdf,.pdf" hidden
+          onChange={(e) => { pick(e.target.files); e.target.value = ''; }} />
         <strong>{file ? 'Choose a different PDF' : 'Choose a PDF'}</strong>
-        <div style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', marginTop: '0.25rem' }}>
-          Processed on your device — nothing is uploaded.
-        </div>
+        <span className="dropzone-hint">Processed on your device — nothing is uploaded.</span>
       </label>
 
       {file && (
-        <p style={{ margin: '0.9rem 0 0', fontSize: '0.9375rem' }}>
+        <p className="stack">
           <strong>{file.name}</strong>{' '}
-          <span style={{ color: 'var(--ink-soft)' }}>
+          <span className="muted">
             {formatBytes(file.size)}
             {pageCount ? ` · ${pageCount} page${pageCount === 1 ? '' : 's'}` : ''}
           </span>
@@ -155,16 +135,11 @@ export default function PdfPagesWidget({ mode = 'extract' }) {
       )}
 
       {file && (
-        <div className="field-grid" style={{ marginTop: '1rem' }}>
-          <div className="field" style={{ gridColumn: mode === 'rotate' ? 'auto' : '1 / -1' }}>
+        <div className="field-grid stack">
+          <div className={mode === 'rotate' ? 'field' : 'field field-wide'}>
             <label htmlFor="ranges">{copy.label}</label>
-            <input
-              id="ranges"
-              type="text"
-              placeholder={copy.placeholder}
-              value={ranges}
-              onChange={(e) => setRanges(e.target.value)}
-            />
+            <input id="ranges" type="text" placeholder={copy.placeholder} value={ranges}
+              onChange={(e) => setRanges(e.target.value)} />
           </div>
 
           {mode === 'rotate' && (
@@ -180,29 +155,17 @@ export default function PdfPagesWidget({ mode = 'extract' }) {
         </div>
       )}
 
-      {file && (
-        <p style={{ margin: '0.6rem 0 0', fontSize: '0.8125rem', color: 'var(--ink-soft)' }}>
-          {copy.hint}
-        </p>
-      )}
+      {file && <p className="muted-block">{copy.hint}</p>}
 
-      {error && <p className="saving-note" style={{ marginTop: '1rem' }}>{error}</p>}
+      {error && <p className="note note-warn">{error}</p>}
 
       {file && (
-        <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem' }}>
-          <button type="button" style={buttonStyle} onClick={run} disabled={busy}>
+        <div className="row stack-lg">
+          <button type="button" className="btn" onClick={run} disabled={busy}>
             {busy ? 'Working…' : copy.action}
           </button>
-          <button
-            type="button"
-            style={secondaryButtonStyle}
-            onClick={() => {
-              setFile(null);
-              setRanges('');
-              setPageCount(0);
-              setError('');
-            }}
-          >
+          <button type="button" className="btn-ghost"
+            onClick={() => { setFile(null); setRanges(''); setPageCount(0); setError(''); }}>
             Start over
           </button>
         </div>

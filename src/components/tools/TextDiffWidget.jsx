@@ -38,11 +38,8 @@ function diffLines(a, b) {
   return rows;
 }
 
-const rowStyle = {
-  same: {},
-  removed: { background: '#fdeceb', color: '#8a2b25' },
-  added: { background: 'var(--accent-tint)', color: '#0f4a3f' },
-};
+const CLASS = { same: '', removed: 'diff-del', added: 'diff-add' };
+const MARK = { same: '  ', removed: '− ', added: '+ ' };
 
 export default function TextDiffWidget() {
   const [a, setA] = useState('');
@@ -51,56 +48,30 @@ export default function TextDiffWidget() {
   const rows = useMemo(() => diffLines(a, b), [a, b]);
   const changed = rows.filter((r) => r.type !== 'same').length;
 
-  const areaStyle = {
-    font: 'inherit',
-    fontFamily: 'var(--font-num)',
-    fontSize: '0.875rem',
-    padding: '0.7rem',
-    border: '1px solid var(--rule)',
-    borderRadius: '4px',
-    background: 'var(--paper)',
-    color: 'var(--ink)',
-    width: '100%',
-    resize: 'vertical',
-  };
-
   return (
     <div>
       <div className="field-grid">
         <div className="field">
           <label htmlFor="a">Original</label>
-          <textarea id="a" rows={8} style={areaStyle} value={a} onChange={(e) => setA(e.target.value)} />
+          <textarea id="a" className="textarea textarea-mono" rows={8} value={a}
+            onChange={(e) => setA(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="b">Changed</label>
-          <textarea id="b" rows={8} style={areaStyle} value={b} onChange={(e) => setB(e.target.value)} />
+          <textarea id="b" className="textarea textarea-mono" rows={8} value={b}
+            onChange={(e) => setB(e.target.value)} />
         </div>
       </div>
 
       {(a || b) && (
-        <div className="results" style={{ display: 'block' }}>
-          <div className="label" style={{ marginBottom: '0.5rem' }}>
+        <div className="results results-block">
+          <div className="label">
             {changed} changed line{changed === 1 ? '' : 's'}
           </div>
-          <div
-            style={{
-              fontFamily: 'var(--font-num)',
-              fontSize: '0.875rem',
-              border: '1px solid var(--rule)',
-              borderRadius: '4px',
-              overflow: 'hidden',
-            }}
-          >
+          <div className="diff stack-sm">
             {rows.map((r, idx) => (
-              <div
-                key={idx}
-                style={{
-                  padding: '0.15rem 0.6rem',
-                  whiteSpace: 'pre-wrap',
-                  ...rowStyle[r.type],
-                }}
-              >
-                {r.type === 'removed' ? '− ' : r.type === 'added' ? '+ ' : '  '}
+              <div key={idx} className={`diff-line ${CLASS[r.type]}`}>
+                {MARK[r.type]}
                 {r.text || ' '}
               </div>
             ))}

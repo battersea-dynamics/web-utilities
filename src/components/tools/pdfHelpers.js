@@ -1,6 +1,8 @@
 // Shared helpers for the PDF tools. Everything here runs in the browser —
 // no file is ever uploaded anywhere, which is the main thing these tools
 // have over the big online PDF services.
+//
+// Presentation lives in global.css; this file is behaviour only.
 
 /** Read a File/Blob into an ArrayBuffer. */
 export function readFile(file) {
@@ -68,35 +70,3 @@ export function pdfName(original, suffix) {
   const base = original.replace(/\.pdf$/i, '');
   return `${base}${suffix}.pdf`;
 }
-
-/** Shared inline styles so the widgets stay visually consistent. */
-export const dropzoneStyle = {
-  border: '1px dashed var(--rule)',
-  borderRadius: 'var(--radius)',
-  padding: '1.5rem',
-  textAlign: 'center',
-  background: 'var(--paper)',
-  cursor: 'pointer',
-};
-
-export const buttonStyle = {
-  font: 'inherit',
-  fontWeight: 600,
-  padding: '0.6rem 1.1rem',
-  border: '1px solid var(--accent)',
-  borderRadius: '4px',
-  background: 'var(--accent)',
-  color: '#fff',
-  cursor: 'pointer',
-};
-
-export const secondaryButtonStyle = {
-  font: 'inherit',
-  fontSize: '0.8125rem',
-  padding: '0.35rem 0.6rem',
-  border: '1px solid var(--rule)',
-  borderRadius: '4px',
-  background: 'var(--surface)',
-  color: 'var(--ink)',
-  cursor: 'pointer',
-};

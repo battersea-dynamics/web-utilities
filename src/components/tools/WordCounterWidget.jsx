@@ -8,10 +8,12 @@ export default function WordCounterWidget() {
     const words = trimmed ? trimmed.split(/\s+/).length : 0;
     const chars = text.length;
     const charsNoSpaces = text.replace(/\s/g, '').length;
-    const sentences = trimmed ? (trimmed.match(/[.!?]+(?:\s|$)/g) || []).length || (trimmed ? 1 : 0) : 0;
-    const paragraphs = trimmed ? trimmed.split(/\n\s*\n/).filter((p) => p.trim()).length : 0;
-    const readingMins = words / 200;
-    const speakingMins = words / 130;
+    const sentences = trimmed
+      ? (trimmed.match(/[.!?]+(?:\s|$)/g) || []).length || 1
+      : 0;
+    const paragraphs = trimmed
+      ? trimmed.split(/\n\s*\n/).filter((p) => p.trim()).length
+      : 0;
 
     const fmtTime = (mins) => {
       if (mins < 1 / 60) return '0 sec';
@@ -28,8 +30,8 @@ export default function WordCounterWidget() {
       charsNoSpaces,
       sentences,
       paragraphs,
-      readingTime: fmtTime(readingMins),
-      speakingTime: fmtTime(speakingMins),
+      readingTime: fmtTime(words / 200),
+      speakingTime: fmtTime(words / 130),
     };
   }, [text]);
 
@@ -39,17 +41,8 @@ export default function WordCounterWidget() {
         <label htmlFor="text">Your text</label>
         <textarea
           id="text"
+          className="textarea"
           rows={10}
-          style={{
-            font: 'inherit',
-            padding: '0.7rem',
-            border: '1px solid var(--rule)',
-            borderRadius: '4px',
-            background: 'var(--paper)',
-            color: 'var(--ink)',
-            width: '100%',
-            resize: 'vertical',
-          }}
           placeholder="Paste or type here…"
           value={text}
           onChange={(e) => setText(e.target.value)}

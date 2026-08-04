@@ -1,27 +1,93 @@
-/* ---------------------------------------------------------
-   gazza.ltd — design tokens
-   Palette: cool paper + ink, single deep-teal accent.
-   Numbers are the content here, so figures are set in mono.
-   --------------------------------------------------------- */
+/* ===========================================================
+   gazza.ltd — global stylesheet
+   -----------------------------------------------------------
+   EVERYTHING visual lives in this file. Widgets carry class
+   names only, never inline styles, so a change here applies
+   across the whole site.
+
+   Where to change things:
+     §1  Design tokens ......... colours, spacing, type, radius
+     §2  Category themes ....... per-section overrides
+     §3  Base & layout
+     §4  Header & footer
+     §5  Typography
+     §6  Forms
+     §7  Buttons
+     §8  Components ............ tables, notes, dropzones, etc.
+     §9  Utilities ............. spacing and flex helpers
+     §10 Cards & grids
+     §11 Ads & motion
+   =========================================================== */
+
+/* ---------- §1 DESIGN TOKENS -------------------------------
+   Change a value here and it applies everywhere.
+   ---------------------------------------------------------- */
 
 :root {
-  --paper:      #f7f8f7;
-  --surface:    #ffffff;
-  --ink:        #14181a;
-  --ink-soft:   #5a6468;
-  --rule:       #dfe4e3;
-  --accent:     #0f6b5c;
-  --accent-tint:#e6f2ef;
+  /* Colour */
+  --paper:       #f7f8f7;   /* page background */
+  --surface:     #ffffff;   /* panels, cards, header */
+  --ink:         #14181a;   /* primary text */
+  --ink-soft:    #5a6468;   /* secondary text */
+  --rule:        #dfe4e3;   /* borders and dividers */
+  --accent:      #0f6b5c;   /* links, results, focus */
+  --accent-ink:  #ffffff;   /* text on accent */
+  --accent-tint: #e6f2ef;   /* accent background wash */
+  --warn-bg:     #fdeceb;
+  --warn-ink:    #8a2b25;
+  --good-ink:    #0f4a3f;
 
+  /* Type */
   --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
   --font-num: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --text-xs:   0.75rem;
+  --text-sm:   0.8125rem;
+  --text-base: 0.9375rem;
+  --text-body: 1.0625rem;
 
-  --wrap: 62rem;
+  /* Space — every margin and gap references these */
+  --sp-1: 0.3rem;
+  --sp-2: 0.6rem;
+  --sp-3: 0.9rem;
+  --sp-4: 1.25rem;
+  --sp-5: 1.75rem;
+  --sp-6: 2.5rem;
+
+  /* Shape */
   --radius: 6px;
+  --radius-sm: 4px;
+  --border: 1px solid var(--rule);
+
+  /* Layout */
+  --wrap: 62rem;
+  --prose: 44rem;
 }
 
-* { box-sizing: border-box; }
+/* ---------- §2 CATEGORY THEMES -----------------------------
+   Set on <body data-cat="...">. Override any token to give a
+   section its own character — one line each.
+   ---------------------------------------------------------- */
 
+body[data-cat='finance'] {
+  /* Deliberately restrained: money pages should read as precise. */
+  --radius: 3px;
+  --radius-sm: 2px;
+}
+
+body[data-cat='text'] {
+  /* A touch softer for reading and word play. */
+  --radius: 10px;
+  --radius-sm: 8px;
+}
+
+body[data-cat='pdf'] {
+  --radius: 6px;
+  --radius-sm: 4px;
+}
+
+/* ---------- §3 BASE & LAYOUT ------------------------------- */
+
+* { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -29,7 +95,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-ui);
-  font-size: 1.0625rem;
+  font-size: var(--text-body);
   line-height: 1.65;
 }
 
@@ -37,29 +103,32 @@ body {
   width: 100%;
   max-width: var(--wrap);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: var(--sp-4);
 }
 
 a { color: var(--accent); text-underline-offset: 2px; }
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* ---------- header / footer ---------- */
+/* ---------- §4 HEADER & FOOTER ----------------------------- */
 
 .site-head {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--border);
   background: var(--surface);
 }
 .site-head .wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--sp-3);
   min-height: 3.75rem;
   flex-wrap: wrap;
 }
@@ -71,25 +140,26 @@ select:focus-visible {
   text-decoration: none;
 }
 .brand span { color: var(--accent); }
+
 .site-nav {
   display: flex;
   gap: 1.1rem;
   flex-wrap: wrap;
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
 }
 .site-nav a { color: var(--ink-soft); text-decoration: none; }
 .site-nav a:hover { color: var(--accent); }
 
 .site-foot {
   margin-top: 4rem;
-  border-top: 1px solid var(--rule);
+  border-top: var(--border);
   background: var(--surface);
   padding-block: 2rem;
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   color: var(--ink-soft);
 }
 .site-foot h3 {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink);
@@ -98,13 +168,25 @@ select:focus-visible {
 .foot-cols {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-  gap: 1.75rem;
+  gap: var(--sp-5);
 }
 .foot-cols ul { list-style: none; margin: 0; padding: 0; }
 .foot-cols a { color: var(--ink-soft); text-decoration: none; }
 .foot-cols a:hover { color: var(--accent); }
 
-/* ---------- typography ---------- */
+.foot-bottom {
+  margin-top: var(--sp-5);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.foot-bottom p { margin: 0; }
+
+/* Top of the homepage, above the category grid. */
+.page-head { padding-top: var(--sp-6); }
+
+/* ---------- §5 TYPOGRAPHY ---------------------------------- */
 
 h1 {
   font-size: clamp(1.75rem, 4.5vw, 2.375rem);
@@ -115,70 +197,176 @@ h1 {
 h2 {
   font-size: 1.3125rem;
   letter-spacing: -0.015em;
-  margin: 2.5rem 0 0.75rem;
+  margin: var(--sp-6) 0 0.75rem;
 }
-h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
+h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 
 .standfirst {
   color: var(--ink-soft);
-  font-size: 1.0625rem;
-  margin: 0 0 1.5rem;
-  max-width: 44rem;
+  font-size: var(--text-body);
+  margin: 0 0 var(--sp-4);
+  max-width: var(--prose);
 }
 
-/* ---------- breadcrumbs ---------- */
-
 .crumbs {
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   color: var(--ink-soft);
-  padding-top: 1.5rem;
+  padding-top: var(--sp-4);
 }
 .crumbs a { color: var(--ink-soft); text-decoration: none; }
 .crumbs a:hover { color: var(--accent); }
 
-/* ---------- the tool panel ---------- */
+.prose { max-width: var(--prose); }
+.prose p { margin: 0.75rem 0; }
+.prose ul { padding-left: 1.15rem; }
+.prose code {
+  font-family: var(--font-num);
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+
+.faq-item { border-top: var(--border); padding: var(--sp-3) 0; }
+.faq-item:last-child { border-bottom: var(--border); }
+.faq-item h3 { margin: 0 0 0.25rem; }
+.faq-item p { margin: 0; color: var(--ink-soft); }
+
+/* ---------- §6 FORMS --------------------------------------- */
 
 .tool-panel {
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: var(--border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: var(--sp-4);
   margin-bottom: 2rem;
 }
 
 .field-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: 1rem 1.25rem;
+  gap: var(--sp-3) var(--sp-4);
 }
-.field { display: flex; flex-direction: column; gap: 0.3rem; }
+.field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.field-wide { grid-column: 1 / -1; }
+.field-narrow { max-width: 14rem; }
+
 .field label {
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ink-soft);
 }
+
 .field input,
-.field select {
+.field select,
+.textarea {
   font: inherit;
   font-family: var(--font-num);
   padding: 0.55rem 0.7rem;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
+  border: var(--border);
+  border-radius: var(--radius-sm);
   background: var(--paper);
   color: var(--ink);
   width: 100%;
 }
 
+/* Prose-style inputs read better in the UI font. */
+.textarea {
+  font-family: var(--font-ui);
+  padding: 0.7rem;
+  resize: vertical;
+}
+.textarea-mono { font-family: var(--font-num); font-size: 0.875rem; }
+
+.check-row {
+  display: flex;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-top: var(--sp-3);
+  font-size: var(--text-base);
+}
+.check {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+/* ---------- §7 BUTTONS ------------------------------------- */
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) { filter: brightness(1.1); }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+.btn-ghost {
+  font: inherit;
+  font-size: var(--text-sm);
+  padding: 0.4rem 0.7rem;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.btn-ghost:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn-ghost:disabled { opacity: 0.4; cursor: default; }
+
+.btn-tiny {
+  font: inherit;
+  font-size: var(--text-xs);
+  padding: 0.2rem 0.45rem;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Segmented control — the UK nation and language pickers. */
+.seg { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.seg-btn {
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.55rem 0.9rem;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.seg-btn:hover { border-color: var(--accent); }
+.seg-btn[aria-pressed='true'] {
+  font-weight: 700;
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+/* ---------- §8 COMPONENTS ---------------------------------- */
+
+/* Results grid */
 .results {
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--rule);
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: var(--border);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: 1rem;
+  gap: var(--sp-3);
 }
+.results-block { display: block; }
+
 .result .label {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ink-soft);
@@ -191,52 +379,178 @@ h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
 }
 .result.primary .value { color: var(--accent); }
 
-.saving-note {
-  margin-top: 1rem;
+/* Notes and callouts */
+.note {
+  margin-top: var(--sp-3);
   background: var(--accent-tint);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: 0.75rem 0.9rem;
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
+}
+.note-warn { background: var(--warn-bg); color: var(--warn-ink); }
+
+/* Alias kept so any remaining older markup still renders correctly. */
+.saving-note {
+  margin-top: var(--sp-3);
+  background: var(--accent-tint);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  font-size: var(--text-base);
 }
 
-/* ---------- prose blocks under the tool ---------- */
+/* File dropzone */
+.dropzone {
+  display: block;
+  border: 1px dashed var(--rule);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  text-align: center;
+  background: var(--paper);
+  cursor: pointer;
+}
+.dropzone:hover { border-color: var(--accent); }
+.dropzone-hint {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+}
 
-.prose { max-width: 44rem; }
-.prose p { margin: 0.75rem 0; }
-.prose ul { padding-left: 1.15rem; }
-.prose code {
+/* Ordered file lists with reorder controls */
+.file-list { margin: var(--sp-4) 0 0; padding-left: var(--sp-4); }
+.file-list li { margin-bottom: 0.4rem; }
+.file-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.file-name { min-width: 0; word-break: break-word; }
+.file-actions { display: flex; gap: 0.35rem; flex-shrink: 0; }
+
+/* Data tables — schedules, band breakdowns */
+.table-scroll { overflow-x: auto; margin-top: 0.75rem; }
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
   font-family: var(--font-num);
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  padding: 0.1em 0.35em;
-  font-size: 0.9em;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+.data-table th {
+  text-align: right;
+  padding: 0.35rem 0.5rem;
+  border-bottom: var(--border);
+  color: var(--ink-soft);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.data-table td { text-align: right; padding: 0.3rem 0.5rem; }
+.data-table th:first-child,
+.data-table td:first-child { text-align: left; }
+.data-table .label-cell { font-family: var(--font-ui); text-align: left; }
+
+/* Comparison columns */
+.compare-grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+.compare-col {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-3);
+  background: var(--paper);
+}
+.compare-col .field { margin-bottom: 0.5rem; }
+.compare-title {
+  font: inherit;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  width: 60%;
+  padding: 0;
+}
+.is-best { color: var(--accent); font-weight: 700; }
+
+/* Disclosure (details/summary) */
+.disclosure { margin-top: var(--sp-4); }
+.disclosure > summary {
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: 600;
 }
 
-.faq-item {
-  border-top: 1px solid var(--rule);
-  padding: 1rem 0;
+/* Diff output */
+.diff {
+  font-family: var(--font-num);
+  font-size: 0.875rem;
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
 }
-.faq-item:last-child { border-bottom: 1px solid var(--rule); }
-.faq-item h3 { margin: 0 0 0.25rem; }
-.faq-item p { margin: 0; color: var(--ink-soft); }
+.diff-line { padding: 0.15rem 0.6rem; white-space: pre-wrap; }
+.diff-add { background: var(--accent-tint); color: var(--good-ink); }
+.diff-del { background: var(--warn-bg); color: var(--warn-ink); }
 
-/* ---------- tool card grids ---------- */
+/* Case converter output rows */
+.case-row {
+  border-top: var(--border);
+  padding: var(--sp-2) 0;
+}
+
+/* Word-game result groups */
+.word-group { margin-bottom: var(--sp-2); }
+.word-group-head {
+  font-family: var(--font-num);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+.word-list { margin: 0.2rem 0 0; }
+
+/* Cross-links out of a tool */
+.tool-actions {
+  margin-top: var(--sp-4);
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.tool-actions .card { padding: 0.6rem 1rem; font-weight: 600; }
+
+/* ---------- §9 UTILITIES ----------------------------------- */
+
+.stack   { margin-top: var(--sp-3); }
+.stack-sm { margin-top: var(--sp-2); }
+.stack-lg { margin-top: var(--sp-4); }
+.stack-xl { margin-top: var(--sp-5); }
+
+.row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.row-tight { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.row-end { display: flex; justify-content: flex-end; }
+
+.muted { font-size: var(--text-sm); color: var(--ink-soft); }
+.muted-block { font-size: var(--text-sm); color: var(--ink-soft); margin-top: var(--sp-3); }
+.divider-top { margin-top: var(--sp-4); padding-top: var(--sp-4); border-top: var(--border); }
+.wrap-text { white-space: pre-wrap; }
+
+/* ---------- §10 CARDS & GRIDS ------------------------------ */
 
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   gap: 0.875rem;
-  margin: 1rem 0 0;
+  margin: var(--sp-3) 0 0;
   padding: 0;
   list-style: none;
 }
 .card {
   display: block;
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: var(--border);
   border-radius: var(--radius);
-  padding: 0.9rem 1rem;
+  padding: var(--sp-3) 1rem;
   text-decoration: none;
   color: var(--ink);
   transition: border-color 0.15s ease, transform 0.15s ease;
@@ -251,12 +565,10 @@ h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
 }
 .card.soon { opacity: 0.55; pointer-events: none; }
 
-.cat-block { margin-top: 2.5rem; }
+.cat-block { margin-top: var(--sp-6); }
 .cat-block > a.cat-link { text-decoration: none; }
 .cat-block h2 { margin-bottom: 0.15rem; }
-.cat-block .blurb { color: var(--ink-soft); margin: 0; font-size: 0.9375rem; }
-
-/* ---------- homepage category cards ---------- */
+.cat-block .blurb { color: var(--ink-soft); margin: 0; font-size: var(--text-base); }
 
 .category-grid {
   display: grid;
@@ -271,9 +583,9 @@ h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
   flex-direction: column;
   gap: 0.4rem;
   background: var(--surface);
-  border: 1px solid var(--rule);
+  border: var(--border);
   border-radius: var(--radius);
-  padding: 1.25rem 1.25rem 1.1rem;
+  padding: var(--sp-4) var(--sp-4) 1.1rem;
   height: 100%;
   text-decoration: none;
   color: var(--ink);
@@ -282,34 +594,35 @@ h3 { font-size: 1.0625rem; margin: 1.5rem 0 0.4rem; }
 .category-card:hover { border-color: var(--accent); transform: translateY(-1px); }
 .category-card .cat-name {
   font-weight: 650;
-  font-size: 1.0625rem;
+  font-size: var(--text-body);
   letter-spacing: -0.01em;
 }
 .category-card .cat-blurb {
   color: var(--ink-soft);
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   line-height: 1.5;
 }
 .category-card .cat-count {
   margin-top: auto;
   padding-top: 0.5rem;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-family: var(--font-num);
   color: var(--accent);
 }
 
-/* ---------- ad slot ---------- */
+/* ---------- §11 ADS & MOTION ------------------------------- */
 
+/* Fixed height so ads never shift the page as they load. */
 .ad-slot {
   margin: 2rem 0;
-  min-height: 90px;      /* reserved to prevent layout shift */
+  min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px dashed var(--rule);
   border-radius: var(--radius);
   color: var(--ink-soft);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }

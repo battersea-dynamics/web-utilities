@@ -45,10 +45,7 @@ export default function MortgageWidget() {
     [principal, rate, term]
   );
 
-  const yearly = useMemo(
-    () => (result.ok ? toYearly(result.schedule) : []),
-    [result]
-  );
+  const yearly = useMemo(() => (result.ok ? toYearly(result.schedule) : []), [result]);
   const snap = result.ok ? atMonth(result.schedule, snapshotMonth) : null;
 
   const ltv = price > 0 ? (borrowed / price) * 100 : 0;
@@ -81,13 +78,11 @@ export default function MortgageWidget() {
         </div>
       </div>
 
-      <details open={showAdvanced} onToggle={(e) => setShowAdvanced(e.currentTarget.open)}
-        style={{ marginTop: '1rem' }}>
-        <summary style={{ cursor: 'pointer', fontSize: '0.9375rem', fontWeight: 600 }}>
-          More options — overpayments, rate change, fees
-        </summary>
+      <details className="disclosure" open={showAdvanced}
+        onToggle={(e) => setShowAdvanced(e.currentTarget.open)}>
+        <summary>More options — overpayments, rate change, fees</summary>
 
-        <div className="field-grid" style={{ marginTop: '0.9rem' }}>
+        <div className="field-grid stack">
           <div className="field">
             <label htmlFor="over">Monthly overpayment (£)</label>
             <input id="over" type="number" min="0" step="25" value={monthlyOverpay}
@@ -121,18 +116,17 @@ export default function MortgageWidget() {
         </div>
 
         {fee > 0 && (
-          <label style={{ display: 'flex', gap: '0.4rem', alignItems: 'center',
-            marginTop: '0.7rem', fontSize: '0.9375rem' }}>
-            <input type="checkbox" checked={feeAddedToLoan}
-              onChange={(e) => setFeeAddedToLoan(e.target.checked)} />
-            Add the fee to the loan (rather than paying it upfront)
-          </label>
+          <div className="check-row">
+            <label className="check">
+              <input type="checkbox" checked={feeAddedToLoan}
+                onChange={(e) => setFeeAddedToLoan(e.target.checked)} />
+              Add the fee to the loan (rather than paying it upfront)
+            </label>
+          </div>
         )}
       </details>
 
-      {!result.ok && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>{result.reason}</p>
-      )}
+      {!result.ok && <p className="note stack">{result.reason}</p>}
 
       {result.ok && (
         <>
@@ -164,7 +158,7 @@ export default function MortgageWidget() {
           </div>
 
           {(monthlyOverpay > 0 || lumpAmount > 0) && monthsSaved > 0 && (
-            <p className="saving-note">
+            <p className="note">
               Those overpayments clear the mortgage{' '}
               <strong>{monthsToText(monthsSaved)}</strong> early and save{' '}
               <strong>{gbp(interestSaved)}</strong> in interest.
@@ -172,15 +166,15 @@ export default function MortgageWidget() {
           )}
 
           {/* Point-in-time snapshot — "what will I be paying in month 9?" */}
-          <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--rule)' }}>
-            <div className="field" style={{ maxWidth: '14rem' }}>
+          <div className="divider-top">
+            <div className="field field-narrow">
               <label htmlFor="snap">Show me month</label>
               <input id="snap" type="number" min="1" max={result.months} value={snapshotMonth}
                 onChange={(e) => setSnapshotMonth(Math.max(1, Number(e.target.value)))} />
             </div>
 
             {snap && (
-              <div className="results" style={{ marginTop: '0.9rem' }}>
+              <div className="results">
                 <div className="result">
                   <div className="label">Payment that month</div>
                   <div className="value">{gbp(snap.payment)}</div>
@@ -209,31 +203,26 @@ export default function MortgageWidget() {
             )}
           </div>
 
-          <details open={showSchedule} onToggle={(e) => setShowSchedule(e.currentTarget.open)}
-            style={{ marginTop: '1.25rem' }}>
-            <summary style={{ cursor: 'pointer', fontSize: '0.9375rem', fontWeight: 600 }}>
-              Year-by-year schedule
-            </summary>
-            <div style={{ overflowX: 'auto', marginTop: '0.75rem' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse',
-                fontFamily: 'var(--font-num)', fontSize: '0.8125rem' }}>
+          <details className="disclosure" open={showSchedule}
+            onToggle={(e) => setShowSchedule(e.currentTarget.open)}>
+            <summary>Year-by-year schedule</summary>
+            <div className="table-scroll">
+              <table className="data-table">
                 <thead>
                   <tr>
                     {['Year', 'Interest', 'Capital', 'Paid', 'Balance'].map((h) => (
-                      <th key={h} style={{ textAlign: 'right', padding: '0.35rem 0.5rem',
-                        borderBottom: '1px solid var(--rule)', color: 'var(--ink-soft)',
-                        fontWeight: 600 }}>{h}</th>
+                      <th key={h}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {yearly.map((y) => (
                     <tr key={y.year}>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{y.year}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.interest)}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.principal)}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.paid)}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(y.balance)}</td>
+                      <td>{y.year}</td>
+                      <td>{gbp(y.interest)}</td>
+                      <td>{gbp(y.principal)}</td>
+                      <td>{gbp(y.paid)}</td>
+                      <td>{gbp(y.balance)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -241,11 +230,9 @@ export default function MortgageWidget() {
             </div>
           </details>
 
-          <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <a className="card" href="/mortgage-comparison-calculator"
-              style={{ padding: '0.6rem 1rem', fontWeight: 600 }}>Compare mortgages →</a>
-            <a className="card" href="/mortgage-overpayment-calculator"
-              style={{ padding: '0.6rem 1rem', fontWeight: 600 }}>Model overpayments →</a>
+          <div className="tool-actions">
+            <a className="card" href="/mortgage-comparison-calculator">Compare mortgages →</a>
+            <a className="card" href="/mortgage-overpayment-calculator">Model overpayments →</a>
           </div>
         </>
       )}

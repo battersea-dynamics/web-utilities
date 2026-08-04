@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
-import {
-  readFile,
-  download,
-  formatBytes,
-  dropzoneStyle,
-  buttonStyle,
-  secondaryButtonStyle,
-} from './pdfHelpers.js';
+import { readFile, download, formatBytes } from './pdfHelpers.js';
 
 export default function PdfMergeWidget() {
   const [files, setFiles] = useState([]);
@@ -36,8 +29,7 @@ export default function PdfMergeWidget() {
     });
   };
 
-  const remove = (index) =>
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+  const remove = (index) => setFiles((prev) => prev.filter((_, i) => i !== index));
 
   const merge = async () => {
     if (files.length < 2) {
@@ -56,10 +48,8 @@ export default function PdfMergeWidget() {
       }
       const out = await merged.save();
       download(out, 'merged.pdf');
-    } catch (e) {
-      setError(
-        'Could not merge those files. One of them may be password-protected or damaged.'
-      );
+    } catch {
+      setError('Could not merge those files. One of them may be password-protected or damaged.');
     } finally {
       setBusy(false);
     }
@@ -67,50 +57,36 @@ export default function PdfMergeWidget() {
 
   return (
     <div>
-      <label style={dropzoneStyle} htmlFor="pdfs">
+      <label className="dropzone" htmlFor="pdfs">
         <input
           id="pdfs"
           type="file"
           accept="application/pdf,.pdf"
           multiple
-          style={{ display: 'none' }}
+          hidden
           onChange={(e) => {
             addFiles(e.target.files);
             e.target.value = '';
           }}
         />
         <strong>Choose PDF files</strong>
-        <div style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', marginTop: '0.25rem' }}>
-          Add two or more. They stay on your device.
-        </div>
+        <span className="dropzone-hint">Add two or more. They stay on your device.</span>
       </label>
 
       {files.length > 0 && (
-        <ol style={{ margin: '1.25rem 0 0', paddingLeft: '1.25rem' }}>
+        <ol className="file-list">
           {files.map((f, i) => (
-            <li key={`${f.name}-${i}`} style={{ marginBottom: '0.4rem' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '0.75rem',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <span style={{ minWidth: 0, wordBreak: 'break-word' }}>
-                  {f.name}{' '}
-                  <span style={{ color: 'var(--ink-soft)', fontSize: '0.8125rem' }}>
-                    {formatBytes(f.size)}
-                  </span>
+            <li key={`${f.name}-${i}`}>
+              <div className="file-row">
+                <span className="file-name">
+                  {f.name} <span className="muted">{formatBytes(f.size)}</span>
                 </span>
-                <span style={{ display: 'flex', gap: '0.35rem', flexShrink: 0 }}>
-                  <button type="button" style={secondaryButtonStyle}
-                    onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
-                  <button type="button" style={secondaryButtonStyle}
-                    onClick={() => move(i, 1)} disabled={i === files.length - 1}>↓</button>
-                  <button type="button" style={secondaryButtonStyle}
-                    onClick={() => remove(i)}>Remove</button>
+                <span className="file-actions">
+                  <button type="button" className="btn-ghost" onClick={() => move(i, -1)}
+                    disabled={i === 0} aria-label="Move up">↑</button>
+                  <button type="button" className="btn-ghost" onClick={() => move(i, 1)}
+                    disabled={i === files.length - 1} aria-label="Move down">↓</button>
+                  <button type="button" className="btn-ghost" onClick={() => remove(i)}>Remove</button>
                 </span>
               </div>
             </li>
@@ -118,16 +94,14 @@ export default function PdfMergeWidget() {
         </ol>
       )}
 
-      {error && <p className="saving-note" style={{ marginTop: '1rem' }}>{error}</p>}
+      {error && <p className="note note-warn">{error}</p>}
 
-      <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-        <button type="button" style={buttonStyle} onClick={merge} disabled={busy || files.length < 2}>
+      <div className="row stack-lg">
+        <button type="button" className="btn" onClick={merge} disabled={busy || files.length < 2}>
           {busy ? 'Merging…' : 'Merge PDFs'}
         </button>
         {files.length > 0 && (
-          <button type="button" style={secondaryButtonStyle} onClick={() => setFiles([])}>
-            Clear all
-          </button>
+          <button type="button" className="btn-ghost" onClick={() => setFiles([])}>Clear all</button>
         )}
       </div>
     </div>

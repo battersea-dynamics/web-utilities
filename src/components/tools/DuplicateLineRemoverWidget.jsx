@@ -32,71 +32,38 @@ export default function DuplicateLineRemoverWidget() {
     setTimeout(() => setCopied(false), 1200);
   };
 
-  const areaStyle = {
-    font: 'inherit',
-    padding: '0.7rem',
-    border: '1px solid var(--rule)',
-    borderRadius: '4px',
-    background: 'var(--paper)',
-    color: 'var(--ink)',
-    width: '100%',
-    resize: 'vertical',
-  };
-
   return (
     <div>
       <div className="field">
         <label htmlFor="text">Your list</label>
-        <textarea
-          id="text"
-          rows={10}
-          style={areaStyle}
+        <textarea id="text" className="textarea" rows={10}
           placeholder={'one\ntwo\none\nthree'}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+          value={text} onChange={(e) => setText(e.target.value)} />
       </div>
 
-      <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.75rem', fontSize: '0.9375rem' }}>
-        <label style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
-          <input type="checkbox" checked={ignoreCase} onChange={(e) => setIgnoreCase(e.target.checked)} />
+      <div className="check-row">
+        <label className="check">
+          <input type="checkbox" checked={ignoreCase}
+            onChange={(e) => setIgnoreCase(e.target.checked)} />
           Ignore case
         </label>
-        <label style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+        <label className="check">
           <input type="checkbox" checked={trim} onChange={(e) => setTrim(e.target.checked)} />
           Trim whitespace
         </label>
       </div>
 
       {text && (
-        <div className="results" style={{ display: 'block' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '0.5rem',
-            }}
-          >
-            <span className="label">{removedCount} duplicate{removedCount === 1 ? '' : 's'} removed</span>
-            <button
-              type="button"
-              onClick={copy}
-              style={{
-                font: 'inherit',
-                fontSize: '0.8125rem',
-                padding: '0.4rem 0.7rem',
-                border: '1px solid var(--rule)',
-                borderRadius: '4px',
-                background: 'var(--surface)',
-                color: 'var(--ink)',
-                cursor: 'pointer',
-              }}
-            >
+        <div className="results results-block">
+          <div className="row-between stack-sm">
+            <span className="label">
+              {removedCount} duplicate{removedCount === 1 ? '' : 's'} removed
+            </span>
+            <button type="button" className="btn-ghost" onClick={copy}>
               {copied ? 'Copied' : 'Copy result'}
             </button>
           </div>
-          <textarea readOnly rows={10} style={areaStyle} value={output} />
+          <textarea readOnly className="textarea" rows={10} value={output} />
         </div>
       )}
     </div>

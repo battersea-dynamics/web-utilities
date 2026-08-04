@@ -68,35 +68,26 @@ export default function LoremIpsumWidget() {
         </div>
         <div className="field">
           <label htmlFor="count">How many</label>
-          <input id="count" type="number" min="1" max="50" value={count} onChange={(e) => setCount(Math.max(1, Number(e.target.value)))} />
+          <input id="count" type="number" min="1" max="50" value={count}
+            onChange={(e) => setCount(Math.max(1, Number(e.target.value)))} />
         </div>
       </div>
 
-      <label style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', marginTop: '0.75rem', fontSize: '0.9375rem' }}>
-        <input type="checkbox" checked={startClassic} onChange={(e) => setStartClassic(e.target.checked)} />
-        Start with the classic "Lorem ipsum dolor sit amet…" opening
-      </label>
+      <div className="check-row">
+        <label className="check">
+          <input type="checkbox" checked={startClassic}
+            onChange={(e) => setStartClassic(e.target.checked)} />
+          Start with the classic "Lorem ipsum dolor sit amet…" opening
+        </label>
+      </div>
 
-      <div className="results" style={{ display: 'block' }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.5rem' }}>
-          <button
-            type="button"
-            onClick={copy}
-            style={{
-              font: 'inherit',
-              fontSize: '0.8125rem',
-              padding: '0.4rem 0.7rem',
-              border: '1px solid var(--rule)',
-              borderRadius: '4px',
-              background: 'var(--surface)',
-              color: 'var(--ink)',
-              cursor: 'pointer',
-            }}
-          >
+      <div className="results results-block">
+        <div className="row-end stack-sm">
+          <button type="button" className="btn-ghost" onClick={copy}>
             {copied ? 'Copied' : 'Copy result'}
           </button>
         </div>
-        <div className="prose" style={{ maxWidth: 'none', whiteSpace: 'pre-wrap' }}>{output}</div>
+        <div className="prose wrap-text">{output}</div>
       </div>
     </div>
   );

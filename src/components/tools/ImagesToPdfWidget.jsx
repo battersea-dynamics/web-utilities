@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
-import {
-  readFile,
-  download,
-  formatBytes,
-  dropzoneStyle,
-  buttonStyle,
-  secondaryButtonStyle,
-} from './pdfHelpers.js';
+import { readFile, download, formatBytes } from './pdfHelpers.js';
 
 // Page sizes in PDF points (72 per inch).
 const PAGE_SIZES = {
@@ -56,9 +49,7 @@ export default function ImagesToPdfWidget() {
       for (const file of files) {
         const bytes = await readFile(file);
         const image =
-          file.type === 'image/png'
-            ? await doc.embedPng(bytes)
-            : await doc.embedJpg(bytes);
+          file.type === 'image/png' ? await doc.embedPng(bytes) : await doc.embedJpg(bytes);
 
         let [w, h] = PAGE_SIZES[size];
         const landscape =
@@ -93,47 +84,35 @@ export default function ImagesToPdfWidget() {
 
   return (
     <div>
-      <label style={dropzoneStyle} htmlFor="imgs">
-        <input
-          id="imgs"
-          type="file"
-          accept="image/jpeg,image/png"
-          multiple
-          style={{ display: 'none' }}
-          onChange={(e) => {
-            addFiles(e.target.files);
-            e.target.value = '';
-          }}
-        />
+      <label className="dropzone" htmlFor="imgs">
+        <input id="imgs" type="file" accept="image/jpeg,image/png" multiple hidden
+          onChange={(e) => { addFiles(e.target.files); e.target.value = ''; }} />
         <strong>Choose images</strong>
-        <div style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', marginTop: '0.25rem' }}>
-          JPG or PNG. One image per page, in the order shown.
-        </div>
+        <span className="dropzone-hint">JPG or PNG. One image per page, in the order shown.</span>
       </label>
 
       {files.length > 0 && (
         <>
-          <ol style={{ margin: '1.25rem 0 0', paddingLeft: '1.25rem' }}>
+          <ol className="file-list">
             {files.map((f, i) => (
-              <li key={`${f.name}-${i}`} style={{ marginBottom: '0.4rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap' }}>
-                  <span style={{ minWidth: 0, wordBreak: 'break-word' }}>
-                    {f.name}{' '}
-                    <span style={{ color: 'var(--ink-soft)', fontSize: '0.8125rem' }}>
-                      {formatBytes(f.size)}
-                    </span>
+              <li key={`${f.name}-${i}`}>
+                <div className="file-row">
+                  <span className="file-name">
+                    {f.name} <span className="muted">{formatBytes(f.size)}</span>
                   </span>
-                  <span style={{ display: 'flex', gap: '0.35rem', flexShrink: 0 }}>
-                    <button type="button" style={secondaryButtonStyle} onClick={() => move(i, -1)} disabled={i === 0}>↑</button>
-                    <button type="button" style={secondaryButtonStyle} onClick={() => move(i, 1)} disabled={i === files.length - 1}>↓</button>
-                    <button type="button" style={secondaryButtonStyle} onClick={() => remove(i)}>Remove</button>
+                  <span className="file-actions">
+                    <button type="button" className="btn-ghost" onClick={() => move(i, -1)}
+                      disabled={i === 0} aria-label="Move up">↑</button>
+                    <button type="button" className="btn-ghost" onClick={() => move(i, 1)}
+                      disabled={i === files.length - 1} aria-label="Move down">↓</button>
+                    <button type="button" className="btn-ghost" onClick={() => remove(i)}>Remove</button>
                   </span>
                 </div>
               </li>
             ))}
           </ol>
 
-          <div className="field-grid" style={{ marginTop: '1.25rem' }}>
+          <div className="field-grid stack-lg">
             <div className="field">
               <label htmlFor="size">Page size</label>
               <select id="size" value={size} onChange={(e) => setSize(e.target.value)}>
@@ -152,21 +131,21 @@ export default function ImagesToPdfWidget() {
             </div>
             <div className="field">
               <label htmlFor="margin">Margin (pt)</label>
-              <input id="margin" type="number" min="0" max="144" step="6"
-                value={margin} onChange={(e) => setMargin(Number(e.target.value))} />
+              <input id="margin" type="number" min="0" max="144" step="6" value={margin}
+                onChange={(e) => setMargin(Number(e.target.value))} />
             </div>
           </div>
         </>
       )}
 
-      {error && <p className="saving-note" style={{ marginTop: '1rem' }}>{error}</p>}
+      {error && <p className="note note-warn">{error}</p>}
 
-      <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem' }}>
-        <button type="button" style={buttonStyle} onClick={build} disabled={busy || files.length === 0}>
+      <div className="row stack-lg">
+        <button type="button" className="btn" onClick={build} disabled={busy || files.length === 0}>
           {busy ? 'Building…' : 'Create PDF'}
         </button>
         {files.length > 0 && (
-          <button type="button" style={secondaryButtonStyle} onClick={() => setFiles([])}>Clear all</button>
+          <button type="button" className="btn-ghost" onClick={() => setFiles([])}>Clear all</button>
         )}
       </div>
     </div>

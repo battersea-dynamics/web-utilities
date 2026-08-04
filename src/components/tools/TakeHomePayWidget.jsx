@@ -14,41 +14,29 @@ export default function TakeHomePayWidget() {
     [salary, region, pensionPercent]
   );
 
-  const tabStyle = (active) => ({
-    font: 'inherit',
-    fontSize: '0.875rem',
-    fontWeight: active ? 700 : 500,
-    padding: '0.55rem 0.9rem',
-    border: `1px solid ${active ? 'var(--accent)' : 'var(--rule)'}`,
-    background: active ? 'var(--accent-tint)' : 'var(--surface)',
-    color: active ? 'var(--accent)' : 'var(--ink)',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  });
-
   return (
     <div>
-      <div className="field" style={{ marginBottom: '1rem' }}>
-        <label style={{ marginBottom: '0.4rem' }}>Where do you live?</label>
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+      <div className="field">
+        <label>Where do you live?</label>
+        <div className="seg stack-sm">
           {REGIONS.map((r) => (
             <button
               key={r}
               type="button"
+              className="seg-btn"
               onClick={() => setRegion(r)}
               aria-pressed={region === r}
-              style={tabStyle(region === r)}
             >
               {INCOME_TAX[r].name}
             </button>
           ))}
         </div>
-        <p style={{ margin: '0.5rem 0 0', fontSize: '0.8125rem', color: 'var(--ink-soft)' }}>
+        <p className="muted stack-sm">
           Scotland sets its own income tax bands. National Insurance is the same UK-wide.
         </p>
       </div>
 
-      <div className="field-grid">
+      <div className="field-grid stack">
         <div className="field">
           <label htmlFor="salary">Gross annual salary (£)</label>
           <input id="salary" type="number" min="0" step="1000" value={salary}
@@ -61,9 +49,7 @@ export default function TakeHomePayWidget() {
         </div>
       </div>
 
-      {!result.ok && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>{result.reason}</p>
-      )}
+      {!result.ok && <p className="note stack">{result.reason}</p>}
 
       {result.ok && (
         <>
@@ -94,33 +80,29 @@ export default function TakeHomePayWidget() {
             </div>
           </div>
 
-          <p className="saving-note">
+          <p className="note">
             Your personal allowance is <strong>{gbp(result.allowance)}</strong>, and you keep{' '}
             <strong>{gbp(100 - result.marginalRate, 0)}</strong> of the next £100 you earn — a
             marginal rate of {result.marginalRate.toFixed(0)}%.
           </p>
 
           {result.bandRows.length > 0 && (
-            <div style={{ overflowX: 'auto', marginTop: '1.25rem' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse',
-                fontFamily: 'var(--font-num)', fontSize: '0.8125rem' }}>
+            <div className="table-scroll">
+              <table className="data-table">
                 <thead>
                   <tr>
                     {['Band', 'Rate', 'Income taxed', 'Tax'].map((h) => (
-                      <th key={h} style={{ textAlign: 'right', padding: '0.35rem 0.5rem',
-                        borderBottom: '1px solid var(--rule)', color: 'var(--ink-soft)', fontWeight: 600 }}>
-                        {h}
-                      </th>
+                      <th key={h}>{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {result.bandRows.map((row, i) => (
                     <tr key={i}>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{row.label}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{row.rate}%</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(row.slice)}</td>
-                      <td style={{ textAlign: 'right', padding: '0.3rem 0.5rem' }}>{gbp(row.tax)}</td>
+                      <td className="label-cell">{row.label}</td>
+                      <td>{row.rate}%</td>
+                      <td>{gbp(row.slice)}</td>
+                      <td>{gbp(row.tax)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -128,7 +110,7 @@ export default function TakeHomePayWidget() {
             </div>
           )}
 
-          <p style={{ marginTop: '1rem', fontSize: '0.8125rem', color: 'var(--ink-soft)' }}>
+          <p className="muted-block">
             {TAX_YEAR} rates, verified {LAST_VERIFIED} against GOV.UK. Assumes a standard tax
             code, one job, and a workplace pension taken before income tax but after National
             Insurance. Student loans and salary sacrifice are not included.

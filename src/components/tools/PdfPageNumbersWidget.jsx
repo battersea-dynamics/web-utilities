@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
-import {
-  readFile,
-  download,
-  formatBytes,
-  pdfName,
-  dropzoneStyle,
-  buttonStyle,
-  secondaryButtonStyle,
-} from './pdfHelpers.js';
+import { readFile, download, formatBytes, pdfName } from './pdfHelpers.js';
 
 const POSITIONS = {
   'bottom-centre': 'Bottom centre',
@@ -78,13 +70,7 @@ export default function PdfPageNumbersWidget() {
 
         const y = position.startsWith('top') ? height - pad - fontSize : pad;
 
-        page.drawText(text, {
-          x,
-          y,
-          size: fontSize,
-          font,
-          color: rgb(0.15, 0.15, 0.15),
-        });
+        page.drawText(text, { x, y, size: fontSize, font, color: rgb(0.15, 0.15, 0.15) });
       });
 
       const out = await doc.save();
@@ -98,19 +84,17 @@ export default function PdfPageNumbersWidget() {
 
   return (
     <div>
-      <label style={dropzoneStyle} htmlFor="pdfnum">
-        <input id="pdfnum" type="file" accept="application/pdf,.pdf" style={{ display: 'none' }}
+      <label className="dropzone" htmlFor="pdfnum">
+        <input id="pdfnum" type="file" accept="application/pdf,.pdf" hidden
           onChange={(e) => { pick(e.target.files); e.target.value = ''; }} />
         <strong>{file ? 'Choose a different PDF' : 'Choose a PDF'}</strong>
-        <div style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', marginTop: '0.25rem' }}>
-          Processed on your device — nothing is uploaded.
-        </div>
+        <span className="dropzone-hint">Processed on your device — nothing is uploaded.</span>
       </label>
 
       {file && (
-        <p style={{ margin: '0.9rem 0 0', fontSize: '0.9375rem' }}>
+        <p className="stack">
           <strong>{file.name}</strong>{' '}
-          <span style={{ color: 'var(--ink-soft)' }}>
+          <span className="muted">
             {formatBytes(file.size)}{pageCount ? ` · ${pageCount} pages` : ''}
           </span>
         </p>
@@ -118,7 +102,7 @@ export default function PdfPageNumbersWidget() {
 
       {file && (
         <>
-          <div className="field-grid" style={{ marginTop: '1rem' }}>
+          <div className="field-grid stack">
             <div className="field">
               <label htmlFor="pos">Position</label>
               <select id="pos" value={position} onChange={(e) => setPosition(e.target.value)}>
@@ -148,21 +132,24 @@ export default function PdfPageNumbersWidget() {
             </div>
           </div>
 
-          <label style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', marginTop: '0.75rem', fontSize: '0.9375rem' }}>
-            <input type="checkbox" checked={skipFirst} onChange={(e) => setSkipFirst(e.target.checked)} />
-            Skip the first page (useful for cover pages)
-          </label>
+          <div className="check-row">
+            <label className="check">
+              <input type="checkbox" checked={skipFirst}
+                onChange={(e) => setSkipFirst(e.target.checked)} />
+              Skip the first page (useful for cover pages)
+            </label>
+          </div>
         </>
       )}
 
-      {error && <p className="saving-note" style={{ marginTop: '1rem' }}>{error}</p>}
+      {error && <p className="note note-warn">{error}</p>}
 
       {file && (
-        <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem' }}>
-          <button type="button" style={buttonStyle} onClick={run} disabled={busy}>
+        <div className="row stack-lg">
+          <button type="button" className="btn" onClick={run} disabled={busy}>
             {busy ? 'Working…' : 'Add page numbers'}
           </button>
-          <button type="button" style={secondaryButtonStyle}
+          <button type="button" className="btn-ghost"
             onClick={() => { setFile(null); setPageCount(0); setError(''); }}>
             Start over
           </button>

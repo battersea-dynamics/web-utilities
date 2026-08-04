@@ -2,7 +2,14 @@
 import '../styles/global.css';
 import { visibleCategories, publishedTools } from '../data/site.js';
 
-const { title, description, canonicalPath = Astro.url.pathname } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  // Sets <body data-cat="…">, which lets a category override design tokens
+  // in global.css §2 without touching any component.
+  category = null,
+} = Astro.props;
 
 const site = 'https://gazza.ltd';
 const canonical = new URL(canonicalPath, site).href;
@@ -27,7 +34,7 @@ const published = publishedTools;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
 
-  <body>
+  <body data-cat={category}>
     <header class="site-head">
       <div class="wrap">
         <a class="brand" href="/">gazza<span>.ltd</span></a>
@@ -54,8 +61,8 @@ const published = publishedTools;
           </div>
         ))}
       </div>
-      <div class="wrap" style="margin-top:1.75rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">
-        <p style="margin:0;">Free online tools. No sign-up, nothing stored.</p>
+      <div class="wrap foot-bottom">
+        <p>Free online tools. No sign-up, nothing stored.</p>
         <nav aria-label="Site">
           <a href="/about">About</a> &nbsp;·&nbsp; <a href="/privacy-policy">Privacy Policy</a>
         </nav>

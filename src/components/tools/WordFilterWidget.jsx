@@ -83,21 +83,19 @@ export default function WordFilterWidget() {
         <LanguageSelect value={lang} onChange={setLang} />
       </div>
 
-      {status === 'loading' && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>Loading dictionary…</p>
-      )}
+      {status === 'loading' && <p className="note stack">Loading dictionary…</p>}
       {status === 'error' && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>
+        <p className="note note-warn stack">
           Couldn't load the dictionary — refresh and try again.
         </p>
       )}
 
       {status === 'ready' && active && (
-        <div className="results" style={{ display: 'block' }}>
-          <div className="label" style={{ marginBottom: '0.4rem' }}>
+        <div className="results results-block">
+          <div className="label">
             {results.length.toLocaleString()} match{results.length === 1 ? '' : 'es'}
           </div>
-          <p style={{ margin: 0 }}>
+          <p className="word-list">
             {results.slice(0, MAX_SHOWN).join(', ')}
             {results.length > MAX_SHOWN && ` … and ${results.length - MAX_SHOWN} more`}
           </p>

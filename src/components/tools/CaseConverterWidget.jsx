@@ -13,25 +13,11 @@ const converters = {
       .replace(/[^a-zA-Z0-9]+(.)/g, (_, c) => c.toUpperCase())
       .replace(/^[A-Z]/, (c) => c.toLowerCase()),
   PascalCase: (t) =>
-    t
-      .toLowerCase()
-      .replace(/(^|[^a-zA-Z0-9]+)(.)/g, (_, __, c) => c.toUpperCase()),
+    t.toLowerCase().replace(/(^|[^a-zA-Z0-9]+)(.)/g, (_, __, c) => c.toUpperCase()),
   snake_case: (t) =>
-    t
-      .trim()
-      .replace(/[^a-zA-Z0-9]+/g, ' ')
-      .trim()
-      .split(/\s+/)
-      .join('_')
-      .toLowerCase(),
+    t.trim().replace(/[^a-zA-Z0-9]+/g, ' ').trim().split(/\s+/).join('_').toLowerCase(),
   'kebab-case': (t) =>
-    t
-      .trim()
-      .replace(/[^a-zA-Z0-9]+/g, ' ')
-      .trim()
-      .split(/\s+/)
-      .join('-')
-      .toLowerCase(),
+    t.trim().replace(/[^a-zA-Z0-9]+/g, ' ').trim().split(/\s+/).join('-').toLowerCase(),
   'aLtErNaTiNg CaSe': (t) =>
     t
       .split('')
@@ -60,58 +46,19 @@ export default function CaseConverterWidget() {
     <div>
       <div className="field">
         <label htmlFor="text">Your text</label>
-        <textarea
-          id="text"
-          rows={4}
-          style={{
-            font: 'inherit',
-            padding: '0.7rem',
-            border: '1px solid var(--rule)',
-            borderRadius: '4px',
-            background: 'var(--paper)',
-            color: 'var(--ink)',
-            width: '100%',
-            resize: 'vertical',
-          }}
-          placeholder="Type or paste here…"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+        <textarea id="text" className="textarea" rows={4} placeholder="Type or paste here…"
+          value={text} onChange={(e) => setText(e.target.value)} />
       </div>
 
-      <div className="results" style={{ display: 'block' }}>
+      <div className="results results-block">
         {results.map(({ name, value }) => (
-          <div
-            key={name}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              alignItems: 'center',
-              borderTop: '1px solid var(--rule)',
-              padding: '0.6rem 0',
-            }}
-          >
-            <div style={{ minWidth: 0 }}>
+          <div key={name} className="row-between case-row">
+            <div className="file-name">
               <div className="label">{name}</div>
-              <div style={{ wordBreak: 'break-word' }}>{value || '—'}</div>
+              <div>{value || '—'}</div>
             </div>
-            <button
-              type="button"
-              onClick={() => copy(name, value)}
-              disabled={!text}
-              style={{
-                font: 'inherit',
-                fontSize: '0.8125rem',
-                padding: '0.4rem 0.7rem',
-                border: '1px solid var(--rule)',
-                borderRadius: '4px',
-                background: 'var(--surface)',
-                color: 'var(--ink)',
-                cursor: text ? 'pointer' : 'default',
-                flexShrink: 0,
-              }}
-            >
+            <button type="button" className="btn-ghost" onClick={() => copy(name, value)}
+              disabled={!text}>
               {copied === name ? 'Copied' : 'Copy'}
             </button>
           </div>

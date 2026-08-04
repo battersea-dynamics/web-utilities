@@ -46,7 +46,7 @@ export default function UnscrambleWidget({ mode = 'unscramble' }) {
   return (
     <div>
       <div className="field-grid">
-        <div className="field" style={{ gridColumn: '1 / -1' }}>
+        <div className="field field-wide">
           <label htmlFor="letters">Your letters</label>
           <input
             id="letters"
@@ -64,57 +64,41 @@ export default function UnscrambleWidget({ mode = 'unscramble' }) {
         <LanguageSelect value={lang} onChange={setLang} />
       </div>
 
-      {status === 'loading' && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>
-          Loading dictionary…
-        </p>
-      )}
+      {status === 'loading' && <p className="note stack">Loading dictionary…</p>}
       {status === 'error' && (
-        <p className="saving-note" style={{ marginTop: '1rem' }}>
+        <p className="note note-warn stack">
           Couldn't load the dictionary — refresh and try again.
         </p>
       )}
 
       {status === 'ready' && letters.trim() && (
-        <div className="results" style={{ display: 'block' }}>
+        <div className="results results-block">
           {mode === 'anagram' && (
-            <div style={{ marginBottom: exact.length || otherGroups.length ? '1.25rem' : 0 }}>
-              <div className="label" style={{ marginBottom: '0.4rem' }}>
-                Full anagrams (use every letter)
-              </div>
+            <div className="stack-lg">
+              <div className="label">Full anagrams (use every letter)</div>
               {exact.length > 0 ? (
-                <p style={{ margin: 0 }}>{exact.join(', ')}</p>
+                <p className="word-list">{exact.join(', ')}</p>
               ) : (
-                <p style={{ margin: 0, color: 'var(--ink-soft)' }}>None found.</p>
+                <p className="muted">None found.</p>
               )}
             </div>
           )}
 
           {totalFound === 0 && (
-            <p style={{ margin: 0, color: 'var(--ink-soft)' }}>
-              No dictionary words found in those letters.
-            </p>
+            <p className="muted">No dictionary words found in those letters.</p>
           )}
 
           {otherGroups.length > 0 && (
-            <div>
+            <div className="stack">
               {mode === 'anagram' && (
-                <div className="label" style={{ marginBottom: '0.4rem' }}>
-                  Other words from those letters
-                </div>
+                <div className="label">Other words from those letters</div>
               )}
               {otherGroups.map((g) => (
-                <div key={g.length} style={{ marginBottom: '0.6rem' }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-num)',
-                      fontSize: '0.8125rem',
-                      color: 'var(--ink-soft)',
-                    }}
-                  >
+                <div key={g.length} className="word-group">
+                  <span className="word-group-head">
                     {g.length} letters ({g.words.length})
                   </span>
-                  <p style={{ margin: '0.2rem 0 0' }}>{g.words.join(', ')}</p>
+                  <p className="word-list">{g.words.join(', ')}</p>
                 </div>
               ))}
             </div>
