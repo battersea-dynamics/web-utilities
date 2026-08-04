@@ -8,6 +8,12 @@ const tool = data.tools.find((t) => t.slug === slug);
 if (!tool) throw new Error(`No entry in tools.json for slug "${slug}"`);
 
 const category = data.categories.find((c) => c.slug === tool.category);
+
+// Keyword first, brand last. The optional titleSuffix carries a short benefit
+// phrase; without one we fall back to the bare title.
+const metaTitle = tool.titleSuffix
+  ? `${tool.title} — ${tool.titleSuffix} | gazza.ltd`
+  : `${tool.title} | gazza.ltd`;
 const related = (tool.related || [])
   .map((s) => data.tools.find((t) => t.slug === s))
   .filter((t) => t && t.published);
@@ -38,7 +44,7 @@ const faqSchema = faq.length
     }
   : null;
 ---
-<Base title={`${tool.title} | gazza.ltd`} description={tool.metaDescription}>
+<Base title={metaTitle} description={tool.metaDescription}>
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/">Home</a> ›

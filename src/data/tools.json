@@ -3,303 +3,557 @@
     {
       "slug": "finance",
       "name": "Financial Calculators",
+      "metaDescription": "Free financial calculators for mortgages, overpayments and deal comparisons. Every tool shows the formula it uses and a worked example, so you can check it.",
       "blurb": "Mortgages, tax, pay and savings — worked out properly, with the numbers shown."
     },
     {
       "slug": "health",
       "name": "Health & Fitness Calculators",
+      "metaDescription": "Free health and fitness calculators for body measurements, training numbers and everyday reference figures. Each one explains the method behind the result.",
       "blurb": "Body measurements, training numbers and everyday health reference figures."
     },
     {
       "slug": "dates",
       "name": "Date & Time Calculators",
+      "metaDescription": "Free date and time calculators for ages, date differences, working days and countdowns. Each shows how the result is worked out, not just the answer itself.",
       "blurb": "Ages, date differences, working days and countdowns."
     },
     {
       "slug": "converters",
       "name": "Unit Converters",
+      "metaDescription": "Free unit converters for lengths, weights, cooking measures, temperatures and clothing sizes. Each shows the conversion factor used and a worked example.",
       "blurb": "Units, sizes, cooking measures and temperatures."
     },
     {
       "slug": "text",
       "name": "Text Tools",
+      "metaDescription": "Free text tools for counting, cleaning and transforming text, plus word games like unscramblers and anagram solvers. Everything runs inside your browser.",
       "blurb": "Counting, cleaning and transforming text."
     },
     {
       "slug": "developer",
       "name": "Developer Tools",
+      "metaDescription": "Free developer tools — encoders, formatters, generators and validators. Everything runs in your browser, so nothing you paste is sent anywhere or stored.",
       "blurb": "Encoders, formatters, generators and validators."
     },
     {
       "slug": "pdf",
       "name": "PDF Tools",
+      "metaDescription": "Free PDF tools to merge, split, rotate and edit PDFs entirely in your browser. Your files are never uploaded, so private documents stay on your own device.",
       "blurb": "Merge, split and edit PDFs entirely in your browser — no upload, no sign-up."
     }
   ],
-
   "tools": [
     {
       "slug": "mortgage-calculator",
       "title": "Mortgage Calculator",
+      "titleSuffix": "Monthly Repayments",
       "h1": "Mortgage Calculator",
       "category": "finance",
-      "metaDescription": "Work out your monthly mortgage repayment from the property price, deposit, interest rate and term. Includes overpayments and total interest.",
-      "keywords": ["mortgage calculator", "mortgage repayment calculator", "monthly mortgage payment"],
-      "related": ["mortgage-comparison-calculator", "mortgage-overpayment-calculator", "stamp-duty-calculator"],
-      "published": true
+      "metaDescription": "Work out monthly mortgage repayments from the price, deposit, rate and term. See the interest and capital split for any month, and what overpaying saves.",
+      "keywords": [
+        "mortgage calculator",
+        "mortgage repayment calculator",
+        "monthly mortgage payment"
+      ],
+      "related": [
+        "mortgage-comparison-calculator",
+        "mortgage-overpayment-calculator",
+        "stamp-duty-calculator"
+      ],
+      "published": true,
+      "contentStatus": "partial"
     },
     {
       "slug": "mortgage-comparison-calculator",
       "title": "Mortgage Comparison Calculator",
+      "titleSuffix": "Side by Side",
       "h1": "Compare Mortgages Side by Side",
       "category": "finance",
-      "metaDescription": "Compare two or three mortgage deals side by side, including fees, to see which is genuinely cheapest rather than which has the lowest monthly payment.",
-      "keywords": ["mortgage comparison calculator", "compare mortgages", "compare mortgage deals"],
-      "related": ["mortgage-calculator", "mortgage-overpayment-calculator", "stamp-duty-calculator"],
-      "published": true
+      "metaDescription": "Compare two or three mortgage deals side by side, fees included, to see which is genuinely cheapest — not simply which has the lowest monthly payment.",
+      "keywords": [
+        "mortgage comparison calculator",
+        "compare mortgages",
+        "compare mortgage deals"
+      ],
+      "related": [
+        "mortgage-calculator",
+        "mortgage-overpayment-calculator",
+        "stamp-duty-calculator"
+      ],
+      "published": true,
+      "contentStatus": "partial"
     },
     {
       "slug": "mortgage-overpayment-calculator",
       "title": "Mortgage Overpayment Calculator",
+      "titleSuffix": "Save Interest",
       "h1": "Mortgage Overpayment Calculator",
       "category": "finance",
-      "metaDescription": "See how much interest you save and how many years you cut off your mortgage by overpaying monthly or with a lump sum.",
-      "keywords": ["mortgage overpayment calculator", "overpay mortgage", "mortgage overpayment savings"],
-      "related": ["mortgage-calculator", "mortgage-comparison-calculator", "compound-interest-calculator"],
-      "published": true
+      "metaDescription": "See what overpaying your mortgage is worth: the interest you avoid and the years you cut off the term, from a monthly amount or a one-off lump sum.",
+      "keywords": [
+        "mortgage overpayment calculator",
+        "overpay mortgage",
+        "mortgage overpayment savings"
+      ],
+      "related": [
+        "mortgage-calculator",
+        "mortgage-comparison-calculator",
+        "compound-interest-calculator"
+      ],
+      "published": true,
+      "contentStatus": "partial"
     },
     {
       "slug": "stamp-duty-calculator",
       "title": "Stamp Duty Calculator",
+      "titleSuffix": "UK SDLT",
       "h1": "Stamp Duty Calculator",
       "category": "finance",
-      "metaDescription": "Calculate UK stamp duty land tax on a property purchase, including the first-time buyer and additional property rates.",
-      "keywords": ["stamp duty calculator", "sdlt calculator"],
-      "related": ["mortgage-calculator"],
-      "published": false
+      "metaDescription": "Calculate UK stamp duty land tax on a property purchase, including first-time buyer relief and the additional property surcharge, with the bands shown.",
+      "keywords": [
+        "stamp duty calculator",
+        "sdlt calculator"
+      ],
+      "related": [
+        "mortgage-calculator"
+      ],
+      "published": false,
+      "contentStatus": "stub"
     },
     {
       "slug": "take-home-pay-calculator",
       "title": "Take-Home Pay Calculator",
+      "titleSuffix": "Salary After Tax",
       "h1": "Take-Home Pay Calculator",
       "category": "finance",
-      "metaDescription": "Work out your salary after income tax, National Insurance and pension contributions.",
-      "keywords": ["take home pay calculator", "salary after tax"],
-      "related": ["mortgage-calculator"],
-      "published": false
+      "metaDescription": "Work out your take-home pay after income tax, National Insurance and pension contributions, with a full breakdown showing where every deduction goes.",
+      "keywords": [
+        "take home pay calculator",
+        "salary after tax"
+      ],
+      "related": [
+        "mortgage-calculator"
+      ],
+      "published": false,
+      "contentStatus": "stub"
     },
     {
       "slug": "compound-interest-calculator",
       "title": "Compound Interest Calculator",
+      "titleSuffix": "Savings Growth",
       "h1": "Compound Interest Calculator",
       "category": "finance",
-      "metaDescription": "See how savings grow over time with compound interest and regular monthly contributions.",
-      "keywords": ["compound interest calculator", "savings growth calculator"],
-      "related": ["mortgage-calculator"],
-      "published": false
+      "metaDescription": "See how savings grow with compound interest and regular monthly contributions. Compare rates and terms to find what your pot could realistically be worth.",
+      "keywords": [
+        "compound interest calculator",
+        "savings growth calculator"
+      ],
+      "related": [
+        "mortgage-calculator"
+      ],
+      "published": false,
+      "contentStatus": "stub"
     },
-
     {
       "slug": "word-unscrambler",
       "title": "Word Unscrambler",
+      "titleSuffix": "Find Words From Letters",
       "h1": "Word Unscrambler",
       "category": "text",
-      "metaDescription": "Unscramble letters into every valid word they can make, from short two-letter words up to the full jumble. Free, instant, no sign-up.",
-      "keywords": ["word unscrambler", "unscramble words", "unscramble letters"],
-      "related": ["anagram-solver", "words-starting-with", "scrabble-word-finder"],
-      "published": true
+      "metaDescription": "Unscramble letters into every word they can make, grouped by length from two letters upwards. Free, instant, and built on an everyday English dictionary.",
+      "keywords": [
+        "word unscrambler",
+        "unscramble words",
+        "unscramble letters"
+      ],
+      "related": [
+        "anagram-solver",
+        "words-starting-with",
+        "scrabble-word-finder",
+        "word-counter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "anagram-solver",
       "title": "Anagram Solver",
+      "titleSuffix": "Rearrange Any Letters",
       "h1": "Anagram Solver",
       "category": "text",
-      "metaDescription": "Find every anagram of a set of letters, plus every shorter word hidden inside them. Free, instant, no sign-up.",
-      "keywords": ["anagram solver", "anagram finder", "solve anagram"],
-      "related": ["word-unscrambler", "words-starting-with", "words-with-friends-cheat"],
-      "published": true
+      "metaDescription": "Find every anagram of your letters, plus the shorter words hidden inside them. Type the letters in any order and get results instantly, with no sign-up.",
+      "keywords": [
+        "anagram solver",
+        "anagram finder",
+        "solve anagram"
+      ],
+      "related": [
+        "word-unscrambler",
+        "words-starting-with",
+        "words-with-friends-cheat",
+        "word-counter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "words-starting-with",
       "title": "Words Starting With",
+      "titleSuffix": "Start, End or Contain",
       "h1": "Words Starting, Ending or Containing Letters",
       "category": "text",
-      "metaDescription": "Find dictionary words that start with, end with or contain a set of letters, with an optional exact-length filter.",
-      "keywords": ["words that start with", "words starting with", "words ending in", "words containing"],
-      "related": ["word-unscrambler", "anagram-solver"],
-      "published": true
+      "metaDescription": "Find words that start with, end with or contain any letters, with an exact-length filter for crosswords and word games. Combine filters to narrow results.",
+      "keywords": [
+        "words that start with",
+        "words starting with",
+        "words ending in",
+        "words containing"
+      ],
+      "related": [
+        "word-unscrambler",
+        "anagram-solver",
+        "word-counter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "scrabble-word-finder",
       "title": "Scrabble Word Finder",
+      "titleSuffix": "Best Scoring Plays",
       "h1": "Scrabble Word Finder",
       "category": "text",
-      "metaDescription": "Find the highest-scoring Scrabble words from your tiles, with letter values worked out for you.",
-      "keywords": ["scrabble word finder", "scrabble cheat", "scrabble helper"],
-      "related": ["word-unscrambler", "words-with-friends-cheat"],
-      "published": false
+      "metaDescription": "Find the highest-scoring Scrabble words from your tiles, with letter values worked out for you. Sort by score or by length to pick the strongest play.",
+      "keywords": [
+        "scrabble word finder",
+        "scrabble cheat",
+        "scrabble helper"
+      ],
+      "related": [
+        "word-unscrambler",
+        "words-with-friends-cheat"
+      ],
+      "published": false,
+      "contentStatus": "stub"
     },
     {
       "slug": "words-with-friends-cheat",
       "title": "Words With Friends Cheat",
+      "titleSuffix": "Word Finder",
       "h1": "Words With Friends Word Finder",
       "category": "text",
-      "metaDescription": "Find the best-scoring Words With Friends plays from your letters, using the Words With Friends dictionary and tile values.",
-      "keywords": ["words with friends cheat", "words with friends word finder", "wwf cheat"],
-      "related": ["word-unscrambler", "scrabble-word-finder"],
-      "published": false
+      "metaDescription": "Find the best Words With Friends plays from your letters, using the game's own dictionary and tile values. Every option ranked by score, instantly.",
+      "keywords": [
+        "words with friends cheat",
+        "words with friends word finder",
+        "wwf cheat"
+      ],
+      "related": [
+        "word-unscrambler",
+        "scrabble-word-finder"
+      ],
+      "published": false,
+      "contentStatus": "stub"
     },
-
     {
       "slug": "word-counter",
       "title": "Word Counter",
+      "titleSuffix": "Words & Characters",
       "h1": "Word Counter",
       "category": "text",
-      "metaDescription": "Count words, characters, sentences and paragraphs as you type, with reading time and speaking time estimates.",
-      "keywords": ["word counter", "character counter", "word count tool"],
-      "related": ["case-converter", "duplicate-line-remover", "remove-extra-spaces"],
-      "published": true
+      "metaDescription": "Count words, characters, sentences and paragraphs as you type, with reading and speaking time estimates. Ideal for essays, speeches and word-limited forms.",
+      "keywords": [
+        "word counter",
+        "character counter",
+        "word count tool"
+      ],
+      "related": [
+        "case-converter",
+        "duplicate-line-remover",
+        "remove-extra-spaces"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "case-converter",
       "title": "Case Converter",
+      "titleSuffix": "Change Text Case",
       "h1": "Case Converter",
       "category": "text",
-      "metaDescription": "Convert text between UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case and more, instantly.",
-      "keywords": ["case converter", "text case converter", "uppercase to lowercase"],
-      "related": ["word-counter", "text-reverser"],
-      "published": true
+      "metaDescription": "Convert text between UPPERCASE, lowercase, Title Case, Sentence case, camelCase and snake_case instantly, and copy any version with a single click.",
+      "keywords": [
+        "case converter",
+        "text case converter",
+        "uppercase to lowercase"
+      ],
+      "related": [
+        "word-counter",
+        "text-reverser",
+        "remove-extra-spaces"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "text-diff-checker",
       "title": "Text Diff Checker",
+      "titleSuffix": "Compare Two Texts",
       "h1": "Text Diff Checker",
       "category": "text",
-      "metaDescription": "Compare two blocks of text and see exactly what changed, line by line and word by word.",
-      "keywords": ["text diff checker", "compare text online", "diff checker"],
-      "related": ["duplicate-line-remover", "word-counter"],
-      "published": true
+      "metaDescription": "Compare two blocks of text and see exactly which lines were added, removed or left unchanged. Useful for checking edits in documents, emails and code.",
+      "keywords": [
+        "text diff checker",
+        "compare text online",
+        "diff checker"
+      ],
+      "related": [
+        "duplicate-line-remover",
+        "word-counter",
+        "remove-extra-spaces"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "duplicate-line-remover",
       "title": "Duplicate Line Remover",
+      "titleSuffix": "Clean Up Lists",
       "h1": "Duplicate Line Remover",
       "category": "text",
-      "metaDescription": "Remove duplicate lines from a list or block of text, with options to ignore case and trim whitespace.",
-      "keywords": ["duplicate line remover", "remove duplicate lines"],
-      "related": ["remove-extra-spaces", "text-diff-checker"],
-      "published": true
+      "metaDescription": "Remove duplicate lines from a list or block of text, keeping the first of each. Options to ignore case and trim whitespace suit messy exported data.",
+      "keywords": [
+        "duplicate line remover",
+        "remove duplicate lines"
+      ],
+      "related": [
+        "remove-extra-spaces",
+        "text-diff-checker",
+        "word-counter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "remove-extra-spaces",
       "title": "Remove Extra Spaces",
+      "titleSuffix": "Tidy Up Text",
       "h1": "Remove Extra Spaces & Line Breaks",
       "category": "text",
-      "metaDescription": "Strip extra spaces, tabs and blank lines from text, ready to paste somewhere clean.",
-      "keywords": ["remove extra spaces", "remove line breaks", "clean up text"],
-      "related": ["duplicate-line-remover", "word-counter"],
-      "published": true
+      "metaDescription": "Strip extra spaces, tabs and blank lines from text pasted out of a PDF or document. Clean it up in one click before pasting it somewhere that matters.",
+      "keywords": [
+        "remove extra spaces",
+        "remove line breaks",
+        "clean up text"
+      ],
+      "related": [
+        "duplicate-line-remover",
+        "word-counter",
+        "case-converter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "lorem-ipsum-generator",
       "title": "Lorem Ipsum Generator",
+      "titleSuffix": "Placeholder Text",
       "h1": "Lorem Ipsum Generator",
       "category": "text",
-      "metaDescription": "Generate placeholder Lorem Ipsum text by paragraphs, sentences or words, for mockups and layouts.",
-      "keywords": ["lorem ipsum generator", "lorem ipsum text", "placeholder text generator"],
-      "related": ["word-counter", "case-converter"],
-      "published": true
+      "metaDescription": "Generate placeholder Lorem Ipsum text by paragraph, sentence or word count. Copy it straight into a design mockup or a layout you are still testing.",
+      "keywords": [
+        "lorem ipsum generator",
+        "lorem ipsum text",
+        "placeholder text generator"
+      ],
+      "related": [
+        "word-counter",
+        "case-converter",
+        "remove-extra-spaces"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "text-reverser",
       "title": "Text Reverser",
+      "titleSuffix": "Flip Text Backwards",
       "h1": "Text Reverser",
       "category": "text",
-      "metaDescription": "Reverse text letter by letter, word by word, or line by line.",
-      "keywords": ["text reverser", "reverse text online", "flip text"],
-      "related": ["case-converter", "word-counter"],
-      "published": true
+      "metaDescription": "Reverse text letter by letter, word by word or line by line. Handy for checking palindromes, making novelty text, or flipping a list that came out backwards.",
+      "keywords": [
+        "text reverser",
+        "reverse text online",
+        "flip text"
+      ],
+      "related": [
+        "case-converter",
+        "word-counter",
+        "anagram-solver"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
-
     {
       "slug": "merge-pdf",
       "title": "Merge PDF",
+      "titleSuffix": "Combine PDF Files",
       "h1": "Merge PDF Files",
       "category": "pdf",
-      "metaDescription": "Combine several PDFs into one file, in any order you choose. Runs in your browser — your files are never uploaded.",
-      "keywords": ["merge pdf", "combine pdf", "join pdf files"],
-      "related": ["split-pdf", "delete-pdf-pages", "reorder-pdf-pages"],
-      "published": true
+      "metaDescription": "Combine several PDFs into one file in any order you choose. Runs entirely in your browser, so your documents are never uploaded to anybody's server.",
+      "keywords": [
+        "merge pdf",
+        "combine pdf",
+        "join pdf files"
+      ],
+      "related": [
+        "split-pdf",
+        "delete-pdf-pages",
+        "reorder-pdf-pages"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "split-pdf",
       "title": "Split PDF",
+      "titleSuffix": "Extract Pages",
       "h1": "Split PDF — Extract Pages",
       "category": "pdf",
-      "metaDescription": "Pull selected pages out of a PDF into a new file. Choose single pages or ranges. Nothing is uploaded.",
-      "keywords": ["split pdf", "extract pdf pages", "separate pdf pages"],
-      "related": ["merge-pdf", "delete-pdf-pages", "rotate-pdf"],
-      "published": true
+      "metaDescription": "Extract selected pages from a PDF into a new file, using single pages or ranges. Everything runs in your browser, so nothing is uploaded anywhere at all.",
+      "keywords": [
+        "split pdf",
+        "extract pdf pages",
+        "separate pdf pages"
+      ],
+      "related": [
+        "merge-pdf",
+        "delete-pdf-pages",
+        "rotate-pdf"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "delete-pdf-pages",
       "title": "Delete PDF Pages",
+      "titleSuffix": "Remove Pages",
       "h1": "Delete Pages from a PDF",
       "category": "pdf",
-      "metaDescription": "Remove unwanted pages from a PDF and download the trimmed file. Runs entirely in your browser.",
-      "keywords": ["delete pdf pages", "remove pages from pdf"],
-      "related": ["split-pdf", "merge-pdf", "reorder-pdf-pages"],
-      "published": true
+      "metaDescription": "Remove unwanted pages from a PDF and download the trimmed file. Strip blank scans, adverts or terms pages in seconds, with nothing uploaded to a server.",
+      "keywords": [
+        "delete pdf pages",
+        "remove pages from pdf"
+      ],
+      "related": [
+        "split-pdf",
+        "merge-pdf",
+        "reorder-pdf-pages"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "rotate-pdf",
       "title": "Rotate PDF",
+      "titleSuffix": "Fix Page Orientation",
       "h1": "Rotate PDF Pages",
       "category": "pdf",
-      "metaDescription": "Turn sideways or upside-down PDF pages the right way up, individually or all at once. No upload needed.",
-      "keywords": ["rotate pdf", "turn pdf pages", "fix pdf orientation"],
-      "related": ["split-pdf", "merge-pdf", "delete-pdf-pages"],
-      "published": true
+      "metaDescription": "Turn sideways or upside-down PDF pages the right way up, all at once or page by page. Rotation is lossless and happens entirely inside your browser.",
+      "keywords": [
+        "rotate pdf",
+        "turn pdf pages",
+        "fix pdf orientation"
+      ],
+      "related": [
+        "split-pdf",
+        "merge-pdf",
+        "delete-pdf-pages"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "reorder-pdf-pages",
       "title": "Reorder PDF Pages",
+      "titleSuffix": "Rearrange Pages",
       "h1": "Reorder PDF Pages",
       "category": "pdf",
-      "metaDescription": "Rearrange the pages of a PDF into any order you like and download the result. Processed on your device.",
-      "keywords": ["reorder pdf pages", "rearrange pdf", "change pdf page order"],
-      "related": ["merge-pdf", "split-pdf", "delete-pdf-pages"],
-      "published": true
+      "metaDescription": "Rearrange the pages of a PDF into any order you like and download the result. Move a page to the front or swap whole sections, with nothing uploaded.",
+      "keywords": [
+        "reorder pdf pages",
+        "rearrange pdf",
+        "change pdf page order"
+      ],
+      "related": [
+        "merge-pdf",
+        "split-pdf",
+        "delete-pdf-pages"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "images-to-pdf",
       "title": "Images to PDF",
+      "titleSuffix": "JPG & PNG to PDF",
       "h1": "Convert Images to PDF",
       "category": "pdf",
-      "metaDescription": "Turn JPG and PNG images into a single PDF, one image per page, with page size and margin options.",
-      "keywords": ["images to pdf", "jpg to pdf", "png to pdf", "photo to pdf"],
-      "related": ["merge-pdf", "add-page-numbers", "watermark-pdf"],
-      "published": true
+      "metaDescription": "Turn JPG and PNG images into a single PDF, one image per page, with page size and margin options. Quality is preserved and nothing leaves your device.",
+      "keywords": [
+        "images to pdf",
+        "jpg to pdf",
+        "png to pdf",
+        "photo to pdf"
+      ],
+      "related": [
+        "merge-pdf",
+        "add-page-numbers",
+        "watermark-pdf"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "add-page-numbers",
       "title": "Add Page Numbers to PDF",
+      "titleSuffix": "Number Any PDF",
       "h1": "Add Page Numbers to a PDF",
       "category": "pdf",
-      "metaDescription": "Add page numbers to a PDF in the position and format you want, with the option to skip a cover page.",
-      "keywords": ["add page numbers to pdf", "number pdf pages", "pdf page numbering"],
-      "related": ["watermark-pdf", "merge-pdf", "images-to-pdf"],
-      "published": true
+      "metaDescription": "Add page numbers to a PDF in any position and format, with the option to skip a cover page or start from any number. Runs entirely in your browser.",
+      "keywords": [
+        "add page numbers to pdf",
+        "number pdf pages",
+        "pdf page numbering"
+      ],
+      "related": [
+        "watermark-pdf",
+        "merge-pdf",
+        "images-to-pdf"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     },
     {
       "slug": "watermark-pdf",
       "title": "Watermark PDF",
+      "titleSuffix": "Add DRAFT Text",
       "h1": "Add a Watermark to a PDF",
       "category": "pdf",
-      "metaDescription": "Stamp text such as DRAFT or CONFIDENTIAL across every page of a PDF, with adjustable opacity and angle.",
-      "keywords": ["watermark pdf", "add watermark to pdf", "stamp pdf draft"],
-      "related": ["add-page-numbers", "merge-pdf", "split-pdf"],
-      "published": true
+      "metaDescription": "Stamp DRAFT, CONFIDENTIAL or your own text across every page of a PDF, with adjustable opacity and angle. Processed on your device and never uploaded.",
+      "keywords": [
+        "watermark pdf",
+        "add watermark to pdf",
+        "stamp pdf draft"
+      ],
+      "related": [
+        "add-page-numbers",
+        "merge-pdf",
+        "split-pdf"
+      ],
+      "published": true,
+      "contentStatus": "complete"
     }
   ]
 }
