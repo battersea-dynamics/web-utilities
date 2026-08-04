@@ -3,7 +3,66 @@
 The utilities site behind **gazza.ltd**. Astro (static HTML) with React islands for the interactive widgets.
 
 **Repo:** `github.com/battersea-dynamics/web-utilities`
-**Hosting:** Cloudflare Pages (not yet connected — see Step 2 below)
+**Hosting:** Cloudflare Pages — live at [gazza.ltd](https://gazza.ltd), redeploys automatically on every push to `main`
+
+---
+
+## Branch safety workflow
+
+Two branches, always:
+
+- **`main`** — what's live. Every push to it triggers a Cloudflare deploy.
+- **`previous`** — a snapshot of the last known-good `main`, so there's always something to fall back to.
+
+### Before starting any new set of changes
+
+Run this first, every time, while the site is working:
+
+```bash
+git checkout main
+git pull
+git branch -f previous main
+git push -f origin previous
+```
+
+That moves `previous` to the current tip of `main` and publishes it. Only then start the work, and push to `main` as normal.
+
+The discipline that matters: **only ever reset `previous` when the site is actually working.** If you run these commands after breaking something, you have overwritten your escape route with the broken version. When in doubt, check the live site first.
+
+### Rolling back
+
+If a change breaks the site, put `main` back to the last good state:
+
+```bash
+git checkout main
+git reset --hard previous
+git push -f origin main
+```
+
+Cloudflare picks that up as a new deploy and the site returns to the previous version within a couple of minutes.
+
+To look at the old version before committing to a rollback:
+
+```bash
+git checkout previous     # inspect it locally
+npm ci && npm run dev
+git checkout main         # go back
+```
+
+To undo one specific commit rather than everything since:
+
+```bash
+git revert <commit-hash>
+git push
+```
+
+`revert` is the safer option — it adds a new commit undoing the change instead of rewriting history, so nothing is lost.
+
+### Worth knowing
+
+- `push -f` rewrites the remote branch. It's intended here, but it does mean anything on the remote that isn't in your local branch is discarded.
+- Cloudflare keeps its own deployment history. **Workers & Pages → your project → Deployments → Rollback** reverts the live site instantly without touching git — useful when you need the site fixed now and want to sort the repo out afterwards.
+- Run `npm test` and `npm run build` before pushing. Both are quick and catch most breakage before it reaches the live site.
 
 ---
 
