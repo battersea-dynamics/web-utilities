@@ -590,6 +590,41 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-gloss { display: block; margin-top: 0.2rem; }
 
+/* Category hub pages.
+   The tool grid stays at the top — someone who knows what they want should
+   not have to read past an essay to reach it. The explanation sits below,
+   for the reader who doesn't yet know which tool they need. */
+.hub-prose { margin-top: var(--sp-5); }
+.hub-choosing { margin-top: var(--sp-4); }
+.hub-note { margin-top: var(--sp-3); }
+.hub-soon { margin-top: var(--sp-5); }
+
+/* "Which one do you need?" — a plain description-to-tool mapping. Two
+   columns on a wide screen, stacked on a phone. */
+.choose-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--border);
+}
+.choose-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--sp-2);
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--sp-2) 0;
+  border-bottom: var(--border);
+}
+.choose-when {
+  color: var(--ink-soft);
+  flex: 1 1 16rem;
+}
+.choose-tool {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* Data-source attribution, where a licence requires it to be shown. */
 .credits {
   margin-top: var(--sp-4);

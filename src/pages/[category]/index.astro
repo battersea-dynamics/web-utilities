@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import data from '../../data/tools.json';
 import { visibleCategories } from '../../data/site.js';
+import { contentFor } from '../../data/categoryContent.js';
 
 // Only categories with at least one published tool get a hub page at all.
 // No page means no sitemap entry and no crawlable dead end.
@@ -16,6 +17,16 @@ const { category } = Astro.props;
 const tools = data.tools.filter((t) => t.category === category.slug);
 const live = tools.filter((t) => t.published);
 const soon = tools.filter((t) => !t.published);
+
+const content = contentFor(category.slug);
+
+// Titles in the "which one" list come from tools.json rather than being
+// written out a second time, so a renamed tool can't drift out of sync.
+// Unpublished tools are filtered out so the list never links to a dead page.
+const titleOf = (slug) => data.tools.find((t) => t.slug === slug)?.title ?? slug;
+const choosing = (content?.choosing ?? []).filter((c) =>
+  live.some((t) => t.slug === c.slug)
+);
 ---
 <Base
   title={`${category.name} | gazza.ltd`}
@@ -47,8 +58,32 @@ const soon = tools.filter((t) => !t.published);
       <p class="standfirst">Nothing published in this category yet.</p>
     )}
 
+    {/* What the category actually covers. Without this the hub is a menu
+        with no explanation — nothing for a reader or a crawler to weigh. */}
+    {content && (
+      <section class="prose hub-prose">
+        {content.intro.map((p) => <p>{p}</p>)}
+      </section>
+    )}
+
+    {choosing.length > 0 && (
+      <section class="hub-choosing">
+        <h2>Which one do you need?</h2>
+        <ul class="choose-list">
+          {choosing.map((c) => (
+            <li>
+              <span class="choose-when">{c.when}</span>
+              <a class="choose-tool" href={`/${c.slug}`}>{titleOf(c.slug)}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {content?.note && <p class="note hub-note">{content.note}</p>}
+
     {soon.length > 0 && (
-      <section style="margin-top:2.5rem;">
+      <section class="hub-soon">
         <h2>Coming next</h2>
         <ul class="card-grid">
           {soon.map((t) => (

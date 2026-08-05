@@ -5,7 +5,12 @@
 // render time, so a category reappears everywhere automatically the moment it
 // gains its first published tool.
 
-import data from './tools.json';
+// The `with { type: 'json' }` attribute is required, not decorative. Since
+// package.json declares "type": "module", plain Node treats this file as ESM
+// and refuses a bare JSON import without it. Astro's bundler is more lenient,
+// so the build would pass while `node --test` failed — remove it and the
+// tests break without the site ever noticing.
+import data from './tools.json' with { type: 'json' };
 
 export const allCategories = data.categories;
 export const allTools = data.tools;
