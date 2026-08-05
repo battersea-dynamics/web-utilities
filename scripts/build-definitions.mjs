@@ -169,7 +169,7 @@ fs.mkdirSync(OUT, { recursive: true });
    editing the notice itself. */
 fs.writeFileSync(
   path.join(OUT, 'LICENSE.txt'),
-  fs.readFileSync(path.join(root, 'node_modules/wordnet-db/LICENSE'), 'utf8') +
+  fs.readFileSync(path.join(root, 'node_modules/wordnet-db/LICENSE'), 'utf8').replace(/\r\n/g, '\n') +
     `
 ---------------------------------------------------------------------
 NOTE ADDED BY gazza.ltd

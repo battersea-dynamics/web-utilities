@@ -62,7 +62,7 @@ function writeLanguage(lang, wordSet) {
   // These lists are copies, so the notice ships with them.
   writeFileSync(
     path.join(dir, 'WORDLIST-LICENSE.txt'),
-    readFileSync(path.join(root, 'node_modules/wordlist-english/Copyright'), 'utf8') +
+    readFileSync(path.join(root, 'node_modules/wordlist-english/Copyright'), 'utf8').replace(/\r\n/g, '\n') +
       `
 ---------------------------------------------------------------------
 NOTE ADDED BY gazza.ltd
