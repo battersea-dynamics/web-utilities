@@ -103,7 +103,7 @@ npm run preview   # serve the built site locally
 
 **Site pages** — `/about` (with the magpie story) and `/privacy-policy`, both linked in the footer alongside a feedback link. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
 
-**Tests** — 189, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
+**Tests** — 191, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
 
 ---
 

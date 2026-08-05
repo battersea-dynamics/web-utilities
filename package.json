@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "The utilities site behind **gazza.ltd**. Astro (static HTML) with React islands for the interactive widgets.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "node --test \"tests/**/*.test.mjs\"",
     "dev": "astro dev",
