@@ -1,0 +1,61 @@
+---
+// The missing 404 page.
+//
+// Why this file matters more than it looks: without a 404.html in the build,
+// Cloudflare Pages fell back to serving index.html for every unmatched path.
+// So https://gazza.ltd/products/creatine-powder — a URL left over from the
+// Shopify store that used to sit on this domain — returned the homepage with
+// a 200 OK instead of an error. That is a "soft 404", and it is why Bing was
+// still listing Nexvita product pages under gazza.ltd months after the store
+// moved: as far as a crawler could tell, those URLs still worked.
+//
+// It applied to every wrong URL, not just the old shop ones — typos, stale
+// links, anything a crawler invented.
+//
+// Astro turns this file into 404.html at the root of dist/, which Cloudflare
+// Pages serves with a real HTTP 404 status.
+//
+// Do not add this page to the sitemap, and do not redirect unknown URLs to
+// the homepage — a redirect tells a crawler the content moved there, which
+// is the same lie in a different form. A 404 is the honest answer.
+
+import Base from '../layouts/Base.astro';
+import { visibleCategories } from '../data/site.js';
+
+const categories = visibleCategories;
+---
+<Base
+  title="Page not found | gazza.ltd"
+  description="That page doesn't exist. Browse the free calculators, PDF tools and text tools available on gazza.ltd."
+>
+  <div class="wrap">
+    <section class="notfound">
+      <p class="notfound-code">404</p>
+      <h1>That page doesn't exist</h1>
+      <p class="standfirst">
+        The link may be out of date, or the address may have a typo in it.
+        Nothing here was deleted recently — if you followed a link from
+        somewhere else, it was probably pointing at a site that used to sit
+        on this domain.
+      </p>
+
+      <h2>Where you might be headed</h2>
+      <ul class="card-grid">
+        {categories.map((c) => (
+          <li>
+            <a class="card" href={`/${c.slug}`}>
+              <span class="name">{c.name}</span>
+              <span class="desc">{c.blurb}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="note">
+        Everything on the site is free, runs in your browser, and needs no
+        sign-up. If you expected something specific to be here,
+        <a href="mailto:hello@gazza.ltd">tell us what you were looking for</a>.
+      </p>
+    </section>
+  </div>
+</Base>

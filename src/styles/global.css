@@ -590,6 +590,20 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-gloss { display: block; margin-top: 0.2rem; }
 
+/* 404 page. Deliberately not apologetic-looking — the most useful thing a
+   404 can do is get the visitor somewhere real, fast. */
+.notfound { margin-top: var(--sp-4); }
+.notfound-code {
+  font-family: var(--font-num);
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin: 0 0 var(--sp-1);
+}
+.notfound h2 {
+  margin-top: var(--sp-5);
+}
+
 /* Category hub pages.
    The tool grid stays at the top — someone who knows what they want should
    not have to read past an essay to reach it. The explanation sits below,
