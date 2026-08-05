@@ -57,6 +57,25 @@ function writeLanguage(lang, wordSet) {
   writeFileSync(path.join(dir, 'word-index.json'), JSON.stringify(index));
   writeFileSync(path.join(dir, 'words.json'), JSON.stringify(wordSet));
 
+  // SCOWL's licence permits any use, including commercial, but only
+  // "provided that the above copyright notice appears in all copies".
+  // These lists are copies, so the notice ships with them.
+  writeFileSync(
+    path.join(dir, 'WORDLIST-LICENSE.txt'),
+    readFileSync(path.join(root, 'node_modules/wordlist-english/Copyright'), 'utf8') +
+      `
+---------------------------------------------------------------------
+NOTE ADDED BY gazza.ltd
+
+words.json and word-index.json in this directory are derived from the
+SCOWL word lists covered by the notice above: frequency tiers 10-60
+across all dialects, filtered to length ${MIN_LEN}-${MAX_LEN} and lowercased.
+Redistributed under the terms above.
+
+Generator: scripts/build-word-index.mjs
+`
+  );
+
   console.log(`${lang}: ${wordSet.length} words, ${Object.keys(index).length} index keys`);
 }
 

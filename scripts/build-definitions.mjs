@@ -158,6 +158,38 @@ for (const w of words) {
 
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
+
+/* The licence has to be rewritten here, not just committed once: this script
+   wipes the output directory on every run, and WordNet's terms require the
+   copyright notice and disclaimer to accompany every copy of the database
+   "including modifications that you make". The shards are a modification.
+
+   The licence text is copied verbatim and must stay that way. Anything we
+   need to say about it goes in the separate note below it — never by
+   editing the notice itself. */
+fs.writeFileSync(
+  path.join(OUT, 'LICENSE.txt'),
+  fs.readFileSync(path.join(root, 'node_modules/wordnet-db/LICENSE'), 'utf8') +
+    `
+---------------------------------------------------------------------
+NOTE ADDED BY gazza.ltd
+
+The licence text above is reproduced verbatim as distributed with the
+wordnet-db package. It is headed "WordNet Release 3.0" while the
+database files in that package are WordNet 3.1; Princeton publishes
+the same terms for both releases.
+
+The JSON files in this directory are a derived work: single-sense
+glosses extracted from the WordNet 3.1 database and reformatted for
+web delivery. They are redistributed under the licence above, which
+requires this notice and disclaimer to accompany all copies,
+including modifications.
+
+Source data: WordNet 3.1, Princeton University
+Generator:   scripts/build-definitions.mjs
+`
+);
+
 let bytes = 0;
 for (const [key, data] of Object.entries(shards)) {
   const json = JSON.stringify(data);

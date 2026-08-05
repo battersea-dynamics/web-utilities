@@ -74,6 +74,25 @@ describe('shard files', () => {
     }
   });
 
+  test('the WordNet licence ships alongside the data', () => {
+    // Not optional. WordNet's licence requires the copyright notice and the
+    // disclaimer to travel with every copy of the database, "including
+    // modifications that you make" — which these derived shards are.
+    const licence = path.join(DEFS, 'LICENSE.txt');
+    assert.ok(fs.existsSync(licence), 'LICENSE.txt is missing from the defs directory');
+    const text = fs.readFileSync(licence, 'utf8');
+    assert.match(text, /Copyright 2006 by Princeton University/);
+    assert.match(text, /AS IS/, 'the disclaimer must be present, not just the notice');
+  });
+
+  test('the SCOWL word-list notice ships alongside the word data', () => {
+    // Same requirement as WordNet: permissive, but the copyright notice has
+    // to appear in all copies, and words.json is a copy.
+    const licence = path.join(root, 'public/data/en/WORDLIST-LICENSE.txt');
+    assert.ok(fs.existsSync(licence), 'WORDLIST-LICENSE.txt is missing');
+    assert.match(fs.readFileSync(licence, 'utf8'), /Copyright 2000-2016 by Kevin Atkinson/);
+  });
+
   test('no shard is big enough to hurt on a phone', () => {
     // A click should cost tens of KB, not hundreds. Uncompressed 600KB is
     // roughly 120KB over the wire once Cloudflare gzips it.
