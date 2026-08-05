@@ -1,18 +1,19 @@
 import { useState, useMemo } from 'react';
 import { propertyTax, gbp } from './taxEngine.js';
 import { PROPERTY_TAX, LAST_VERIFIED } from './taxData.js';
+import { useNumber } from './useNumber.js';
 
 const REGIONS = ['england', 'scotland', 'wales'];
 
 export default function StampDutyWidget() {
   const [region, setRegion] = useState('england');
-  const [price, setPrice] = useState(300000);
+  const [price, setPrice, priceN] = useNumber(300000);
   const [firstTimeBuyer, setFirstTimeBuyer] = useState(false);
   const [additionalProperty, setAdditionalProperty] = useState(false);
 
   const result = useMemo(
-    () => propertyTax(price, region, { firstTimeBuyer, additionalProperty }),
-    [price, region, firstTimeBuyer, additionalProperty]
+    () => propertyTax(priceN, region, { firstTimeBuyer, additionalProperty }),
+    [priceN, region, firstTimeBuyer, additionalProperty]
   );
 
   const regime = PROPERTY_TAX[region];
@@ -44,7 +45,7 @@ export default function StampDutyWidget() {
         <div className="field">
           <label htmlFor="price">Purchase price (£)</label>
           <input id="price" type="number" min="0" step="5000" value={price}
-            onChange={(e) => setPrice(Number(e.target.value))} />
+            onChange={(e) => setPrice(e.target.value)} />
         </div>
       </div>
 
@@ -76,7 +77,7 @@ export default function StampDutyWidget() {
             </div>
             <div className="result">
               <div className="label">Total with tax</div>
-              <div className="value">{gbp(price + result.total)}</div>
+              <div className="value">{gbp(priceN + result.total)}</div>
             </div>
           </div>
 

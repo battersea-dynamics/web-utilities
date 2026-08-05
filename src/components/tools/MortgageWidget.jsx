@@ -1,57 +1,58 @@
 import { useState, useMemo } from 'react';
 import { amortise, toYearly, atMonth, gbp, monthsToText } from './mortgageEngine.js';
+import { useNumber } from './useNumber.js';
 
 export default function MortgageWidget() {
   // Core inputs — always visible, so a result appears immediately.
-  const [price, setPrice] = useState(300000);
-  const [deposit, setDeposit] = useState(45000);
-  const [rate, setRate] = useState(4.5);
-  const [term, setTerm] = useState(25);
+  const [price, setPrice, priceN] = useNumber(300000);
+  const [deposit, setDeposit, depositN] = useNumber(45000);
+  const [rate, setRate, rateN] = useNumber(4.5);
+  const [term, setTerm, termN] = useNumber(25, 1);
 
   // Advanced — collapsed by default to keep the tool usable at a glance.
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [monthlyOverpay, setMonthlyOverpay] = useState(0);
-  const [lumpAmount, setLumpAmount] = useState(0);
-  const [lumpMonth, setLumpMonth] = useState(12);
+  const [monthlyOverpay, setMonthlyOverpay, monthlyOverpayN] = useNumber(0);
+  const [lumpAmount, setLumpAmount, lumpAmountN] = useNumber(0);
+  const [lumpMonth, setLumpMonth, lumpMonthN] = useNumber(12, 1);
   const [newRate, setNewRate] = useState('');
-  const [rateChangeMonth, setRateChangeMonth] = useState(25);
-  const [fee, setFee] = useState(0);
+  const [rateChangeMonth, setRateChangeMonth, rateChangeMonthN] = useNumber(25, 1);
+  const [fee, setFee, feeN] = useNumber(0);
   const [feeAddedToLoan, setFeeAddedToLoan] = useState(true);
 
-  const [snapshotMonth, setSnapshotMonth] = useState(9);
+  const [snapshotMonth, setSnapshotMonth, snapshotMonthN] = useNumber(9, 1);
   const [showSchedule, setShowSchedule] = useState(false);
 
-  const borrowed = Math.max(0, price - deposit);
-  const principal = borrowed + (fee > 0 && feeAddedToLoan ? fee : 0);
+  const borrowed = Math.max(0, priceN - depositN);
+  const principal = borrowed + (feeN > 0 && feeAddedToLoan ? feeN : 0);
 
   const opts = useMemo(
     () => ({
       principal,
-      annualRate: rate,
-      years: term,
-      monthlyOverpay,
-      lumpSums: lumpAmount > 0 ? [{ month: lumpMonth, amount: lumpAmount }] : [],
+      annualRate: rateN,
+      years: termN,
+      monthlyOverpay: monthlyOverpayN,
+      lumpSums: lumpAmountN > 0 ? [{ month: lumpMonthN, amount: lumpAmountN }] : [],
       rateChanges:
-        newRate !== '' && Number(newRate) >= 0
-          ? [{ month: rateChangeMonth, rate: Number(newRate) }]
+        newRate.trim() !== '' && Number(newRate) >= 0
+          ? [{ month: rateChangeMonthN, rate: Number(newRate) }]
           : [],
     }),
-    [principal, rate, term, monthlyOverpay, lumpAmount, lumpMonth, newRate, rateChangeMonth]
+    [principal, rateN, termN, monthlyOverpayN, lumpAmountN, lumpMonthN, newRate, rateChangeMonthN]
   );
 
   const result = useMemo(() => amortise(opts), [opts]);
   const plain = useMemo(
-    () => amortise({ principal, annualRate: rate, years: term }),
-    [principal, rate, term]
+    () => amortise({ principal, annualRate: rateN, years: termN }),
+    [principal, rateN, termN]
   );
 
   const yearly = useMemo(() => (result.ok ? toYearly(result.schedule) : []), [result]);
-  const snap = result.ok ? atMonth(result.schedule, snapshotMonth) : null;
+  const snap = result.ok ? atMonth(result.schedule, snapshotMonthN) : null;
 
-  const ltv = price > 0 ? (borrowed / price) * 100 : 0;
+  const ltv = priceN > 0 ? (borrowed / priceN) * 100 : 0;
   const monthsSaved = plain.months - result.months;
   const interestSaved = plain.totalInterest - result.totalInterest;
-  const upfront = fee > 0 && !feeAddedToLoan ? fee : 0;
+  const upfront = feeN > 0 && !feeAddedToLoan ? feeN : 0;
 
   return (
     <div>
@@ -59,22 +60,22 @@ export default function MortgageWidget() {
         <div className="field">
           <label htmlFor="price">Property price (£)</label>
           <input id="price" type="number" min="0" step="1000" value={price}
-            onChange={(e) => setPrice(Number(e.target.value))} />
+            onChange={(e) => setPrice(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="deposit">Deposit (£)</label>
           <input id="deposit" type="number" min="0" step="1000" value={deposit}
-            onChange={(e) => setDeposit(Number(e.target.value))} />
+            onChange={(e) => setDeposit(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="rate">Interest rate (%)</label>
           <input id="rate" type="number" min="0" max="20" step="0.05" value={rate}
-            onChange={(e) => setRate(Number(e.target.value))} />
+            onChange={(e) => setRate(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="term">Term (years)</label>
           <input id="term" type="number" min="1" max="40" step="1" value={term}
-            onChange={(e) => setTerm(Number(e.target.value))} />
+            onChange={(e) => setTerm(e.target.value)} />
         </div>
       </div>
 
@@ -86,17 +87,17 @@ export default function MortgageWidget() {
           <div className="field">
             <label htmlFor="over">Monthly overpayment (£)</label>
             <input id="over" type="number" min="0" step="25" value={monthlyOverpay}
-              onChange={(e) => setMonthlyOverpay(Number(e.target.value))} />
+              onChange={(e) => setMonthlyOverpay(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="lump">One-off lump sum (£)</label>
             <input id="lump" type="number" min="0" step="500" value={lumpAmount}
-              onChange={(e) => setLumpAmount(Number(e.target.value))} />
+              onChange={(e) => setLumpAmount(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="lumpm">Paid in month</label>
             <input id="lumpm" type="number" min="1" value={lumpMonth}
-              onChange={(e) => setLumpMonth(Math.max(1, Number(e.target.value)))} />
+              onChange={(e) => setLumpMonth(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="nrate">Rate changes to (%)</label>
@@ -106,16 +107,16 @@ export default function MortgageWidget() {
           <div className="field">
             <label htmlFor="rcm">From month</label>
             <input id="rcm" type="number" min="1" value={rateChangeMonth}
-              onChange={(e) => setRateChangeMonth(Math.max(1, Number(e.target.value)))} />
+              onChange={(e) => setRateChangeMonth(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="fee">Arrangement fee (£)</label>
             <input id="fee" type="number" min="0" step="50" value={fee}
-              onChange={(e) => setFee(Number(e.target.value))} />
+              onChange={(e) => setFee(e.target.value)} />
           </div>
         </div>
 
-        {fee > 0 && (
+        {feeN > 0 && (
           <div className="check-row">
             <label className="check">
               <input type="checkbox" checked={feeAddedToLoan}
@@ -157,7 +158,7 @@ export default function MortgageWidget() {
             </div>
           </div>
 
-          {(monthlyOverpay > 0 || lumpAmount > 0) && monthsSaved > 0 && (
+          {(monthlyOverpayN > 0 || lumpAmountN > 0) && monthsSaved > 0 && (
             <p className="note">
               Those overpayments clear the mortgage{' '}
               <strong>{monthsToText(monthsSaved)}</strong> early and save{' '}
@@ -170,7 +171,7 @@ export default function MortgageWidget() {
             <div className="field field-narrow">
               <label htmlFor="snap">Show me month</label>
               <input id="snap" type="number" min="1" max={result.months} value={snapshotMonth}
-                onChange={(e) => setSnapshotMonth(Math.max(1, Number(e.target.value)))} />
+                onChange={(e) => setSnapshotMonth(e.target.value)} />
             </div>
 
             {snap && (
@@ -197,7 +198,7 @@ export default function MortgageWidget() {
                 </div>
                 <div className="result">
                   <div className="label">Equity in home</div>
-                  <div className="value">{gbp(price - snap.balance)}</div>
+                  <div className="value">{gbp(priceN - snap.balance)}</div>
                 </div>
               </div>
             )}

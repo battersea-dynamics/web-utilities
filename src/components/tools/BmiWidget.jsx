@@ -1,20 +1,21 @@
 import { useState, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 import { bmi, LAST_VERIFIED } from './healthEngine.js';
 
 export default function BmiWidget() {
   const [units, setUnits] = useState('metric');
 
   // Metric
-  const [cm, setCm] = useState(175);
-  const [kg, setKg] = useState(70);
+  const [cm, setCm, cmN] = useNumber(175);
+  const [kg, setKg, kgN] = useNumber(70);
   // Imperial
-  const [ft, setFt] = useState(5);
-  const [inch, setInch] = useState(9);
-  const [st, setSt] = useState(11);
-  const [lb, setLb] = useState(0);
+  const [ft, setFt, ftN] = useNumber(5);
+  const [inch, setInch, inchN] = useNumber(9);
+  const [st, setSt, stN] = useNumber(11);
+  const [lb, setLb, lbN] = useNumber(0);
 
-  const heightCm = units === 'metric' ? cm : (ft * 12 + Number(inch)) * 2.54;
-  const weightKg = units === 'metric' ? kg : (st * 14 + Number(lb)) * 0.45359237;
+  const heightCm = units === 'metric' ? cmN : (ftN * 12 + inchN) * 2.54;
+  const weightKg = units === 'metric' ? kgN : (stN * 14 + lbN) * 0.45359237;
 
   const result = useMemo(() => bmi(weightKg, heightCm), [weightKg, heightCm]);
 
@@ -40,12 +41,12 @@ export default function BmiWidget() {
           <div className="field">
             <label htmlFor="cm">Height (cm)</label>
             <input id="cm" type="number" min="0" max="272" value={cm}
-              onChange={(e) => setCm(Number(e.target.value))} />
+              onChange={(e) => setCm(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="kg">Weight (kg)</label>
             <input id="kg" type="number" min="0" max="650" step="0.1" value={kg}
-              onChange={(e) => setKg(Number(e.target.value))} />
+              onChange={(e) => setKg(e.target.value)} />
           </div>
         </div>
       ) : (
@@ -53,22 +54,22 @@ export default function BmiWidget() {
           <div className="field">
             <label htmlFor="ft">Height (feet)</label>
             <input id="ft" type="number" min="0" max="8" value={ft}
-              onChange={(e) => setFt(Number(e.target.value))} />
+              onChange={(e) => setFt(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="in">Height (inches)</label>
             <input id="in" type="number" min="0" max="11" value={inch}
-              onChange={(e) => setInch(Number(e.target.value))} />
+              onChange={(e) => setInch(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="st">Weight (stone)</label>
             <input id="st" type="number" min="0" max="100" value={st}
-              onChange={(e) => setSt(Number(e.target.value))} />
+              onChange={(e) => setSt(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="lb">Weight (pounds)</label>
             <input id="lb" type="number" min="0" max="13" value={lb}
-              onChange={(e) => setLb(Number(e.target.value))} />
+              onChange={(e) => setLb(e.target.value)} />
           </div>
         </div>
       )}

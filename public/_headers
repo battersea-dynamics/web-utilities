@@ -1,0 +1,31 @@
+# Cloudflare Pages response headers.
+#
+# The problem this solves: Astro fingerprints CSS and JS filenames on every
+# build. If a browser caches the HTML, that stale HTML keeps asking for asset
+# filenames that no longer exist, and the page renders with no styling or
+# inert widgets. That is why a hard refresh has been needed after every deploy.
+#
+# The fix is the standard pairing for fingerprinted assets:
+#   HTML   — never cached, so a visitor always gets markup pointing at files
+#            that actually exist.
+#   Assets — cached forever, safe precisely because the filename changes
+#            whenever the contents do.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# Fingerprinted build output — the filename changes when the content does,
+# so this can be cached indefinitely.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Word-game dictionaries. Large, and regenerated only when the source list
+# changes, so a day of caching is a reasonable compromise.
+/data/*
+  Cache-Control: public, max-age=86400
+
+# Everything else is HTML. Revalidate every time.
+/*
+  Cache-Control: public, max-age=0, must-revalidate

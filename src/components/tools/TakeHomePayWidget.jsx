@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 import { takeHomePay, gbp } from './taxEngine.js';
 import { INCOME_TAX, LAST_VERIFIED, TAX_YEAR } from './taxData.js';
 
@@ -6,12 +7,12 @@ const REGIONS = ['rUK', 'scotland'];
 
 export default function TakeHomePayWidget() {
   const [region, setRegion] = useState('rUK');
-  const [salary, setSalary] = useState(35000);
-  const [pensionPercent, setPensionPercent] = useState(5);
+  const [salary, setSalary, salaryN] = useNumber(35000);
+  const [pensionPercent, setPensionPercent, pensionPercentN] = useNumber(5);
 
   const result = useMemo(
-    () => takeHomePay(salary, region, { pensionPercent }),
-    [salary, region, pensionPercent]
+    () => takeHomePay(salaryN, region, { pensionPercent: pensionPercentN }),
+    [salaryN, region, pensionPercentN]
   );
 
   return (
@@ -40,12 +41,12 @@ export default function TakeHomePayWidget() {
         <div className="field">
           <label htmlFor="salary">Gross annual salary (£)</label>
           <input id="salary" type="number" min="0" step="1000" value={salary}
-            onChange={(e) => setSalary(Number(e.target.value))} />
+            onChange={(e) => setSalary(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="pension">Pension contribution (%)</label>
           <input id="pension" type="number" min="0" max="100" step="0.5" value={pensionPercent}
-            onChange={(e) => setPensionPercent(Number(e.target.value))} />
+            onChange={(e) => setPensionPercent(e.target.value)} />
         </div>
       </div>
 

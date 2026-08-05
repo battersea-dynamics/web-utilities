@@ -1,34 +1,35 @@
 import { useState, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 import { amortise, gbp, monthsToText } from './mortgageEngine.js';
 
 export default function MortgageOverpaymentWidget() {
-  const [balance, setBalance] = useState(180000);
-  const [rate, setRate] = useState(4.5);
-  const [term, setTerm] = useState(22);
+  const [balance, setBalance, balanceN] = useNumber(180000);
+  const [rate, setRate, rateN] = useNumber(4.5);
+  const [term, setTerm, termN] = useNumber(22, 1);
 
-  const [monthlyOverpay, setMonthlyOverpay] = useState(200);
-  const [startMonth, setStartMonth] = useState(1);
-  const [lumpAmount, setLumpAmount] = useState(3000);
-  const [lumpMonth, setLumpMonth] = useState(6);
+  const [monthlyOverpay, setMonthlyOverpay, monthlyOverpayN] = useNumber(200);
+  const [startMonth, setStartMonth, startMonthN] = useNumber(1, 1);
+  const [lumpAmount, setLumpAmount, lumpAmountN] = useNumber(3000);
+  const [lumpMonth, setLumpMonth, lumpMonthN] = useNumber(6, 1);
   const [mode, setMode] = useState('reduce-term');
 
   const base = useMemo(
-    () => amortise({ principal: balance, annualRate: rate, years: term }),
-    [balance, rate, term]
+    () => amortise({ principal: balanceN, annualRate: rateN, years: termN }),
+    [balanceN, rateN, termN]
   );
 
   const withOverpay = useMemo(
     () =>
       amortise({
-        principal: balance,
-        annualRate: rate,
-        years: term,
-        monthlyOverpay,
-        overpayStartMonth: startMonth,
-        lumpSums: lumpAmount > 0 ? [{ month: lumpMonth, amount: lumpAmount }] : [],
+        principal: balanceN,
+        annualRate: rateN,
+        years: termN,
+        monthlyOverpay: monthlyOverpayN,
+        overpayStartMonth: startMonthN,
+        lumpSums: lumpAmountN > 0 ? [{ month: lumpMonthN, amount: lumpAmountN }] : [],
         overpayMode: mode,
       }),
-    [balance, rate, term, monthlyOverpay, startMonth, lumpAmount, lumpMonth, mode]
+    [balanceN, rateN, termN, monthlyOverpayN, startMonthN, lumpAmountN, lumpMonthN, mode]
   );
 
   const ok = base.ok && withOverpay.ok;
@@ -37,15 +38,15 @@ export default function MortgageOverpaymentWidget() {
 
   // Total extra actually handed over: the monthly amount only counts for the
   // months it was actually paid, which is from startMonth until the loan clears.
-  const overpayMonths = ok ? Math.max(0, withOverpay.months - startMonth + 1) : 0;
+  const overpayMonths = ok ? Math.max(0, withOverpay.months - startMonthN + 1) : 0;
   const totalOverpaid = ok
-    ? monthlyOverpay * overpayMonths + (lumpAmount > 0 ? lumpAmount : 0)
+    ? monthlyOverpayN * overpayMonths + (lumpAmountN > 0 ? lumpAmountN : 0)
     : 0;
   const savedPerPound = totalOverpaid > 0 ? interestSaved / totalOverpaid : 0;
 
   // The 10% annual allowance most UK fixed deals permit without penalty.
-  const annualOverpayment = monthlyOverpay * 12 + (lumpAmount > 0 ? lumpAmount : 0);
-  const allowance = balance * 0.1;
+  const annualOverpayment = monthlyOverpayN * 12 + (lumpAmountN > 0 ? lumpAmountN : 0);
+  const allowance = balanceN * 0.1;
   const overAllowance = annualOverpayment > allowance;
 
   return (
@@ -54,17 +55,17 @@ export default function MortgageOverpaymentWidget() {
         <div className="field">
           <label htmlFor="bal">Amount outstanding (£)</label>
           <input id="bal" type="number" min="0" step="1000" value={balance}
-            onChange={(e) => setBalance(Number(e.target.value))} />
+            onChange={(e) => setBalance(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="r">Interest rate (%)</label>
           <input id="r" type="number" min="0" max="20" step="0.05" value={rate}
-            onChange={(e) => setRate(Number(e.target.value))} />
+            onChange={(e) => setRate(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="t">Years left</label>
           <input id="t" type="number" min="1" max="40" value={term}
-            onChange={(e) => setTerm(Number(e.target.value))} />
+            onChange={(e) => setTerm(e.target.value)} />
         </div>
       </div>
 
@@ -72,22 +73,22 @@ export default function MortgageOverpaymentWidget() {
         <div className="field">
           <label htmlFor="mo">Monthly overpayment (£)</label>
           <input id="mo" type="number" min="0" step="25" value={monthlyOverpay}
-            onChange={(e) => setMonthlyOverpay(Number(e.target.value))} />
+            onChange={(e) => setMonthlyOverpay(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="sm">Starting in month</label>
           <input id="sm" type="number" min="1" value={startMonth}
-            onChange={(e) => setStartMonth(Math.max(1, Number(e.target.value)))} />
+            onChange={(e) => setStartMonth(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="la">One-off lump sum (£)</label>
           <input id="la" type="number" min="0" step="500" value={lumpAmount}
-            onChange={(e) => setLumpAmount(Number(e.target.value))} />
+            onChange={(e) => setLumpAmount(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="lm">Paid in month</label>
           <input id="lm" type="number" min="1" value={lumpMonth}
-            onChange={(e) => setLumpMonth(Math.max(1, Number(e.target.value)))} />
+            onChange={(e) => setLumpMonth(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="mode">Overpayment effect</label>

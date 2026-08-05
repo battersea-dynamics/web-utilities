@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 
 const WORDS = ('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor ' +
   'incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud ' +
@@ -23,21 +24,23 @@ function makeParagraph(sentences) {
 
 export default function LoremIpsumWidget() {
   const [unit, setUnit] = useState('paragraphs');
-  const [count, setCount] = useState(3);
+  const [count, setCount, countN] = useNumber(3, 1);
   const [startClassic, setStartClassic] = useState(true);
   const [copied, setCopied] = useState(false);
+
+  const safeCount = Math.min(50, Math.max(1, Math.floor(countN)));
 
   const output = useMemo(() => {
     let parts = [];
     if (unit === 'words') {
       const words = [];
-      for (let i = 0; i < count; i++) words.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
+      for (let i = 0; i < safeCount; i++) words.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
       parts = [words.join(' ')];
     } else if (unit === 'sentences') {
-      for (let i = 0; i < count; i++) parts.push(makeSentence(6, 16));
+      for (let i = 0; i < safeCount; i++) parts.push(makeSentence(6, 16));
       parts = [parts.join(' ')];
     } else {
-      for (let i = 0; i < count; i++) parts.push(makeParagraph(4 + Math.floor(Math.random() * 3)));
+      for (let i = 0; i < safeCount; i++) parts.push(makeParagraph(4 + Math.floor(Math.random() * 3)));
     }
 
     if (startClassic && parts.length) {
@@ -47,7 +50,7 @@ export default function LoremIpsumWidget() {
     }
 
     return parts.join('\n\n');
-  }, [unit, count, startClassic]);
+  }, [unit, safeCount, startClassic]);
 
   const copy = () => {
     navigator.clipboard?.writeText(output);
@@ -69,7 +72,7 @@ export default function LoremIpsumWidget() {
         <div className="field">
           <label htmlFor="count">How many</label>
           <input id="count" type="number" min="1" max="50" value={count}
-            onChange={(e) => setCount(Math.max(1, Number(e.target.value)))} />
+            onChange={(e) => setCount(e.target.value)} />
         </div>
       </div>
 

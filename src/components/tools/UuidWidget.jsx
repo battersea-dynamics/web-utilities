@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useNumber } from './useNumber.js';
 import { uuid } from './devEngine.js';
 
 export default function UuidWidget() {
-  const [count, setCount] = useState(5);
+  const [count, setCount, countN] = useNumber(5, 1);
   const [uppercase, setUppercase] = useState(false);
   const [braces, setBraces] = useState(false);
   const [list, setList] = useState(() => Array.from({ length: 5 }, uuid));
   const [copied, setCopied] = useState(false);
 
-  const generate = () => setList(Array.from({ length: count }, uuid));
+  const generate = () =>
+    setList(Array.from({ length: Math.min(500, Math.max(1, Math.floor(countN))) }, uuid));
 
   const format = (u) => {
     let s = uppercase ? u.toUpperCase() : u;
@@ -29,7 +31,7 @@ export default function UuidWidget() {
         <div className="field">
           <label htmlFor="count">How many</label>
           <input id="count" type="number" min="1" max="500" value={count}
-            onChange={(e) => setCount(Math.min(500, Math.max(1, Number(e.target.value) || 1)))} />
+            onChange={(e) => setCount(e.target.value)} />
         </div>
       </div>
 

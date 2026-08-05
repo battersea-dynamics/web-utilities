@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNumber } from './useNumber.js';
 import { PDFDocument, StandardFonts, degrees, rgb } from 'pdf-lib';
 import { readFile, download, formatBytes, pdfName } from './pdfHelpers.js';
 
@@ -6,9 +7,9 @@ export default function PdfWatermarkWidget() {
   const [file, setFile] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [text, setText] = useState('DRAFT');
-  const [opacity, setOpacity] = useState(0.15);
-  const [angle, setAngle] = useState(45);
-  const [fontSize, setFontSize] = useState(60);
+  const [opacity, setOpacity, opacityN] = useNumber(0.15, 0.15);
+  const [angle, setAngle, angleN] = useNumber(45);
+  const [fontSize, setFontSize, fontSizeN] = useNumber(60, 60);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -42,8 +43,8 @@ export default function PdfWatermarkWidget() {
 
       for (const page of doc.getPages()) {
         const { width, height } = page.getSize();
-        const textWidth = font.widthOfTextAtSize(text, fontSize);
-        const rad = (angle * Math.PI) / 180;
+        const textWidth = font.widthOfTextAtSize(text, fontSizeN);
+        const rad = (angleN * Math.PI) / 180;
 
         // Centre the rotated text by offsetting half its length along the
         // rotation vector.
@@ -53,11 +54,11 @@ export default function PdfWatermarkWidget() {
         page.drawText(text, {
           x,
           y,
-          size: fontSize,
+          size: fontSizeN,
           font,
           color: rgb(0.4, 0.4, 0.4),
-          opacity,
-          rotate: degrees(angle),
+          opacity: opacityN,
+          rotate: degrees(angleN),
         });
       }
 
@@ -98,17 +99,17 @@ export default function PdfWatermarkWidget() {
           <div className="field">
             <label htmlFor="op">Opacity</label>
             <input id="op" type="number" min="0.05" max="1" step="0.05" value={opacity}
-              onChange={(e) => setOpacity(Number(e.target.value))} />
+              onChange={(e) => setOpacity(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="ang">Angle (°)</label>
             <input id="ang" type="number" min="0" max="90" step="5" value={angle}
-              onChange={(e) => setAngle(Number(e.target.value))} />
+              onChange={(e) => setAngle(e.target.value)} />
           </div>
           <div className="field">
             <label htmlFor="wfs">Font size</label>
             <input id="wfs" type="number" min="10" max="140" step="5" value={fontSize}
-              onChange={(e) => setFontSize(Number(e.target.value))} />
+              onChange={(e) => setFontSize(e.target.value)} />
           </div>
         </div>
       )}

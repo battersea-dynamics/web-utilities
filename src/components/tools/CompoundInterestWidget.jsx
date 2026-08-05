@@ -1,28 +1,29 @@
 import { useState, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 import { compoundInterest, gbp } from './taxEngine.js';
 
 export default function CompoundInterestWidget() {
-  const [initial, setInitial] = useState(1000);
-  const [monthlyContribution, setMonthlyContribution] = useState(200);
-  const [annualRate, setAnnualRate] = useState(5);
-  const [years, setYears] = useState(20);
-  const [annualContributionIncrease, setIncrease] = useState(0);
+  const [initial, setInitial, initialN] = useNumber(1000);
+  const [monthlyContribution, setMonthlyContribution, monthlyContributionN] = useNumber(200);
+  const [annualRate, setAnnualRate, annualRateN] = useNumber(5);
+  const [years, setYears, yearsN] = useNumber(20, 1);
+  const [annualContributionIncrease, setIncrease, annualContributionIncreaseN] = useNumber(0);
   const [showTable, setShowTable] = useState(false);
 
   const result = useMemo(
     () =>
       compoundInterest({
-        initial,
-        monthlyContribution,
-        annualRate,
-        years,
-        annualContributionIncrease,
+        initial: initialN,
+        monthlyContribution: monthlyContributionN,
+        annualRate: annualRateN,
+        years: yearsN,
+        annualContributionIncrease: annualContributionIncreaseN,
       }),
-    [initial, monthlyContribution, annualRate, years, annualContributionIncrease]
+    [initialN, monthlyContributionN, annualRateN, yearsN, annualContributionIncreaseN]
   );
 
   // The same money with no growth at all, to show what the interest actually added.
-  const withoutGrowth = initial + monthlyContribution * Math.round(years * 12);
+  const withoutGrowth = initialN + monthlyContributionN * Math.round(yearsN * 12);
 
   return (
     <div>
@@ -30,28 +31,28 @@ export default function CompoundInterestWidget() {
         <div className="field">
           <label htmlFor="initial">Starting amount (£)</label>
           <input id="initial" type="number" min="0" step="100" value={initial}
-            onChange={(e) => setInitial(Number(e.target.value))} />
+            onChange={(e) => setInitial(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="monthly">Added each month (£)</label>
           <input id="monthly" type="number" min="0" step="25" value={monthlyContribution}
-            onChange={(e) => setMonthlyContribution(Number(e.target.value))} />
+            onChange={(e) => setMonthlyContribution(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="rate">Interest rate (% a year)</label>
           <input id="rate" type="number" min="0" max="30" step="0.1" value={annualRate}
-            onChange={(e) => setAnnualRate(Number(e.target.value))} />
+            onChange={(e) => setAnnualRate(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="years">Years</label>
           <input id="years" type="number" min="1" max="60" step="1" value={years}
-            onChange={(e) => setYears(Number(e.target.value))} />
+            onChange={(e) => setYears(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="inc">Increase contributions (% a year)</label>
           <input id="inc" type="number" min="0" max="20" step="0.5"
             value={annualContributionIncrease}
-            onChange={(e) => setIncrease(Number(e.target.value))} />
+            onChange={(e) => setIncrease(e.target.value)} />
         </div>
       </div>
 

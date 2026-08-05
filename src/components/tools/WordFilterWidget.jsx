@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 import { DEFAULT_LANGUAGE } from './languages.js';
 import LanguageSelect from './LanguageSelect.jsx';
 

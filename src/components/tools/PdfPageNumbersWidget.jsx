@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNumber } from './useNumber.js';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { readFile, download, formatBytes, pdfName } from './pdfHelpers.js';
 
@@ -16,9 +17,9 @@ export default function PdfPageNumbersWidget() {
   const [pageCount, setPageCount] = useState(0);
   const [position, setPosition] = useState('bottom-centre');
   const [format, setFormat] = useState('n');
-  const [startAt, setStartAt] = useState(1);
+  const [startAt, setStartAt, startAtN] = useNumber(1, 1);
   const [skipFirst, setSkipFirst] = useState(false);
-  const [fontSize, setFontSize] = useState(11);
+  const [fontSize, setFontSize, fontSizeN] = useNumber(11, 11);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -58,19 +59,19 @@ export default function PdfPageNumbersWidget() {
 
       pages.forEach((page, i) => {
         if (skipFirst && i === 0) return;
-        const shown = startAt + (skipFirst ? i - 1 : i);
-        const text = label(shown, numbered + startAt - 1);
+        const shown = startAtN + (skipFirst ? i - 1 : i);
+        const text = label(shown, numbered + startAtN - 1);
         const { width, height } = page.getSize();
-        const textWidth = font.widthOfTextAtSize(text, fontSize);
+        const textWidth = font.widthOfTextAtSize(text, fontSizeN);
         const pad = 28;
 
         let x = (width - textWidth) / 2;
         if (position.endsWith('right')) x = width - textWidth - pad;
         if (position.endsWith('left')) x = pad;
 
-        const y = position.startsWith('top') ? height - pad - fontSize : pad;
+        const y = position.startsWith('top') ? height - pad - fontSizeN : pad;
 
-        page.drawText(text, { x, y, size: fontSize, font, color: rgb(0.15, 0.15, 0.15) });
+        page.drawText(text, { x, y, size: fontSizeN, font, color: rgb(0.15, 0.15, 0.15) });
       });
 
       const out = await doc.save();
@@ -123,12 +124,12 @@ export default function PdfPageNumbersWidget() {
             <div className="field">
               <label htmlFor="start">Start numbering at</label>
               <input id="start" type="number" min="1" value={startAt}
-                onChange={(e) => setStartAt(Math.max(1, Number(e.target.value)))} />
+                onChange={(e) => setStartAt(e.target.value)} />
             </div>
             <div className="field">
               <label htmlFor="fs">Font size</label>
               <input id="fs" type="number" min="6" max="24" value={fontSize}
-                onChange={(e) => setFontSize(Number(e.target.value))} />
+                onChange={(e) => setFontSize(e.target.value)} />
             </div>
           </div>
 

@@ -1,19 +1,26 @@
 import { useState, useMemo } from 'react';
 import { amortise, gbp, monthsToText } from './mortgageEngine.js';
 
+// Numeric fields are held as strings so a half-typed or cleared box stays
+// exactly as typed. They are parsed only when the comparison is calculated.
 const blank = (label) => ({
   label,
-  price: 300000,
-  deposit: 45000,
-  rate: 4.5,
-  term: 25,
-  fee: 0,
+  price: '300000',
+  deposit: '45000',
+  rate: '4.5',
+  term: '25',
+  fee: '0',
 });
+
+const num = (v, fallback = 0) => {
+  const n = Number(String(v).trim());
+  return String(v).trim() === '' || !isFinite(n) ? fallback : n;
+};
 
 export default function MortgageCompareWidget() {
   const [deals, setDeals] = useState([
-    { ...blank('Deal A'), rate: 4.5, term: 25 },
-    { ...blank('Deal B'), rate: 4.2, term: 25, fee: 999 },
+    { ...blank('Deal A'), rate: '4.5', term: '25' },
+    { ...blank('Deal B'), rate: '4.2', term: '25', fee: '999' },
   ]);
 
   const update = (i, key, value) =>
@@ -32,8 +39,13 @@ export default function MortgageCompareWidget() {
   const results = useMemo(
     () =>
       deals.map((d) => {
-        const borrowed = Math.max(0, d.price - d.deposit);
-        const r = amortise({ principal: borrowed, annualRate: d.rate, years: d.term });
+        const borrowed = Math.max(0, num(d.price) - num(d.deposit));
+        const feeN = num(d.fee);
+        const r = amortise({
+          principal: borrowed,
+          annualRate: num(d.rate),
+          years: num(d.term, 1),
+        });
         // The fee is counted as a real cost of the deal, paid upfront.
         return {
           ...d,
@@ -41,8 +53,9 @@ export default function MortgageCompareWidget() {
           ok: r.ok,
           monthly: r.ok ? r.schedule[0].payment : NaN,
           totalInterest: r.ok ? r.totalInterest : NaN,
-          trueCost: r.ok ? r.totalInterest + Number(d.fee || 0) : NaN,
-          totalPaid: r.ok ? r.totalPaid + Number(d.fee || 0) : NaN,
+          feeN,
+          trueCost: r.ok ? r.totalInterest + feeN : NaN,
+          totalPaid: r.ok ? r.totalPaid + feeN : NaN,
           months: r.ok ? r.months : Infinity,
         };
       }),
@@ -78,27 +91,27 @@ export default function MortgageCompareWidget() {
             <div className="field">
               <label>Property price (£)</label>
               <input type="number" min="0" step="1000" value={d.price}
-                onChange={(e) => update(i, 'price', Number(e.target.value))} />
+                onChange={(e) => update(i, 'price', e.target.value)} />
             </div>
             <div className="field">
               <label>Deposit (£)</label>
               <input type="number" min="0" step="1000" value={d.deposit}
-                onChange={(e) => update(i, 'deposit', Number(e.target.value))} />
+                onChange={(e) => update(i, 'deposit', e.target.value)} />
             </div>
             <div className="field">
               <label>Rate (%)</label>
               <input type="number" min="0" max="20" step="0.05" value={d.rate}
-                onChange={(e) => update(i, 'rate', Number(e.target.value))} />
+                onChange={(e) => update(i, 'rate', e.target.value)} />
             </div>
             <div className="field">
               <label>Term (years)</label>
               <input type="number" min="1" max="40" value={d.term}
-                onChange={(e) => update(i, 'term', Number(e.target.value))} />
+                onChange={(e) => update(i, 'term', e.target.value)} />
             </div>
             <div className="field">
               <label>Fees (£)</label>
               <input type="number" min="0" step="50" value={d.fee}
-                onChange={(e) => update(i, 'fee', Number(e.target.value))} />
+                onChange={(e) => update(i, 'fee', e.target.value)} />
             </div>
           </div>
         ))}
@@ -135,7 +148,7 @@ export default function MortgageCompareWidget() {
             </tr>
             <tr>
               <td className="label-cell">Fees</td>
-              {results.map((r, i) => <td key={i}>{gbp(Number(r.fee || 0))}</td>)}
+              {results.map((r, i) => <td key={i}>{gbp(r.feeN)}</td>)}
             </tr>
             <tr>
               <td className="label-cell"><strong>Interest + fees</strong></td>

@@ -1,17 +1,18 @@
 import { useState, useMemo } from 'react';
+import { useNumber } from './useNumber.js';
 import { convertGlucose, GLUCOSE_FACTOR, LAST_VERIFIED } from './healthEngine.js';
 
 export default function BloodSugarWidget() {
   const [measure, setMeasure] = useState('glucose'); // glucose | hba1c
   const [from, setFrom] = useState('mmol');
-  const [value, setValue] = useState(5.5);
+  const [value, setValue, valueN] = useNumber(5.5);
 
-  const result = useMemo(() => convertGlucose(value, from), [value, from]);
+  const result = useMemo(() => convertGlucose(valueN, from), [valueN, from]);
 
   const pick = (m) => {
     setMeasure(m);
     setFrom(m === 'glucose' ? 'mmol' : 'ifcc');
-    setValue(m === 'glucose' ? 5.5 : 48);
+    setValue(m === 'glucose' ? '5.5' : '48');
   };
 
   const UNITS =
@@ -46,7 +47,7 @@ export default function BloodSugarWidget() {
         <div className="field">
           <label htmlFor="val">Reading</label>
           <input id="val" type="number" min="0" step="0.1" value={value}
-            onChange={(e) => setValue(Number(e.target.value))} />
+            onChange={(e) => setValue(e.target.value)} />
         </div>
         <div className="field">
           <label htmlFor="unit">In this unit</label>

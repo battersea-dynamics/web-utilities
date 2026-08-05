@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNumber } from './useNumber.js';
 import { PDFDocument } from 'pdf-lib';
 import { readFile, download, formatBytes } from './pdfHelpers.js';
 
@@ -13,7 +14,7 @@ export default function ImagesToPdfWidget() {
   const [files, setFiles] = useState([]);
   const [size, setSize] = useState('A4');
   const [orientation, setOrientation] = useState('auto');
-  const [margin, setMargin] = useState(36);
+  const [margin, setMargin, marginN] = useNumber(36);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -58,8 +59,8 @@ export default function ImagesToPdfWidget() {
         if (landscape) [w, h] = [h, w];
 
         const page = doc.addPage([w, h]);
-        const usableW = w - margin * 2;
-        const usableH = h - margin * 2;
+        const usableW = w - marginN * 2;
+        const usableH = h - marginN * 2;
         // Scale to fit inside the margins without distorting the image.
         const scale = Math.min(usableW / image.width, usableH / image.height);
         const drawW = image.width * scale;
@@ -132,7 +133,7 @@ export default function ImagesToPdfWidget() {
             <div className="field">
               <label htmlFor="margin">Margin (pt)</label>
               <input id="margin" type="number" min="0" max="144" step="6" value={margin}
-                onChange={(e) => setMargin(Number(e.target.value))} />
+                onChange={(e) => setMargin(e.target.value)} />
             </div>
           </div>
         </>
