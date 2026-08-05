@@ -85,13 +85,25 @@ npm run preview   # serve the built site locally
 
 ## What's built so far
 
+**33 tools across 41 pages, in five live categories.** Categories with no published tools are hidden automatically and appear the moment they gain one — see `src/data/site.js`.
+
 **Homepage** — a brand facade only: category cards, no individual tool content. Every tool lives on its own flat URL.
 
-**Money & Property** — mortgage calculator. Stamp duty, take-home pay and compound interest are scaffolded in `tools.json` but unpublished.
+**Financial Calculators (6)** — mortgage calculator, mortgage comparison, mortgage overpayment, stamp duty, take-home pay, compound interest.
 
-**Text Tools** — word unscrambler, anagram solver, words starting with, word counter, case converter, text diff checker, duplicate line remover, remove extra spaces, lorem ipsum generator, text reverser. Scrabble word finder and Words With Friends cheat are scaffolded but unpublished (they need their own scoring tables and game-specific dictionaries).
+**Health & Fitness Calculators (2)** — BMI calculator, blood sugar unit converter.
 
-**Site pages** — `/about` and `/privacy-policy`, both linked in the footer. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
+**Text Tools (10)** — word unscrambler, anagram solver, words starting with, word counter, case converter, text diff checker, duplicate line remover, remove extra spaces, lorem ipsum generator, text reverser.
+
+**Developer Tools (7)** — hash generator, UUID generator, Base64 encoder, URL encoder, JSON formatter, timestamp converter, number base converter.
+
+**PDF Tools (8)** — merge, split, delete pages, rotate, reorder, images to PDF, add page numbers, watermark.
+
+**Still stubs** — Scrabble word finder and Words With Friends cheat, both needing their own tournament dictionary and tile-value tables. **Unit Converters** exists as a category but has no tools yet, so it stays hidden.
+
+**Site pages** — `/about` (with the magpie story) and `/privacy-policy`, both linked in the footer alongside a feedback link. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
+
+**Tests** — 168, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
 
 ---
 
