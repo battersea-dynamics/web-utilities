@@ -1,0 +1,33 @@
+# Line endings.
+#
+# The problem this solves: the same generator run on Windows and on Linux
+# was producing byte-different files — identical content, different line
+# endings — which showed up as a 62-line diff on a licence file nobody had
+# touched. Pinning everything to LF in the repository means a regenerated
+# file only appears modified when its content actually changed.
+#
+# This is the same class of cross-platform trap as the npm lockfile: it
+# looks like nothing, and then it wastes an afternoon.
+
+* text=auto eol=lf
+
+# Generated data. Explicit rather than relying on auto-detection, since a
+# spurious diff across ~3MB of JSON is genuinely unreadable.
+*.json  text eol=lf
+*.txt   text eol=lf
+*.mjs   text eol=lf
+*.js    text eol=lf
+*.jsx   text eol=lf
+*.astro text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+
+# Never touch these.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.woff binary
+*.woff2 binary

@@ -1,0 +1,36 @@
+# Runs the same three commands Cloudflare runs, on every push and pull request.
+#
+# Why this exists: the lockfile has silently desynced three times, and each
+# time the first sign of it was a failed Cloudflare deploy — after the change
+# was already on main. `npm ci` is the check that matters, because it is what
+# Cloudflare actually runs and it refuses to install anything the lockfile
+# doesn't exactly describe. `npm install` would paper over the problem.
+
+name: CI
+
+on:
+  push:
+    branches: [main, previous]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Not `npm install` — that would rewrite the lockfile and hide the
+      # exact failure this workflow is here to catch.
+      - name: Install from the lockfile
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
