@@ -162,6 +162,47 @@
       "contentStatus": "complete"
     },
     {
+      "slug": "bmi-calculator",
+      "title": "BMI Calculator",
+      "titleSuffix": "Body Mass Index",
+      "h1": "BMI Calculator",
+      "category": "health",
+      "metaDescription": "Work out your BMI in metric or imperial units, see the WHO category it falls in, and the healthy weight range for your height. Free and instant.",
+      "keywords": [
+        "bmi calculator",
+        "body mass index calculator",
+        "bmi chart"
+      ],
+      "related": [
+        "blood-sugar-converter",
+        "take-home-pay-calculator",
+        "compound-interest-calculator"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "blood-sugar-converter",
+      "title": "Blood Sugar Converter",
+      "titleSuffix": "mmol/L to mg/dL",
+      "h1": "Blood Sugar Unit Converter",
+      "category": "health",
+      "metaDescription": "Convert blood glucose between mmol/L and mg/dL, and HbA1c between mmol/mol and percent. The UK and US use different units for both measurements.",
+      "keywords": [
+        "blood sugar converter",
+        "mmol/l to mg/dl",
+        "hba1c converter",
+        "glucose conversion"
+      ],
+      "related": [
+        "bmi-calculator",
+        "mortgage-calculator",
+        "word-counter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
       "slug": "word-unscrambler",
       "title": "Word Unscrambler",
       "titleSuffix": "Find Words From Letters",

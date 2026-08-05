@@ -1,0 +1,74 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import BloodSugarWidget from '../components/tools/BloodSugarWidget.jsx';
+
+const faq = [
+  {
+    q: 'Why are there two different units for blood sugar?',
+    a: 'History rather than logic. The UK, Ireland and most of Europe measure glucose in mmol/L, which counts molecules. The US, France and Japan use mg/dL, which measures weight per volume. Both describe the same thing, so converting between them is exact arithmetic.',
+  },
+  {
+    q: 'How do I convert mmol/L to mg/dL?',
+    a: 'Multiply by 18. More precisely 18.0182, which comes from the molar mass of glucose. To go the other way, divide by the same number. A reading of 5.5 mmol/L is about 99 mg/dL.',
+  },
+  {
+    q: 'What is HbA1c and why does it have its own units?',
+    a: 'HbA1c reflects your average blood sugar over roughly the previous three months, rather than a single moment. It is reported either in mmol/mol under the IFCC standard used in the UK, or as a percentage under the older DCCT standard still common in the US.',
+  },
+  {
+    q: 'How do the HbA1c units relate?',
+    a: 'Through a fixed linear formula: mmol/mol = (10.93 × percent) − 23.5. So 48 mmol/mol is 6.5%, and 53 mmol/mol is 7.0%. Those two pairs are the values you will most often see quoted together.',
+  },
+  {
+    q: 'Is the conversion exact?',
+    a: 'Yes, both are fixed mathematical relationships rather than estimates, so nothing is lost in translation. The only thing to watch is rounding — a value shown to one decimal place will convert to something slightly different from the same value shown to two.',
+  },
+  {
+    q: 'Can this tell me whether my reading is normal?',
+    a: 'No, and deliberately so. It converts units and nothing else. What a reading means depends on when it was taken, whether you had eaten, your treatment and your medical history — all of which need a doctor or diabetes team rather than a web page.',
+  },
+];
+---
+<ToolPage slug="blood-sugar-converter" faq={faq}>
+  <BloodSugarWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Convert blood glucose between mmol/L and mg/dL, and HbA1c between mmol/mol
+    and percent. Different countries use different units for both, so anyone
+    reading foreign guidance, using an imported meter, or comparing notes with
+    someone abroad ends up needing this.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Both conversions are fixed relationships, not approximations.
+    </p>
+    <p>
+      Glucose is measured either as a concentration of molecules (mmol/L) or as
+      a weight per volume (mg/dL). Converting between them means going through
+      the molar mass of glucose, 180.156 g/mol, which gives a factor of
+      <code>18.0182</code>. Multiply mmol/L by it for mg/dL; divide to come back.
+    </p>
+    <p>
+      HbA1c is different. The older DCCT percentage and the newer IFCC mmol/mol
+      measure the same thing on different scales, related by
+      <code>mmol/mol = (10.93 × %) − 23.5</code>. It is worth noting this is a
+      straight line with an offset, not a simple multiplication, so you cannot
+      convert it in your head the way you can with glucose.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A fasting reading of 7.0 mmol/L converts to 126 mg/dL. Those two figures
+      are quoted as the diabetes diagnostic threshold in their respective
+      countries, which is a useful check that the conversion is working — they
+      are the same number expressed two ways, not two different standards.
+    </p>
+    <p>
+      On the HbA1c side, 48 mmol/mol and 6.5% are similarly the same value in
+      the two systems. A UK patient told their HbA1c is 53 will find American
+      material discussing the identical result as 7.0%.
+    </p>
+  </div>
+</ToolPage>

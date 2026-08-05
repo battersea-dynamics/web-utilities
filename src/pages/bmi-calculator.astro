@@ -1,0 +1,72 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import BmiWidget from '../components/tools/BmiWidget.jsx';
+
+const faq = [
+  {
+    q: 'What counts as a healthy BMI?',
+    a: 'The World Health Organization puts the healthy adult range at 18.5 to 24.9. Below 18.5 is classed as underweight, 25 to 29.9 as overweight, and 30 and above as obesity, which is further split into three classes.',
+  },
+  {
+    q: 'Why does BMI get criticised so much?',
+    a: 'Because it only knows your height and weight. Muscle is denser than fat, so athletes and very active people often register as overweight while carrying little fat. It also says nothing about where fat is stored, which matters — fat around the middle carries more health risk than the same amount elsewhere.',
+  },
+  {
+    q: 'Is BMI accurate for everyone?',
+    a: 'No. It is designed for adults aged roughly 18 to 65 and is unreliable during pregnancy, for children and teenagers, for older adults who have lost muscle, and for anyone with a limb difference. Children use age and sex-adjusted centiles instead of these fixed thresholds.',
+  },
+  {
+    q: 'Do the thresholds differ by ethnicity?',
+    a: 'Yes. NICE advises lower thresholds for people of South Asian, Chinese, Black African, African-Caribbean and Middle Eastern family background, because the health risks associated with excess weight appear at a lower BMI in these groups. This calculator shows the standard WHO figures, so bear that in mind if it applies to you.',
+  },
+  {
+    q: 'What does the healthy weight range tell me?',
+    a: 'It converts the 18.5 to 24.9 band back into weights for your specific height, which is usually more useful than the BMI number itself — it gives you an actual figure in kilograms or stones rather than an abstract index.',
+  },
+  {
+    q: 'Should I act on this number?',
+    a: 'Treat it as a screening figure and nothing more. It is a starting point for a conversation, not a diagnosis. If your weight is concerning you in either direction, a GP can look at the whole picture — including things BMI cannot see.',
+  },
+];
+---
+<ToolPage slug="bmi-calculator" faq={faq}>
+  <BmiWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Work out your body mass index in either metric or imperial units, see which
+    World Health Organization category it falls into, and — more usefully — the
+    weight range that would put you in the healthy band for your height.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      BMI is weight in kilograms divided by height in metres squared.
+    </p>
+    <p><code>BMI = kg ÷ m²</code></p>
+    <p>
+      That is the whole formula. Imperial measurements are converted first —
+      feet and inches to centimetres, stones and pounds to kilograms — and then
+      the same calculation runs, which is why the two unit systems always agree.
+    </p>
+    <p>
+      The healthy weight range shown underneath works the formula backwards:
+      it takes the 18.5 and 24.9 thresholds and multiplies each by your height
+      squared, giving the actual weights those limits correspond to for you.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Someone 175 cm tall weighing 70 kg has a BMI of 22.9 — inside the healthy
+      band. For that height, the healthy range runs from about 57 kg to 76 kg,
+      which is a span of nearly three stone. BMI bands are wider than people
+      often assume.
+    </p>
+    <p>
+      The same person at 95 kg would have a BMI of 31.0, falling into obesity
+      class I. But if they were a rugby forward carrying substantial muscle, the
+      figure would say very little about their actual health — which is the
+      clearest illustration of what the measure can and cannot do.
+    </p>
+  </div>
+</ToolPage>
