@@ -102,6 +102,11 @@ const faqSchema = faq.length
         </ul>
       </section>
     )}
+
+    <!-- Optional: data-source credits, where a licence requires attribution -->
+    {Astro.slots.has('credits') && (
+      <p class="credits"><slot name="credits" /></p>
+    )}
   </div>
 
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />

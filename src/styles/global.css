@@ -534,6 +534,71 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-list { margin: 0.2rem 0 0; }
 
+/* Clickable words.
+   These are real buttons, for keyboard and screen-reader support, but they
+   must read as ordinary running text — the list is meant to be scanned, and
+   anything that chips or boxes each word destroys that. So: no chrome at
+   all until hover or focus, when a dotted underline shows it can be
+   clicked. The vertical padding is there to give a small word a usable tap
+   target on a phone without opening gaps in the line. */
+.word {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0.15rem 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-bottom: 1px dotted transparent;
+}
+.word:hover,
+.word:focus-visible {
+  color: var(--accent);
+  border-bottom-color: currentColor;
+}
+.word.is-picked {
+  color: var(--accent);
+  font-weight: 600;
+  border-bottom-color: currentColor;
+}
+
+/* The "click to show" note. Deliberately quiet: the words are the product,
+   this is a signpost to a secondary feature. */
+.word-hint {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* Definition panel. min-height keeps the page from jumping as you move
+   between words of different definition lengths. */
+.word-def {
+  margin-top: var(--sp-1);
+  padding: var(--sp-2);
+  min-height: 3.4rem;
+  background: var(--accent-tint);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.word-pos {
+  margin-left: 0.4rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.word-gloss { display: block; margin-top: 0.2rem; }
+
+/* Data-source attribution, where a licence requires it to be shown. */
+.credits {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-2);
+  border-top: var(--border);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
 /* Cross-links out of a tool */
 .tool-actions {
   margin-top: var(--sp-4);

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { loadWordIndex, findWords, fullLengthAnagrams } from './wordEngine.js';
 import { DEFAULT_LANGUAGE } from './languages.js';
 import LanguageSelect from './LanguageSelect.jsx';
+import WordList from './WordList.jsx';
 
 /**
  * Powers both /word-unscrambler and /anagram-solver. `mode="anagram"`
@@ -73,11 +74,15 @@ export default function UnscrambleWidget({ mode = 'unscramble' }) {
 
       {status === 'ready' && letters.trim() && (
         <div className="results results-block">
+          {totalFound > 0 && (
+            <p className="word-hint">Click any word to see what it means.</p>
+          )}
+
           {mode === 'anagram' && (
             <div className="stack-lg">
               <div className="label">Full anagrams (use every letter)</div>
               {exact.length > 0 ? (
-                <p className="word-list">{exact.join(', ')}</p>
+                <WordList words={exact} lang={lang} />
               ) : (
                 <p className="muted">None found.</p>
               )}
@@ -98,7 +103,7 @@ export default function UnscrambleWidget({ mode = 'unscramble' }) {
                   <span className="word-group-head">
                     {g.length} letters ({g.words.length})
                   </span>
-                  <p className="word-list">{g.words.join(', ')}</p>
+                  <WordList words={g.words} lang={lang} />
                 </div>
               ))}
             </div>

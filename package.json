@@ -21,6 +21,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "wordlist-english": "^1.2.1"
+    "wordlist-english": "^1.2.1",
+    "wordnet-db": "^3.1.14"
   }
 }

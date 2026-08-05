@@ -4,6 +4,10 @@ import UnscrambleWidget from '../components/tools/UnscrambleWidget.jsx';
 
 const faq = [
   {
+    q: 'Can I see what a word means?',
+    a: 'Yes — click any word in the results and its definition appears underneath. Definitions are only fetched when you ask for one, so they never slow the search down. About one word in twelve has no definition available; those are still valid words, we just don\u2019t hold a meaning for them.',
+  },
+  {
     q: 'What counts as a true anagram?',
     a: 'A word or phrase made by rearranging every letter of the original, using each one exactly once. This tool shows those full-length matches first, separate from shorter words hidden inside your letters.',
   },
@@ -60,4 +64,11 @@ const faq = [
       <em>nest</em> and <em>tin</em>.
     </p>
   </div>
+
+  <Fragment slot="credits">
+    Word definitions are from <a href="https://wordnet.princeton.edu/" rel="nofollow noopener" target="_blank">WordNet 3.1</a>,
+    Princeton University. WordNet is used here under its own licence, which permits
+    free use provided this notice is retained.
+  </Fragment>
+
 </ToolPage>

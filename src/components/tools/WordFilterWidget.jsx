@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNumber } from './useNumber.js';
 import { DEFAULT_LANGUAGE } from './languages.js';
 import LanguageSelect from './LanguageSelect.jsx';
+import WordList from './WordList.jsx';
 
 const wordsCache = new Map();
 function loadWords(lang) {
@@ -96,10 +97,18 @@ export default function WordFilterWidget() {
           <div className="label">
             {results.length.toLocaleString()} match{results.length === 1 ? '' : 'es'}
           </div>
-          <p className="word-list">
-            {results.slice(0, MAX_SHOWN).join(', ')}
-            {results.length > MAX_SHOWN && ` … and ${results.length - MAX_SHOWN} more`}
-          </p>
+          {results.length > 0 && (
+            <p className="word-hint">Click any word to see what it means.</p>
+          )}
+          <WordList
+            words={results.slice(0, MAX_SHOWN)}
+            lang={lang}
+            suffix={
+              results.length > MAX_SHOWN
+                ? ` … and ${(results.length - MAX_SHOWN).toLocaleString()} more`
+                : null
+            }
+          />
         </div>
       )}
     </div>

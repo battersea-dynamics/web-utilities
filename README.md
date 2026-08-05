@@ -103,7 +103,7 @@ npm run preview   # serve the built site locally
 
 **Site pages** — `/about` (with the magpie story) and `/privacy-policy`, both linked in the footer alongside a feedback link. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
 
-**Tests** — 168, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
+**Tests** — 189, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
 
 ---
 
@@ -193,17 +193,30 @@ The word tools read two static JSON files that are **generated, not hand-edited*
 ```
 public/data/en/word-index.json    sorted-letters → words, for anagram/subset lookup
 public/data/en/words.json         flat list, for prefix/suffix/contains search
+public/data/en/defs/{a-z}.json    definitions, one file per starting letter
 ```
 
-Both are checked into the repo, so a normal `npm install && npm run build` needs nothing extra. Only re-run the generator if the source word list changes:
+All are checked into the repo, so a normal `npm install && npm run build` needs nothing extra. Only re-run the generators if the source word list changes:
 
 ```bash
 node scripts/build-word-index.mjs
+node scripts/build-definitions.mjs
 ```
 
 Source is the `wordlist-english` package (SCOWL-derived), using frequency tiers 10–60 — everyday recognisable English. Tier 70+ is deliberately excluded: that's where dialect, archaic and obscure entries live, which is wrong for a general unscrambler even though it's exactly right for a competitive Scrabble dictionary. When the Scrabble and Words With Friends tools get built, they'll want their own separate, fuller dictionaries.
 
 Data is namespaced by language (`public/data/<lang>/`) and the widgets have a language picker with English live and French/Spanish/German listed as coming soon. Adding a language means: source a word list, add a case to the generator, regenerate.
+
+### Word definitions
+
+Clicking any word in a result list shows what it means. **The definitions are never downloaded with the results** — only when a word is actually clicked, and only the file for that starting letter, so a lookup costs roughly 40KB rather than the ~1MB the full set would. That is the whole reason for the 26-file split; don't merge them back into one.
+
+Source is **WordNet 3.1** (Princeton), via the MIT-licensed `wordnet-db` dev dependency. WordNet's own licence permits commercial use provided the copyright notice is kept, so **the attribution at the bottom of the three word tool pages is a licence condition, not decoration.** Leave it in place, and add it to any new page that shows definitions.
+
+Two things worth knowing about the generator:
+
+- **Sense selection.** WordNet's `data.*` files are ordered by synset offset, not by meaning, so taking the first entry gives the wrong definition — `rain` came out as "anything happening rapidly", the *rain of bullets* sense. The generator reads `index.sense` instead and picks the sense with the highest semantic-concordance tag count, i.e. the one most observed in real tagged text.
+- **Coverage is 91.8%, not 100%.** WordNet stores base forms only, so inflections are resolved with suffix rules (`berries → berry`, `knives → knife`). The package doesn't ship WordNet's exception lists, so irregulars like `ran` and `geese` stay unresolved. The UI says so plainly rather than pretending the word isn't real, and a missing or broken shard degrades to "no definition" instead of breaking the tool — the word list is the product, definitions are a bonus.
 
 ---
 
