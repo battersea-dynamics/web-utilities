@@ -186,6 +186,24 @@ summary:focus-visible {
 /* Top of the homepage, above the category grid. */
 .page-head { padding-top: var(--sp-6); }
 
+/* Brand mark. Inherits colour via currentColor, so it works on any
+   background — set `color` on the parent to recolour it. */
+.logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+}
+.logo-panel {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin: var(--sp-4) 0 var(--sp-5);
+}
+.logo-panel .logo { width: 8rem; flex-shrink: 0; }
+.logo-panel .logo-caption { flex: 1 1 16rem; color: var(--ink-soft); margin: 0; }
+
 /* ---------- §5 TYPOGRAPHY ---------------------------------- */
 
 h1 {
