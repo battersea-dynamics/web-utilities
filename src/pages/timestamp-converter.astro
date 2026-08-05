@@ -1,0 +1,73 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import TimestampWidget from '../components/tools/TimestampWidget.jsx';
+
+const faq = [
+  {
+    q: 'What is a Unix timestamp?',
+    a: 'The number of seconds elapsed since midnight UTC on 1 January 1970, known as the epoch. It is a single integer with no timezone attached, which is exactly why systems use it — there is no ambiguity about what moment it refers to.',
+  },
+  {
+    q: 'Seconds or milliseconds — how do I tell?',
+    a: 'By length. A current timestamp in seconds is ten digits; in milliseconds it is thirteen. If a date comes out in 1970, you have almost certainly passed milliseconds to something expecting seconds.',
+  },
+  {
+    q: 'Why does the local time differ from the UTC one?',
+    a: 'Because the timestamp itself has no timezone. The UTC line is the canonical moment; the local line is that same moment expressed in your device\'s timezone, including any daylight saving offset in force on that date.',
+  },
+  {
+    q: 'How should I type a date to convert it?',
+    a: 'ISO 8601 is the safest — 2026-08-05T09:30:00Z. Without a trailing Z it is read as your local time rather than UTC, which shifts the result by your offset. That single character is a common source of confusion.',
+  },
+  {
+    q: 'What is the year 2038 problem?',
+    a: 'Systems storing timestamps as signed 32-bit integers run out of room in January 2038 and wrap around to negative numbers. Modern systems use 64-bit values and are unaffected, but the issue persists in older embedded software.',
+  },
+  {
+    q: 'Can timestamps be negative?',
+    a: 'Yes — anything before 1970 is negative. Historical dates convert perfectly well, so a timestamp of -86400 is 31 December 1969.',
+  },
+];
+---
+<ToolPage slug="timestamp-converter" faq={faq}>
+  <TimestampWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Convert Unix timestamps into readable dates and back again, in seconds or
+    milliseconds, with a live clock showing the current epoch time. Useful
+    whenever a log file or database column gives you a bare number.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      A Unix timestamp counts seconds from the epoch — midnight UTC on
+      1 January 1970. Converting to a date means multiplying to milliseconds
+      and handing the result to the browser's date handling, which knows about
+      leap years, leap seconds and every timezone rule.
+    </p>
+    <p>
+      The crucial thing to understand is that the timestamp carries no timezone.
+      It identifies a moment, not a local time. The same number is 9am in London
+      and 4am in New York, which is why every result here shows both the UTC
+      form and your own local rendering of the same instant.
+    </p>
+    <p>
+      Going the other way, a date string without an explicit timezone is
+      interpreted as local time. Adding <code>Z</code> forces UTC, and the
+      difference between the two can be several hours.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      The timestamp <code>1700000000</code> is 14 November 2023 at 22:13:20 UTC.
+      In milliseconds the same instant is <code>1700000000000</code> — three
+      digits longer, which is the quickest way to tell the two apart at a glance.
+    </p>
+    <p>
+      The epoch itself, <code>0</code>, converts to 1 January 1970 at midnight
+      UTC. Seeing that date in an application almost always means a missing or
+      zero value rather than a genuine record from 1970.
+    </p>
+  </div>
+</ToolPage>

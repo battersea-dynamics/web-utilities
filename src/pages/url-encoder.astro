@@ -1,0 +1,70 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import UrlEncoderWidget from '../components/tools/UrlEncoderWidget.jsx';
+
+const faq = [
+  {
+    q: 'Why do URLs need encoding at all?',
+    a: 'Because a URL has structure. Characters like ? & = / and # mean something specific, so when a value contains one of them it must be escaped or it will be misread as part of the URL rather than as data.',
+  },
+  {
+    q: 'What is the difference between the two modes?',
+    a: 'Encoding a single value escapes the structural characters too, which is what you want for one query parameter. Encoding a whole URL leaves them intact so the address still works, and only escapes things like spaces and accented characters.',
+  },
+  {
+    q: 'Why do spaces sometimes become %20 and sometimes +?',
+    a: 'Both appear in the wild. %20 is correct in a URL path and works everywhere. The + form comes from HTML form submissions, where it is valid inside a query string but not in a path. This tool produces %20, which is the safer choice.',
+  },
+  {
+    q: 'What does %XX actually mean?',
+    a: 'A percent sign followed by the two-digit hexadecimal value of the byte. A space is byte 32, which is 20 in hex, giving %20. Characters outside ASCII become several escapes in a row, one per UTF-8 byte.',
+  },
+  {
+    q: 'Why did decoding fail?',
+    a: 'Almost always a stray percent sign. A % must be followed by two valid hex digits, so a literal percent in text needs to be written as %25. A sequence like 100%25 decodes to 100%, whereas a bare 100% is malformed.',
+  },
+  {
+    q: 'Should I encode the whole URL or just the parameter?',
+    a: 'Just the parameter, nearly always. Encoding a complete URL and pasting it somewhere expecting a link tends to produce something that no longer works, because the slashes and question marks have been escaped away.',
+  },
+];
+---
+<ToolPage slug="url-encoder" faq={faq}>
+  <UrlEncoderWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Percent-encode text so it can travel safely inside a URL, or decode an
+    escaped string back to something readable. Choose whether you are handling
+    a single value or an entire address, because the two need different rules.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Percent-encoding replaces a character with <code>%</code> followed by its
+      byte value in hexadecimal. Non-ASCII characters are first converted to
+      UTF-8, then each byte is escaped separately — which is why an accented
+      letter becomes two escapes and an emoji becomes four.
+    </p>
+    <p>
+      The distinction between the two modes is which characters count as
+      reserved. Treating the input as a single value escapes <code>/ ? &amp; = #</code>{' '}
+      along with everything else, because inside a parameter those are data.
+      Treating it as a whole URL leaves them alone, because there they are
+      structure.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      The value <code>a b&amp;c=d</code> encodes to <code>a%20b%26c%3Dd</code>.
+      Without that escaping, the <code>&amp;</code> would start a new parameter
+      and the <code>=</code> would split it — so the receiving server would see
+      two parameters instead of one value.
+    </p>
+    <p>
+      Decoding works the same way in reverse, and is the quicker way to read a
+      long tracking URL: paste it in and the readable version usually makes the
+      structure obvious.
+    </p>
+  </div>
+</ToolPage>

@@ -1,0 +1,76 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import HashWidget from '../components/tools/HashWidget.jsx';
+
+const faq = [
+  {
+    q: 'Which hash should I use?',
+    a: 'SHA-256 is the sensible default for anything security-related. MD5 and SHA-1 are both broken — collisions can be produced deliberately — so they should never be used for passwords, signatures or certificates, though they remain perfectly serviceable for checking a download arrived intact.',
+  },
+  {
+    q: 'Can a hash be reversed?',
+    a: 'Not directly. Hashing is one-way by design. But short or common inputs can be found by brute force or looked up in precomputed tables, which is why passwords need a salt and a deliberately slow algorithm such as bcrypt or Argon2 rather than a raw SHA hash.',
+  },
+  {
+    q: 'Why does an empty box still produce a hash?',
+    a: 'Because the empty string is valid input. Its SHA-256 value, beginning e3b0c442, is one of the most recognisable constants in computing — you will see it whenever something hashed nothing at all, which is often a useful clue.',
+  },
+  {
+    q: 'Does the same text always give the same hash?',
+    a: 'Always, on any machine, in any language. That determinism is the entire point — it is what lets you verify a file matches the one someone else has. Change one character and the output changes completely.',
+  },
+  {
+    q: 'Is my input sent to a server?',
+    a: 'No. SHA hashing uses the Web Crypto API built into your browser, and the MD5 implementation runs in JavaScript on your machine. Nothing you paste leaves the page, which matters if you are hashing anything sensitive.',
+  },
+  {
+    q: 'Why is MD5 included if it is insecure?',
+    a: 'Because plenty of real work still needs it. Software vendors publish MD5 checksums, older systems store MD5 digests, and verifying those is a legitimate task. It is included with the warning attached rather than left out.',
+  },
+];
+---
+<ToolPage slug="hash-generator" faq={faq}>
+  <HashWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Generate MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hashes from any text,
+    all five at once and updating as you type. Useful for verifying downloads,
+    comparing checksums, or generating a fingerprint for a string.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      A hash function takes input of any length and produces a fixed-length
+      output. SHA-256 always returns 64 hexadecimal characters whether you feed
+      it one letter or an entire book. The mapping is deterministic — identical
+      input always gives identical output — but effectively impossible to run
+      backwards.
+    </p>
+    <p>
+      The SHA hashes here come from the Web Crypto API, the same implementation
+      the browser uses for HTTPS, so results are exact. MD5 is implemented in
+      JavaScript because browsers deliberately exclude it from Web Crypto on
+      the grounds that it is no longer cryptographically sound.
+    </p>
+    <p>
+      Text is converted to UTF-8 bytes before hashing, which is what makes
+      accented characters and emoji hash consistently with other tools and
+      programming languages.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      The string <code>abc</code> hashes to <code>900150983cd24fb0d6963f7d28e17f72</code>{' '}
+      in MD5 and <code>ba7816bf8f01cfea…</code> in SHA-256. Those exact values
+      appear in the published specifications for both algorithms, which makes
+      them a quick way to confirm any hashing tool is behaving correctly.
+    </p>
+    <p>
+      Change the input to <code>abd</code> — a single letter — and every
+      character of the output changes. That property, sometimes called the
+      avalanche effect, is why a hash is a reliable fingerprint: two nearly
+      identical files produce completely unrelated hashes.
+    </p>
+  </div>
+</ToolPage>

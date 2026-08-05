@@ -1,0 +1,76 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import NumberBaseWidget from '../components/tools/NumberBaseWidget.jsx';
+
+const faq = [
+  {
+    q: 'Why does hexadecimal use letters?',
+    a: 'Base 16 needs sixteen digits and we only have ten, so A to F stand in for the values ten to fifteen. Hex is popular because one hex digit maps exactly to four bits, making it a compact way to write binary.',
+  },
+  {
+    q: 'What are the 0x and 0b prefixes?',
+    a: 'Conventions from programming languages marking which base a literal is written in — 0x for hex, 0b for binary, 0o for octal. They are not part of the number. This tool strips them automatically so you can paste code straight in.',
+  },
+  {
+    q: 'Why does it reject some digits?',
+    a: 'Because they do not exist in the base you chose. There is no digit 2 in binary, and no F in decimal. Many converters silently stop reading at the first invalid character and return a wrong answer, which is worse than an error.',
+  },
+  {
+    q: 'Where is octal still used?',
+    a: 'Mostly Unix file permissions. A mode of 755 is octal, and each digit is three bits representing read, write and execute. That is why permissions are conventionally written as three digits rather than in decimal.',
+  },
+  {
+    q: 'What does "bits needed" tell me?',
+    a: 'How many binary digits the value requires, which indicates the smallest integer type that can hold it. Anything needing more than 32 bits will not fit in a standard 32-bit integer, which is worth knowing before storing it.',
+  },
+  {
+    q: 'Is there a maximum?',
+    a: 'JavaScript handles integers exactly up to about 9 quadrillion — 2 to the power of 53. Beyond that, precision is lost and the result cannot be trusted, so very large values need specialist arbitrary-precision tools.',
+  },
+];
+---
+<ToolPage slug="number-base-converter" faq={faq}>
+  <NumberBaseWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Convert a number between binary, octal, decimal and hexadecimal, seeing all
+    four at once. Prefixes like <code>0x</code> are handled automatically, and
+    digits that are invalid for the base you picked are flagged rather than
+    quietly ignored.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      A base is simply how many distinct digits are available before you need
+      another column. Decimal has ten, binary two, octal eight, hexadecimal
+      sixteen. The underlying quantity never changes — only how it is written.
+    </p>
+    <p>
+      Conversion works by reading the input into a single numeric value using
+      the source base, then writing that value out in each target base. Before
+      that, every character is checked against the source base, so a stray{' '}
+      <code>9</code> in an octal number produces an error instead of a plausible
+      but wrong answer.
+    </p>
+    <p>
+      Binary and hexadecimal line up neatly: each hex digit is exactly four
+      bits. That relationship is why hex is used for colours, memory addresses
+      and byte dumps — it is binary, four times shorter.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Decimal <code>255</code> is <code>11111111</code> in binary,{' '}
+      <code>377</code> in octal and <code>FF</code> in hex. The binary form is
+      eight ones, which is exactly one byte with every bit set — which is why
+      255 turns up everywhere in computing, from colour channels to network
+      masks.
+    </p>
+    <p>
+      That connection is visible in web colours: <code>#FFFFFF</code> is white
+      because each of the three channels is set to its maximum of 255. Convert
+      <code>FF</code> from hex and the reason becomes obvious.
+    </p>
+  </div>
+</ToolPage>

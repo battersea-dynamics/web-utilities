@@ -512,10 +512,17 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 .diff-add { background: var(--accent-tint); color: var(--good-ink); }
 .diff-del { background: var(--warn-bg); color: var(--warn-ink); }
 
-/* Case converter output rows */
+/* Case converter and hash output rows */
 .case-row {
   border-top: var(--border);
   padding: var(--sp-2) 0;
+}
+
+/* Long monospace values — hashes, encoded strings, big numbers. */
+.hash-value {
+  font-family: var(--font-num);
+  font-size: var(--text-sm);
+  word-break: break-all;
 }
 
 /* Word-game result groups */

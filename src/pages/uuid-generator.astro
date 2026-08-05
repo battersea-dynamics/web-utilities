@@ -1,0 +1,71 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import UuidWidget from '../components/tools/UuidWidget.jsx';
+
+const faq = [
+  {
+    q: 'What is a UUID?',
+    a: 'A 128-bit identifier written as 32 hexadecimal characters in five hyphen-separated groups. The point is that anyone can generate one independently, without coordinating with anyone else, and still be confident it will not clash with someone else\'s.',
+  },
+  {
+    q: 'What does version 4 mean?',
+    a: 'Version 4 UUIDs are almost entirely random — 122 of the 128 bits, with the remaining six fixed to mark the version and variant. Other versions derive values from timestamps or names instead. Version 4 is the one to use unless you have a specific reason otherwise.',
+  },
+  {
+    q: 'Could two ever be the same?',
+    a: 'In theory yes, in practice no. With 122 random bits you would need to generate billions per second for many years before a collision became likely. It is a risk people accept in banking systems, so it is fine for most things.',
+  },
+  {
+    q: 'Are these safe to use in production?',
+    a: 'Yes. They come from your browser\'s cryptographic random number generator, not a simple pseudo-random function, so they are properly unpredictable. They are also generated locally, so nobody else has ever seen them.',
+  },
+  {
+    q: 'Why the uppercase and braces options?',
+    a: 'Some systems expect a particular form. Microsoft tooling often writes GUIDs in braces and uppercase, while most web and Unix contexts use plain lowercase. The value is identical either way — only the presentation differs.',
+  },
+  {
+    q: 'Is a UUID a good database key?',
+    a: 'It depends. UUIDs let you create records without asking a central authority for an ID, which is invaluable in distributed systems and offline-first apps. The trade-off is that random values scatter across an index, which can hurt insert performance on very large tables.',
+  },
+];
+---
+<ToolPage slug="uuid-generator" faq={faq}>
+  <UuidWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Generate version 4 UUIDs — one, or up to five hundred at a time — with
+    optional uppercase and brace formatting. Every value is produced by your
+    own browser and never transmitted, so they are safe to use for real.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      A version 4 UUID is 128 bits of which 122 are random. Six bits are fixed:
+      four identify the version, and two identify the variant. That is why every
+      UUID here has a <code>4</code> at the start of the third group and one of{' '}
+      <code>8</code>, <code>9</code>, <code>a</code> or <code>b</code> starting
+      the fourth.
+    </p>
+    <p>
+      The randomness comes from the browser's cryptographic generator rather
+      than an ordinary pseudo-random function. That distinction matters: a
+      predictable identifier can sometimes be guessed by an attacker, which is
+      a real weakness in systems that use IDs as capability tokens.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A generated value looks like{' '}
+      <code>3f2504e0-4f89-41d3-9a0c-0305e82c3301</code>. The <code>4</code>{' '}
+      beginning the third group marks it as version 4; the <code>9</code>{' '}
+      beginning the fourth marks the variant. Any UUID lacking those markers
+      came from a different scheme.
+    </p>
+    <p>
+      Generating five hundred at once is genuinely useful when seeding a test
+      database or building fixture data — you get a block you can paste straight
+      into a script, with no risk of accidentally reusing the same value twice.
+    </p>
+  </div>
+</ToolPage>

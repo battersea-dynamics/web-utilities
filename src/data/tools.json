@@ -443,6 +443,151 @@
       "contentStatus": "complete"
     },
     {
+      "slug": "hash-generator",
+      "title": "Hash Generator",
+      "titleSuffix": "MD5 & SHA",
+      "h1": "Hash Generator",
+      "category": "developer",
+      "metaDescription": "Generate MD5, SHA-1, SHA-256, SHA-384 and SHA-512 hashes from any text, all at once. Runs in your browser, so nothing you type is ever uploaded.",
+      "keywords": [
+        "hash generator",
+        "md5 generator",
+        "sha256 generator",
+        "online hash"
+      ],
+      "related": [
+        "uuid-generator",
+        "base64-encoder",
+        "json-formatter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "uuid-generator",
+      "title": "UUID Generator",
+      "titleSuffix": "Version 4 IDs",
+      "h1": "UUID Generator",
+      "category": "developer",
+      "metaDescription": "Generate one or many version 4 UUIDs instantly, with uppercase and brace options. Created by your browser's crypto engine, never sent anywhere.",
+      "keywords": [
+        "uuid generator",
+        "guid generator",
+        "random uuid",
+        "uuid v4"
+      ],
+      "related": [
+        "hash-generator",
+        "base64-encoder",
+        "timestamp-converter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "base64-encoder",
+      "title": "Base64 Encoder",
+      "titleSuffix": "Encode & Decode",
+      "h1": "Base64 Encoder and Decoder",
+      "category": "developer",
+      "metaDescription": "Encode text to Base64 or decode it back to plain text, with full Unicode support and a URL-safe option. Everything is processed locally in your browser.",
+      "keywords": [
+        "base64 encoder",
+        "base64 decoder",
+        "base64 converter"
+      ],
+      "related": [
+        "url-encoder",
+        "hash-generator",
+        "json-formatter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "url-encoder",
+      "title": "URL Encoder",
+      "titleSuffix": "Percent Encoding",
+      "h1": "URL Encoder and Decoder",
+      "category": "developer",
+      "metaDescription": "Percent-encode text for use in a URL, or decode an escaped string back to plain text. Choose between whole-URL and single-value escaping as you need.",
+      "keywords": [
+        "url encoder",
+        "url decoder",
+        "percent encoding",
+        "urlencode"
+      ],
+      "related": [
+        "base64-encoder",
+        "json-formatter",
+        "hash-generator"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "json-formatter",
+      "title": "JSON Formatter",
+      "titleSuffix": "Validate & Prettify",
+      "h1": "JSON Formatter and Validator",
+      "category": "developer",
+      "metaDescription": "Format messy JSON, validate it, and see exactly where an error is. Get both a pretty-printed and a minified version. Nothing leaves your browser.",
+      "keywords": [
+        "json formatter",
+        "json validator",
+        "json beautifier",
+        "format json"
+      ],
+      "related": [
+        "base64-encoder",
+        "url-encoder",
+        "uuid-generator"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "timestamp-converter",
+      "title": "Timestamp Converter",
+      "titleSuffix": "Unix Epoch",
+      "h1": "Unix Timestamp Converter",
+      "category": "developer",
+      "metaDescription": "Convert Unix timestamps to readable dates and back again, in seconds or milliseconds, with a live clock showing the current epoch time as you work.",
+      "keywords": [
+        "unix timestamp converter",
+        "epoch converter",
+        "timestamp to date"
+      ],
+      "related": [
+        "number-base-converter",
+        "uuid-generator",
+        "json-formatter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "number-base-converter",
+      "title": "Number Base Converter",
+      "titleSuffix": "Binary, Hex, Octal",
+      "h1": "Number Base Converter",
+      "category": "developer",
+      "metaDescription": "Convert numbers between binary, octal, decimal and hexadecimal at once. Invalid digits for the chosen base are flagged rather than silently ignored.",
+      "keywords": [
+        "number base converter",
+        "binary to decimal",
+        "hex converter",
+        "decimal to binary"
+      ],
+      "related": [
+        "timestamp-converter",
+        "hash-generator",
+        "json-formatter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
       "slug": "merge-pdf",
       "title": "Merge PDF",
       "titleSuffix": "Combine PDF Files",

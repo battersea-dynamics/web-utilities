@@ -1,0 +1,68 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import Base64Widget from '../components/tools/Base64Widget.jsx';
+
+const faq = [
+  {
+    q: 'What is Base64 actually for?',
+    a: 'It carries binary data through channels that only reliably handle text — email attachments, JSON fields, data URLs, and older protocols. It represents every three bytes as four printable characters, so nothing gets mangled in transit.',
+  },
+  {
+    q: 'Is Base64 encryption?',
+    a: 'No, and this matters. Anyone can decode it instantly, including this page. It offers no secrecy whatsoever. If you find credentials stored as Base64, treat them as if they were written in plain text, because effectively they are.',
+  },
+  {
+    q: 'Why is my encoded string longer than the original?',
+    a: 'Because four characters are used for every three bytes, output is about a third larger than input. That overhead is the price of making binary data safe to transmit as text, and it is why images embedded as data URLs bloat a page.',
+  },
+  {
+    q: 'What is the URL-safe option?',
+    a: 'Standard Base64 uses + and / which have special meanings in URLs, and = padding which can also cause trouble. The URL-safe variant substitutes - and _ and drops the padding, so the result can be dropped into a link or filename unescaped.',
+  },
+  {
+    q: 'Does it handle emoji and non-English text?',
+    a: 'Yes. Text is converted to UTF-8 bytes before encoding, so accented characters, Chinese, Arabic and emoji all survive a round trip intact. The browser\'s built-in btoa function fails on these, which is a common source of bugs.',
+  },
+  {
+    q: 'What do the equals signs at the end mean?',
+    a: 'Padding. Base64 works in blocks of three bytes, and when the input does not divide evenly one or two = characters are appended to complete the final block. Seeing one or two is normal; three would indicate something is wrong.',
+  },
+];
+---
+<ToolPage slug="base64-encoder" faq={faq}>
+  <Base64Widget client:load slot="tool" />
+
+  <p slot="intro">
+    Encode text to Base64 or decode it back, with a URL-safe option and full
+    support for accented characters, non-Latin scripts and emoji. Everything
+    runs in your browser, which matters when you are decoding a token.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Base64 splits the input into groups of three bytes — 24 bits — and
+      re-reads them as four six-bit numbers, each mapped to one of 64 printable
+      characters. Where the input does not divide neatly into threes, the final
+      block is padded with <code>=</code>.
+    </p>
+    <p>
+      Before any of that happens, text is converted to UTF-8 bytes. This step is
+      what browsers' built-in <code>btoa</code> skips, which is why it throws an
+      error on anything outside the Latin-1 range. Doing the conversion properly
+      is the difference between a tool that handles café and one that does not.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      <code>Hello, World!</code> encodes to <code>SGVsbG8sIFdvcmxkIQ==</code>.
+      The two trailing equals signs indicate the original was one byte short of
+      a complete three-byte group.
+    </p>
+    <p>
+      A practical use: JSON Web Tokens are three Base64 sections separated by
+      dots. Pasting the middle section here reveals the claims inside — which
+      is a neat demonstration that Base64 hides nothing at all.
+    </p>
+  </div>
+</ToolPage>

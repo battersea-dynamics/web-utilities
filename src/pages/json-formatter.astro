@@ -1,0 +1,73 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import JsonFormatterWidget from '../components/tools/JsonFormatterWidget.jsx';
+
+const faq = [
+  {
+    q: 'What makes JSON invalid?',
+    a: 'Usually one of three things: a trailing comma after the last item, single quotes instead of double, or an unquoted key. All three are legal in JavaScript but not in JSON, which catches people out constantly.',
+  },
+  {
+    q: 'Where does the error position come from?',
+    a: 'The browser reports the character offset where parsing failed, which is translated here into a line and column. Bear in mind the reported spot is where the parser gave up, not always where the mistake is — a missing bracket is often flagged several lines later.',
+  },
+  {
+    q: 'Does formatting change my data?',
+    a: 'No. The text is parsed into real values and written back out, so only whitespace changes. One thing to note: object keys keep their original order, but any duplicate keys are collapsed, since JSON objects cannot hold the same key twice.',
+  },
+  {
+    q: 'What is minified JSON for?',
+    a: 'Removing every unnecessary space and line break makes the payload smaller, which matters for API responses and anything sent over a network at volume. It is unreadable to humans, which is why both versions are shown here.',
+  },
+  {
+    q: 'Can I paste an API response with sensitive data?',
+    a: 'Everything is parsed in your browser and nothing is transmitted, so yes — that is precisely why this runs client-side. Many online JSON formatters send your input to a server, which is a poor idea for anything containing tokens or personal data.',
+  },
+  {
+    q: 'Why does it say "top level" and count keys?',
+    a: 'As a quick sanity check. If you expected an array of results and it reports an object with two keys, you have probably pasted a wrapper rather than the data inside it — which is faster to spot from a summary than by reading the output.',
+  },
+];
+---
+<ToolPage slug="json-formatter" faq={faq}>
+  <JsonFormatterWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Paste messy or minified JSON to check whether it is valid, see exactly
+    where any error is, and get back both a properly indented version and a
+    minified one. Everything is parsed locally in your browser.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      The text is handed to the browser's own JSON parser — the same one your
+      code will use — so if it validates here it will validate in your
+      application. Once parsed, it is written back out twice: once with
+      indentation for reading, once with none for transmission.
+    </p>
+    <p>
+      When parsing fails, the browser reports the character offset where it
+      stopped. That offset is converted into a line and column by counting the
+      newlines before it, which is far easier to act on than a raw number.
+    </p>
+    <p>
+      Because the data is genuinely parsed rather than pattern-matched, the
+      summary can report what the top level actually is and how many keys or
+      items it holds.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Pasting <code>&#123;"b":1,"a":[1,2,3]&#125;</code> returns it indented
+      across several lines, reports an object with two keys, and gives the
+      minified form back unchanged since it was already compact.
+    </p>
+    <p>
+      Introduce a trailing comma — <code>&#123;"a":1,&#125;</code> — and it
+      reports the failure with a line and column. That single character is
+      probably the most common JSON error there is, because most programming
+      languages allow it and JSON does not.
+    </p>
+  </div>
+</ToolPage>
