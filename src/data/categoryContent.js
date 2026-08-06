@@ -78,6 +78,8 @@ export const categoryContent = {
       { when: 'Find every word hidden in a set of letters', slug: 'word-unscrambler' },
       { when: 'Find words that use all your letters exactly', slug: 'anagram-solver' },
       { when: 'Search for words by prefix, suffix, or length', slug: 'words-starting-with' },
+      { when: 'Find the highest-scoring play from your Scrabble tiles', slug: 'scrabble-word-finder' },
+      { when: 'Find the best Words With Friends play, scored', slug: 'words-with-friends-word-finder' },
       { when: 'Count words, characters and reading time', slug: 'word-counter' },
       { when: 'Switch text between upper, lower, title and sentence case', slug: 'case-converter' },
       { when: 'See exactly what changed between two versions', slug: 'text-diff-checker' },

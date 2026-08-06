@@ -1,0 +1,94 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import WordFinderWidget from '../components/tools/WordFinderWidget.jsx';
+
+const faq = [
+  {
+    q: 'Which dictionary does this use?',
+    a: 'ENABLE, a large public-domain word list released specifically for word-game use. It is not the dictionary Words With Friends itself uses — that one belongs to Zynga and is not published. ENABLE dates from 2000, so a handful of words the game accepts are missing here, and a handful listed here may be rejected in play. Everything it lists is a real English word.',
+  },
+  {
+    q: 'Why are the scores different from Scrabble?',
+    a: 'Words With Friends uses its own tile values. There are 104 tiles carrying 220 points rather than Scrabble’s 100 and 187, and several letters are worth more — J is 10 rather than 8, B and C are 4 rather than 3, L and U are 2 rather than 1. The same word can score noticeably differently in each game.',
+  },
+  {
+    q: 'How do I enter a blank tile?',
+    a: 'Type a question mark. A blank can be any letter and scores nothing, which the tool accounts for — it also tells you which words needed a blank to make.',
+  },
+  {
+    q: 'Does it know about the bonus squares?',
+    a: 'No. It scores the tiles in the word at face value. Words With Friends places its triple-word and triple-letter squares differently from Scrabble, and the value of a play depends on exactly where it lands, which the tool cannot know.',
+  },
+  {
+    q: 'Can I include letters already on the board?',
+    a: 'Yes — enter them alongside your own tiles, up to fifteen letters. That shows you words that play through what is already down, though you will still need to check the placement works.',
+  },
+];
+---
+<ToolPage slug="words-with-friends-word-finder" faq={faq}>
+  <WordFinderWidget slot="tool" game="wwf" client:load />
+
+  <Fragment slot="intro">
+    <p>
+      Enter your tiles and this finds every word you can make from them,
+      scored using the Words With Friends letter values and ranked by points.
+      Type a question mark for each blank.
+    </p>
+    <p>
+      The scoring matters more than it might seem. Words With Friends values
+      several letters differently from Scrabble, so a word that looks
+      unremarkable in one game can be among your best plays in the other.
+    </p>
+  </Fragment>
+
+  <Fragment slot="how-it-works">
+    <p>
+      Words are indexed by their letters in alphabetical order, so
+      <strong> ate</strong>, <strong>eat</strong> and <strong>tea</strong> all
+      sit under <strong>aet</strong>. Every combination of your tiles is
+      sorted the same way and looked up directly, which is why the answer
+      arrives immediately rather than after checking 168,000 words in turn.
+    </p>
+    <p>
+      Scoring uses the Words With Friends distribution: 104 tiles totalling
+      220 points, with J, Q and Z at ten, X at eight, and K and V at five. A
+      blank is worth nothing, so where one is needed the tool spends it on the
+      most valuable letter in the word and says so.
+    </p>
+    <p>
+      Only the dictionary sections a rack could match are downloaded — a
+      seven-tile rack never fetches the entries for longer words, cutting the
+      transfer from roughly 1.2 MB to about 280 KB.
+    </p>
+  </Fragment>
+
+  <Fragment slot="example">
+    <p>
+      The word <strong>BLUE</strong> makes the difference plain. In Scrabble
+      it scores 6: B is 3, and L, U and E are one each. In Words With Friends
+      it scores 9, because B is 4 and both L and U are 2.
+    </p>
+    <p>
+      The gap widens with certain letters. A word built around J is worth
+      chasing here in a way it isn't in Scrabble — ten points rather than
+      eight — while the extra E and T tiles in the bag mean common letters
+      turn up more often and the premium on awkward ones is higher.
+    </p>
+    <p>
+      Enter <strong>RETINAS</strong> and you'll get the same 256 words as any
+      other finder would, but ranked differently: the scoring, not the
+      dictionary, is what changes between the two games.
+    </p>
+  </Fragment>
+
+  <Fragment slot="credits">
+    <span class="disclaimer">
+      <strong>Not affiliated with Words With Friends.</strong> WORDS WITH
+      FRIENDS is a trademark of Zynga Inc. This is an independent reference
+      tool, neither endorsed by nor connected to Zynga, and it does not use
+      the game's own dictionary. Word list derived from ENABLE, released into
+      the public domain by Alan Beale and M. Cooper, whom the ENABLE project
+      asks be credited as originators.
+    </span>
+  </Fragment>
+</ToolPage>

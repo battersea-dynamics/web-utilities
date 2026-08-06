@@ -590,6 +590,46 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-gloss { display: block; margin-top: 0.2rem; }
 
+/* Word-game results, scored view. A ranked list where the score is the
+   point of the row, so it's aligned right and given the numeric font. */
+.play-list {
+  list-style: none;
+  margin: var(--sp-2) 0 0;
+  padding: 0;
+  border-top: var(--border);
+}
+.play-list li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--sp-2);
+  align-items: baseline;
+  padding: var(--sp-1) 0;
+  border-bottom: var(--border);
+}
+.play-word { font-weight: 600; }
+.play-meta {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+.play-score {
+  font-family: var(--font-num);
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 2.5ch;
+  text-align: right;
+}
+
+/* Trademark disclaimer on the game pages. Quiet, but must stay visible —
+   it is doing a job, not decorating. */
+.disclaimer {
+  margin-top: var(--sp-4);
+  padding: var(--sp-2);
+  border: var(--border);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
 /* 404 page. Deliberately not apologetic-looking — the most useful thing a
    404 can do is get the visitor somewhere real, fast. */
 .notfound { margin-top: var(--sp-4); }

@@ -1,0 +1,26 @@
+The word list in this directory is derived from ENABLE2K (enable1.txt).
+
+  The ENABLE master word list, WORD.LST, is herewith formally released
+  into the Public Domain. Anyone is free to use it or distribute it in
+  any manner they see fit. No fee or registration is required for its
+  use nor are "contributions" solicited. This word list is our gift to
+  the Scrabble community, as an alternate to "official" word lists.
+  Game designers may feel free to incorporate the WORD.LST into their
+  games. Please mention the source and credit us as originators of the
+  list.
+
+Originators: Alan Beale and M. Cooper, ENABLE project.
+
+---------------------------------------------------------------------
+NOTE ADDED BY gazza.ltd
+
+These JSON files are ENABLE reindexed for fast lookup: words grouped by
+length, then keyed by their letters in alphabetical order. No words have
+been added or removed beyond restricting length to 2-15.
+
+ENABLE dates from 2000 and is NOT the official dictionary of any game.
+Words added to the tournament lists since then — QI and ZA among them —
+are absent. The tool pages state this; do not quietly "fix" it by pasting
+in words from Collins or TWL, both of which are copyrighted.
+
+Generator: scripts/build-game-dictionary.mjs

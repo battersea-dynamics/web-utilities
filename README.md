@@ -85,7 +85,7 @@ npm run preview   # serve the built site locally
 
 ## What's built so far
 
-**33 tools across 41 pages, in five live categories.** Categories with no published tools are hidden automatically and appear the moment they gain one — see `src/data/site.js`.
+**35 tools across 44 pages, in five live categories.** Categories with no published tools are hidden automatically and appear the moment they gain one — see `src/data/site.js`.
 
 **Homepage** — a brand facade only: category cards, no individual tool content. Every tool lives on its own flat URL.
 
@@ -93,17 +93,17 @@ npm run preview   # serve the built site locally
 
 **Health & Fitness Calculators (2)** — BMI calculator, blood sugar unit converter.
 
-**Text Tools (10)** — word unscrambler, anagram solver, words starting with, word counter, case converter, text diff checker, duplicate line remover, remove extra spaces, lorem ipsum generator, text reverser.
+**Text Tools (12)** — word unscrambler, anagram solver, words starting with, word counter, case converter, text diff checker, duplicate line remover, remove extra spaces, lorem ipsum generator, text reverser, Scrabble word finder, Words With Friends word finder.
 
 **Developer Tools (7)** — hash generator, UUID generator, Base64 encoder, URL encoder, JSON formatter, timestamp converter, number base converter.
 
 **PDF Tools (8)** — merge, split, delete pages, rotate, reorder, images to PDF, add page numbers, watermark.
 
-**Still stubs** — Scrabble word finder and Words With Friends cheat, both needing their own tournament dictionary and tile-value tables. **Unit Converters** exists as a category but has no tools yet, so it stays hidden.
+**Unit Converters** exists as a category but has no tools yet, so it stays hidden.
 
 **Site pages** — `/about` (with the magpie story) and `/privacy-policy`, both linked in the footer alongside a feedback link. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
 
-**Tests** — 191, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
+**Tests** — 240, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
 
 ---
 
@@ -202,6 +202,29 @@ All are checked into the repo, so a normal `npm install && npm run build` needs 
 node scripts/build-word-index.mjs
 node scripts/build-definitions.mjs
 ```
+
+### Two dictionaries, on purpose
+
+The word tools do **not** share one word list, and merging them would break both:
+
+| Tools | List | Why |
+|---|---|---|
+| Unscrambler, anagram solver, words-starting-with | SCOWL tiers 10–60 (79k) | Everyday recognisable English. Obscure entries were removed after `airn`, `daur` and `huia` turned up in results and looked like bugs. |
+| Scrabble / Words With Friends finders | ENABLE (168k) | A game dictionary needs every word the game accepts, however obscure. SCOWL fails here — no `qat`, `aa`, `ae` or `oe`, and only 97 two-letter words. |
+
+ENABLE lives in `data-sources/enable1.txt` and builds to `public/data/en/game/{2..15}.json`:
+
+```bash
+node scripts/build-game-dictionary.mjs
+```
+
+Sharded by **word length**, not first letter, because a rack of N tiles can only make words of length 2–N. A seven-tile rack fetches 280 KB instead of 1.2 MB. First-letter sharding would be useless — a rack matches words starting with any of its letters.
+
+**Licensing, and why it's not negotiable.** Collins (CSW/SOWPODS) and NASPA (TWL) are the official lists and are copyrighted. Do not add them. Be specific about npm packages: `scrabble-dictionary` is MIT-licensed and ships `sowpods.txt` and `twl.txt`, which the packager had no right to relicense. ENABLE is genuinely public domain and its authors ask only to be credited — that credit is on both tool pages and in the generated `LICENSE.txt`.
+
+**ENABLE is from 2000 and has known gaps** — `qi` and `za` entered the official lists in 2006 and are absent. Both tool pages say so plainly. There is a test asserting they stay absent: if they ever appear, someone has pasted in words from a copyrighted list.
+
+**Trademarks.** SCRABBLE is Hasbro (US/Canada) and Mattel (elsewhere); WORDS WITH FRIENDS is Zynga. Both pages carry a visible not-affiliated disclaimer. Leave them in place.
 
 Source is the `wordlist-english` package (SCOWL-derived), using frequency tiers 10–60 — everyday recognisable English. Tier 70+ is deliberately excluded: that's where dialect, archaic and obscure entries live, which is wrong for a general unscrambler even though it's exactly right for a competitive Scrabble dictionary. When the Scrabble and Words With Friends tools get built, they'll want their own separate, fuller dictionaries.
 

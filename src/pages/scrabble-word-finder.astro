@@ -1,0 +1,106 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import WordFinderWidget from '../components/tools/WordFinderWidget.jsx';
+
+const faq = [
+  {
+    q: 'Which dictionary does this use?',
+    a: 'ENABLE, a large public-domain word list that was released specifically for word-game use. It is not the official tournament dictionary — those are Collins (CSW) and the NASPA Word List (TWL), both copyrighted and not free to redistribute. ENABLE dates from 2000, so a small number of words added to the official lists since then are missing, QI and ZA among them. Everything it does list is a real English word.',
+  },
+  {
+    q: 'How do I enter a blank tile?',
+    a: 'Type a question mark. A blank can stand in for any letter, and scores nothing — so a blank played as a Z still adds zero to your total. The tool works this into the score for you and tells you which words needed a blank.',
+  },
+  {
+    q: 'Why is the highest-scoring word not always the best play?',
+    a: 'Because this scores the word on its own, not the board. Premium squares, the letters already down, and what you leave on your rack for next turn all change which play is genuinely strongest. Treat the score here as the starting figure, not the final one.',
+  },
+  {
+    q: 'Does it count double and triple word squares?',
+    a: 'No. It scores the tiles in the word at face value. Board bonuses depend on exactly where you place the word, which the tool cannot know.',
+  },
+  {
+    q: 'Can I use more than seven letters?',
+    a: 'Yes, up to fifteen. A standard rack holds seven, but you can add letters already on the board to find words that play through them.',
+  },
+  {
+    q: 'Is this allowed?',
+    a: 'That depends entirely on who you are playing with. Some people treat word finders as study tools between games, others consider them cheating mid-game. Agree it with your opponent rather than assuming.',
+  },
+];
+---
+<ToolPage slug="scrabble-word-finder" faq={faq}>
+  <WordFinderWidget slot="tool" game="scrabble" client:load />
+
+  <Fragment slot="intro">
+    <p>
+      Enter the letters on your rack and this finds every word you can build
+      from them, scored with the standard tile values and ranked highest
+      first. Blanks are supported — type a question mark for each one.
+    </p>
+    <p>
+      A seven-letter rack usually yields a few hundred playable words. Most
+      are short and worth very little, which is why the default view is sorted
+      by score rather than alphabetically: the useful information is which
+      handful of words are actually worth playing.
+    </p>
+  </Fragment>
+
+  <Fragment slot="how-it-works">
+    <p>
+      The dictionary is indexed by each word's letters in alphabetical order,
+      so <strong>ate</strong>, <strong>eat</strong> and <strong>tea</strong>
+      are all filed together under <strong>aet</strong>. Finding your options
+      is then a matter of sorting each combination of your tiles and looking
+      it up directly, rather than testing your letters against 168,000 words
+      one at a time.
+    </p>
+    <p>
+      Scoring uses the standard English distribution: 100 tiles carrying 187
+      points in total, from the one-point vowels up to Q and Z at ten each. A
+      blank contributes nothing, so where a word needs one the tool spends it
+      on the most expensive letter and tells you it has done so.
+    </p>
+    <p>
+      Only the parts of the dictionary that can possibly match are downloaded.
+      A seven-tile rack cannot make a word longer than seven letters, so the
+      longer entries are never fetched — which cuts roughly 1.2 MB down to
+      about 280 KB.
+    </p>
+  </Fragment>
+
+  <Fragment slot="example">
+    <p>
+      Take the rack <strong>RETINAS</strong>. It produces 256 playable words.
+      Four of them use all seven tiles — <strong>anestri</strong>,
+      <strong> antsier</strong>, <strong>nastier</strong> and
+      <strong> ratines</strong> — each scoring 7 points, since every letter is
+      a one-pointer.
+    </p>
+    <p>
+      That illustrates the limit of raw scoring. Those seven-letter words are
+      worth the same 7 points as the far shorter <strong>tsar</strong> plus a
+      few singles, but in a real game playing all seven tiles earns the
+      fifty-point bonus, which no word score here reflects. Meanwhile a rack
+      like <strong>QUIZZED</strong> would show far higher face values while
+      being much harder to place.
+    </p>
+    <p>
+      Swap one tile for a blank — <strong>RETINA?</strong> — and the count
+      jumps to 1,408 words, but the top scores fall to 6. The blank opens up
+      far more options and pays nothing for the privilege.
+    </p>
+  </Fragment>
+
+  <Fragment slot="credits">
+    <span class="disclaimer">
+      <strong>Not affiliated with SCRABBLE.</strong> SCRABBLE is a registered
+      trademark of Hasbro, Inc. in the United States and Canada, and of
+      Mattel, Inc. (J.W. Spear &amp; Sons Ltd) elsewhere. This is an
+      independent reference tool and is neither endorsed by nor connected to
+      the trademark holders. Word list derived from ENABLE, released into the
+      public domain by Alan Beale and M. Cooper, whom the ENABLE project asks
+      be credited as originators.
+    </span>
+  </Fragment>
+</ToolPage>

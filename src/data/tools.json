@@ -238,7 +238,7 @@
       "related": [
         "word-unscrambler",
         "words-starting-with",
-        "words-with-friends-cheat",
+        "words-with-friends-word-finder",
         "word-counter"
       ],
       "published": true,
@@ -271,37 +271,37 @@
       "titleSuffix": "Best Scoring Plays",
       "h1": "Scrabble Word Finder",
       "category": "text",
-      "metaDescription": "Find the highest-scoring Scrabble words from your tiles, with letter values worked out for you. Sort by score or by length to pick the strongest play.",
+      "metaDescription": "Find the highest-scoring words from your Scrabble tiles, with letter values worked out for you. Sort by score or by length.",
       "keywords": [
         "scrabble word finder",
-        "scrabble cheat",
-        "scrabble helper"
+        "scrabble helper",
+        "scrabble solver"
       ],
       "related": [
         "word-unscrambler",
-        "words-with-friends-cheat"
+        "words-with-friends-word-finder"
       ],
-      "published": false,
-      "contentStatus": "stub"
+      "published": true,
+      "contentStatus": "full"
     },
     {
-      "slug": "words-with-friends-cheat",
-      "title": "Words With Friends Cheat",
-      "titleSuffix": "Word Finder",
+      "slug": "words-with-friends-word-finder",
+      "title": "Words With Friends Word Finder",
+      "titleSuffix": "Best Scoring Plays",
       "h1": "Words With Friends Word Finder",
       "category": "text",
-      "metaDescription": "Find the best Words With Friends plays from your letters, using the game's own dictionary and tile values. Every option ranked by score, instantly.",
+      "metaDescription": "Find the best Words With Friends plays from your letters, with each word's tile score worked out. Sort by score or length.",
       "keywords": [
-        "words with friends cheat",
         "words with friends word finder",
-        "wwf cheat"
+        "words with friends helper",
+        "wwf word finder"
       ],
       "related": [
         "word-unscrambler",
         "scrabble-word-finder"
       ],
-      "published": false,
-      "contentStatus": "stub"
+      "published": true,
+      "contentStatus": "full"
     },
     {
       "slug": "word-counter",
