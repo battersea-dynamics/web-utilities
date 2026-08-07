@@ -80,7 +80,7 @@ Eight tests enforce this.
 
 ---
 
-## Offline — diagnosed and fixed (v4), needs confirming
+## Offline — FIXED and confirmed working on Android (v4)
 
 **The symptom that cracked it:** offline worked from a tool page like
 `/merge-pdf`, but not from the app's own launch screen `/pdf`. That is a very
@@ -100,9 +100,16 @@ Together with the two earlier fixes (trailing-slash cache keys, build-time
 precache of pdf-lib) that is four separate bugs in the same feature, none
 visible without a real phone.
 
-**Still to confirm:** launch the installed app offline and check it opens on
-`/pdf` rather than an error. Cache is now `gazza-pdf-v4`, so the first launch
-after this deploy must be online to re-cache.
+**Confirmed working** on a real Android phone: the installed app launches
+offline, opens on `/pdf`, and merges PDFs with no connection.
+
+**Known, expected: offline is slower than online.** The worker tries the
+network first on every navigation and only falls back to cache once that
+attempt fails, so each page waits out a connection timeout. That is the
+deliberate cost of network-first — it is what stops visitors being pinned to a
+stale build whose fingerprinted assets no longer exist. If it ever becomes
+annoying, the fix is to race the fetch against a short timeout (~2s) rather
+than checking `navigator.onLine`, which lies on captive-portal wifi.
 
 ---
 
