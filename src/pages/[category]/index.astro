@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import data from '../../data/tools.json';
 import { visibleCategories } from '../../data/site.js';
 import { contentFor } from '../../data/categoryContent.js';
+import InstallPdfApp from '../../components/InstallPdfApp.astro';
 
 // Only categories with at least one published tool get a hub page at all.
 // No page means no sitemap entry and no crawlable dead end.
@@ -40,6 +41,11 @@ const choosing = (content?.choosing ?? []).filter((c) =>
 
     <h1>{category.name}</h1>
     <p class="standfirst">{category.blurb}</p>
+
+    {/* Only the PDF tools work offline — they run entirely on the device.
+        The calculators and word tools load reference data, so offering to
+        install those would promise something we can't deliver. */}
+    {category.slug === 'pdf' && <InstallPdfApp />}
 
     {live.length > 0 && (
       <ul class="card-grid">

@@ -590,6 +590,35 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-gloss { display: block; margin-top: 0.2rem; }
 
+/* ─── Install prompt (PDF tools only) ─────────────────────────────────
+   Hidden by default and revealed by script, so it never appears on desktop,
+   in an already-installed app, or on a browser that can't install. */
+.install-app {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-4);
+  margin: var(--sp-4) 0;
+  padding: var(--sp-3);
+  background: var(--accent-tint);
+  border-radius: var(--radius);
+}
+.install-app[hidden] { display: none; }
+.install-copy { flex: 1 1 16rem; }
+.install-copy p {
+  margin: 0.2rem 0 0;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+.install-steps {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  flex: 1 1 14rem;
+}
+.install-steps[hidden] { display: none; }
+
 /* ─── Embeddable widgets ───────────────────────────────────────────────
    These render inside an iframe on somebody else's website, so the shell
    must be minimal and must not assume our page background. */

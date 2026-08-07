@@ -1,0 +1,39 @@
+{
+  "name": "gazza PDF Tools",
+  "short_name": "gazza PDF",
+  "description": "Merge, split, rotate and edit PDFs entirely on your own device. Nothing is ever uploaded.",
+  "id": "/pdf",
+  "start_url": "/pdf?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f8f7",
+  "theme_color": "#0f6b5c",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Merge PDFs", "url": "/merge-pdf" },
+    { "name": "Split a PDF", "url": "/split-pdf" },
+    { "name": "Rotate pages", "url": "/rotate-pdf" },
+    { "name": "Images to PDF", "url": "/images-to-pdf" }
+  ]
+}

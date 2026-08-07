@@ -1,0 +1,44 @@
+---
+// Shown when someone opens a page with no connection and the service worker
+// has nothing cached for it. Precached by sw.js so it is always available.
+//
+// Deliberately upbeat rather than apologetic: for the PDF tools, being
+// offline is a supported state, not an error.
+
+import Base from '../layouts/Base.astro';
+import { publishedTools } from '../data/site.js';
+
+const pdfTools = publishedTools.filter((t) => t.category === 'pdf');
+---
+<Base
+  title="Offline | gazza.ltd"
+  description="You're offline. The PDF tools still work — they run entirely on your own device."
+>
+  <div class="wrap">
+    <section class="notfound">
+      <p class="notfound-code">Offline</p>
+      <h1>No connection — but the PDF tools still work</h1>
+      <p class="standfirst">
+        These run entirely on your own device, so they don't need the internet
+        once the page has loaded. Your files never left your device anyway.
+      </p>
+
+      <h2>Available offline</h2>
+      <ul class="card-grid">
+        {pdfTools.map((t) => (
+          <li>
+            <a class="card" href={`/${t.slug}`}>
+              <span class="name">{t.title}</span>
+              <span class="desc">{t.metaDescription.slice(0, 70)}…</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="note">
+        The calculators and word tools need a connection, because they load
+        reference data. They'll work again as soon as you're back online.
+      </p>
+    </section>
+  </div>
+</Base>

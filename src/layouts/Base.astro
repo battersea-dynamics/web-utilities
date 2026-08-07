@@ -32,6 +32,15 @@ const published = publishedTools;
     <meta property="og:url" content={canonical} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Installable PDF tools. The manifest is linked site-wide because a
+         browser will only offer installation from a page that declares it,
+         and people arrive at the PDF tools from search, not via /pdf. The
+         manifest's start_url sends them to /pdf regardless. -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0f6b5c" />
+    <meta name="apple-mobile-web-app-title" content="gazza PDF" />
   </head>
 
   <body data-cat={category}>

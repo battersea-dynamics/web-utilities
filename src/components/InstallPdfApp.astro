@@ -1,0 +1,91 @@
+---
+// "Install" prompt for the PDF tools, shown only on PDF pages.
+//
+// Two very different platforms to handle:
+//
+//   Android / Chrome — fires `beforeinstallprompt`, which we capture and
+//   replay when the user clicks. A real one-tap install.
+//
+//   iOS / Safari — has NO install prompt and never has. Installing means
+//   Share → Add to Home Screen, done by hand. So on iOS the only thing that
+//   works is telling people the steps, which is why the instructions below
+//   exist rather than a button that would do nothing.
+//
+// The panel hides itself entirely when the app is already installed, and on
+// desktop, where a home-screen icon means little.
+---
+<section class="install-app" id="install-app" hidden>
+  <div class="install-copy">
+    <strong>Use these tools offline</strong>
+    <p id="install-text">
+      Add the PDF tools to your home screen and they work with no connection —
+      your files never leave your device either way.
+    </p>
+  </div>
+  <button type="button" class="btn" id="install-btn" hidden>Install</button>
+  <ol class="install-steps" id="install-steps" hidden>
+    <li>Tap the <strong>Share</strong> button in Safari</li>
+    <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
+  </ol>
+</section>
+
+<script>
+  const panel = document.getElementById('install-app');
+  const button = document.getElementById('install-btn');
+  const steps = document.getElementById('install-steps');
+  const text = document.getElementById('install-text');
+
+  const installed =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
+
+  // Only worth offering on a touch device — a home-screen icon means little
+  // on a desktop, and the point of this is phones.
+  const smallScreen = window.matchMedia('(max-width: 900px)').matches;
+
+  const isIOS =
+    /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  if (!installed && smallScreen) {
+    if (isIOS) {
+      // No prompt exists on iOS; instructions are the only option.
+      steps.hidden = false;
+      panel.hidden = false;
+    } else {
+      // Chrome fires this when the app qualifies for installation. Until it
+      // does, showing an install button would be a lie, so we wait.
+      window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        button.hidden = false;
+        panel.hidden = false;
+        button.addEventListener(
+          'click',
+          async () => {
+            button.disabled = true;
+            event.prompt();
+            const { outcome } = await event.userChoice;
+            if (outcome === 'accepted') {
+              panel.hidden = true;
+            } else {
+              button.disabled = false;
+            }
+          },
+          { once: true }
+        );
+      });
+    }
+  }
+
+  window.addEventListener('appinstalled', () => {
+    panel.hidden = true;
+  });
+
+  // Register the worker that makes offline use possible. Failure here is not
+  // worth surfacing: the tools still work perfectly online without it.
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
+</script>
