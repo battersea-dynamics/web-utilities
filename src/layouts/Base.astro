@@ -45,6 +45,23 @@ const published = publishedTools;
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="theme-color" content="#0f6b5c" />
     <meta name="apple-mobile-web-app-title" content="gazza PDF" />
+
+    <!-- Catch the install event as early as possible.
+         Chrome fires `beforeinstallprompt` during page load, and the install
+         panel's own script is a module — which browsers defer — so it can
+         attach its listener AFTER the event has already fired and miss it
+         entirely. The panel then never appears, even for someone who could
+         install. This inline script runs immediately, stashes the event, and
+         tells the panel it's ready. Must stay `is:inline` and stay in <head>;
+         bundling it would reintroduce the delay it exists to avoid. -->
+    <script is:inline>
+      window.__installPrompt = null;
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        window.__installPrompt = e;
+        window.dispatchEvent(new Event('installpromptready'));
+      });
+    </script>
   </head>
 
   <body data-cat={category}>

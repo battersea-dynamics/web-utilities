@@ -162,9 +162,25 @@ describe('install prompt', () => {
     assert.match(cmp, /Add to Home Screen/);
   });
 
-  test('uses beforeinstallprompt on Android rather than a fake button', () => {
-    assert.match(cmp, /beforeinstallprompt/);
-    assert.match(cmp, /event\.prompt\(\)/);
+  test('the install event is captured before deferred scripts run', () => {
+    // beforeinstallprompt fires during page load. This component's script is
+    // a module, which browsers defer, so it can attach its listener after the
+    // event has already fired — and then the panel never appears for anyone.
+    // Base.astro catches it inline in <head> and stashes it.
+    const base = read('src/layouts/Base.astro');
+    assert.match(base, /is:inline/, 'the early capture script is not inline');
+    assert.match(base, /beforeinstallprompt/, 'nothing catches the event early');
+    assert.match(base, /__installPrompt/, 'the event is not stashed for the panel');
+    assert.match(cmp, /window\.__installPrompt/, 'the panel ignores the stashed event');
+    assert.match(cmp, /prompt\(\)/);
+  });
+
+  test('always offers a manual route, since the event is unreliable', () => {
+    // beforeinstallprompt does not fire in incognito, when already installed,
+    // or sometimes after a recent dismissal. Without a fallback, people have
+    // no idea the app can be installed at all.
+    assert.match(cmp, /install-steps-menu/, 'no browser-menu fallback');
+    assert.match(cmp, /Install app/);
   });
 
   test('hides itself when already installed', () => {

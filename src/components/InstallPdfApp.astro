@@ -1,39 +1,51 @@
 ---
 // "Install" prompt for the PDF tools, shown only on PDF pages.
 //
-// Two very different platforms to handle:
+// Three platforms to handle, and none of them behaves like the others:
 //
-//   Android / Chrome — fires `beforeinstallprompt`, which we capture and
-//   replay when the user clicks. A real one-tap install.
+//   Android / Chrome — fires `beforeinstallprompt`, which we replay when the
+//   user taps Install. But the event fires during page load, and this script
+//   is a module (deferred), so by the time it runs the event may already have
+//   come and gone. Base.astro therefore catches it inline in <head> and
+//   stashes it on window.__installPrompt; we check that first, then listen
+//   for it in case it hasn't fired yet.
 //
 //   iOS / Safari — has NO install prompt and never has. Installing means
-//   Share → Add to Home Screen, done by hand. So on iOS the only thing that
-//   works is telling people the steps, which is why the instructions below
-//   exist rather than a button that would do nothing.
+//   Share → Add to Home Screen, by hand. Instructions are the only option.
 //
-// The panel hides itself entirely when the app is already installed, and on
-// desktop, where a home-screen icon means little.
+//   Everything else, including Chrome when it decides not to fire the event
+//   at all — falls back to pointing at the browser's own menu. That path
+//   always works, which matters because `beforeinstallprompt` is genuinely
+//   unreliable: it doesn't fire in incognito, or when already installed, or
+//   sometimes if the user dismissed it recently.
 ---
 <section class="install-app" id="install-app" hidden>
   <div class="install-copy">
     <strong>Use these tools offline</strong>
-    <p id="install-text">
+    <p>
       Add the PDF tools to your home screen and they work with no connection —
       your files never leave your device either way.
     </p>
   </div>
+
   <button type="button" class="btn" id="install-btn" hidden>Install</button>
-  <ol class="install-steps" id="install-steps" hidden>
+
+  <ol class="install-steps" id="install-steps-ios" hidden>
     <li>Tap the <strong>Share</strong> button in Safari</li>
     <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
+  </ol>
+
+  <ol class="install-steps" id="install-steps-menu" hidden>
+    <li>Open your browser's <strong>⋮</strong> menu</li>
+    <li>Tap <strong>Add to Home screen</strong> or <strong>Install app</strong></li>
   </ol>
 </section>
 
 <script>
   const panel = document.getElementById('install-app');
   const button = document.getElementById('install-btn');
-  const steps = document.getElementById('install-steps');
-  const text = document.getElementById('install-text');
+  const stepsIOS = document.getElementById('install-steps-ios');
+  const stepsMenu = document.getElementById('install-steps-menu');
 
   const installed =
     window.matchMedia('(display-mode: standalone)').matches ||
@@ -47,33 +59,40 @@
     /iphone|ipad|ipod/i.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
+  function showButton(promptEvent) {
+    stepsMenu.hidden = true;
+    button.hidden = false;
+    panel.hidden = false;
+    button.addEventListener(
+      'click',
+      async () => {
+        button.disabled = true;
+        promptEvent.prompt();
+        const { outcome } = await promptEvent.userChoice;
+        if (outcome === 'accepted') panel.hidden = true;
+        else button.disabled = false;
+      },
+      { once: true }
+    );
+  }
+
   if (!installed && smallScreen) {
     if (isIOS) {
-      // No prompt exists on iOS; instructions are the only option.
-      steps.hidden = false;
+      stepsIOS.hidden = false;
       panel.hidden = false;
+    } else if (window.__installPrompt) {
+      // The event already fired before this script ran — the usual case.
+      showButton(window.__installPrompt);
     } else {
-      // Chrome fires this when the app qualifies for installation. Until it
-      // does, showing an install button would be a lie, so we wait.
-      window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        button.hidden = false;
-        panel.hidden = false;
-        button.addEventListener(
-          'click',
-          async () => {
-            button.disabled = true;
-            event.prompt();
-            const { outcome } = await event.userChoice;
-            if (outcome === 'accepted') {
-              panel.hidden = true;
-            } else {
-              button.disabled = false;
-            }
-          },
-          { once: true }
-        );
-      });
+      // Show the manual route now, and upgrade to a one-tap button if the
+      // event turns up. Better than showing nothing, which is what happened
+      // before: Chrome only fires the event sometimes, and when it doesn't,
+      // people had no idea the app could be installed at all.
+      stepsMenu.hidden = false;
+      panel.hidden = false;
+      window.addEventListener('installpromptready', () =>
+        showButton(window.__installPrompt)
+      );
     }
   }
 
