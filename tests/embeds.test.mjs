@@ -15,6 +15,7 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const tools = JSON.parse(fs.readFileSync(path.join(root, 'src/data/tools.json'), 'utf8'));
 
 const { embeddableTools, embedSnippet, SITE } = await import('../src/data/embeds.js');
+const { sitemapFilter } = await import('../src/data/sitemapFilter.js');
 
 const embedRoute = fs.readFileSync(
   path.join(root, 'src/pages/embed/[tool].astro'),
@@ -204,12 +205,16 @@ describe('search-engine handling', () => {
   });
 
   test('the sitemap excludes /embed/* but keeps /embed', () => {
+    // Tests the real function rather than a regex-extracted copy of it. The
+    // previous version eval'd source pulled out of astro.config.mjs and broke
+    // when a comment containing a comma was added.
+    assert.equal(sitemapFilter('https://gazza.ltd/embed/stamp-duty-calculator/'), false);
+    assert.equal(sitemapFilter('https://gazza.ltd/embed/'), true);
+    assert.equal(sitemapFilter('https://gazza.ltd/stamp-duty-calculator/'), true);
+    assert.equal(sitemapFilter('https://gazza.ltd/pwa-check/'), false);
+
     const config = fs.readFileSync(path.join(root, 'astro.config.mjs'), 'utf8');
-    assert.match(config, /filter:/, 'no sitemap filter — noindex pages would be listed');
-    const filter = eval(config.match(/filter:\s*(\(page\)[^,]+)/)[1]);
-    assert.equal(filter('https://gazza.ltd/embed/stamp-duty-calculator/'), false);
-    assert.equal(filter('https://gazza.ltd/embed/'), true);
-    assert.equal(filter('https://gazza.ltd/stamp-duty-calculator/'), true);
+    assert.match(config, /sitemapFilter/, 'the config no longer uses the shared filter');
   });
 });
 

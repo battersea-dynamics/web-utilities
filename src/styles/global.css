@@ -603,6 +603,29 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
   max-width: var(--prose);
 }
 
+/* Diagnostic readout on /pwa-check. Plain and legible on a phone — it exists
+   to be read at arm's length while standing in a room with no signal. */
+.pwa-report { margin: var(--sp-4) 0; }
+.pwa-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: var(--border);
+  font-size: var(--text-base);
+}
+.pwa-ok { color: var(--good-ink); }
+.pwa-bad { color: var(--warn-ink); }
+.pwa-verdict-ok,
+.pwa-verdict-bad {
+  margin: 0 0 var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+.pwa-verdict-ok { background: var(--accent-tint); color: var(--good-ink); }
+.pwa-verdict-bad { background: var(--warn-bg); color: var(--warn-ink); }
+
 /* ─── Install prompt (PDF tools only) ─────────────────────────────────
    Hidden by default and revealed by script, so it never appears on desktop,
    in an already-installed app, or on a browser that can't install. */

@@ -6,6 +6,9 @@ const {
   title,
   description,
   canonicalPath = Astro.url.pathname,
+  // Keeps a page out of search results. Used by internal tools like
+  // /pwa-check, which exist for us rather than for visitors.
+  noindex = false,
   // Sets <body data-cat="…">, which lets a category override design tokens
   // in global.css §2 without touching any component.
   category = null,
@@ -25,6 +28,7 @@ const published = publishedTools;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

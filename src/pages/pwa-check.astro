@@ -1,0 +1,142 @@
+---
+// Diagnostic page for the installable PDF app.
+//
+// Offline failures are invisible from the outside: the app just doesn't work,
+// and there is no way to inspect a phone's service worker remotely. This page
+// reports what is actually on the device — which worker is running, what is in
+// its cache, and whether the PDF engine made it — so a failure can be measured
+// instead of guessed at.
+//
+// Deliberately noindex and not in the sitemap. It is a tool for us, not
+// content for anyone else.
+
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="PWA check | gazza.ltd"
+  description="Diagnostic page for the installable PDF tools."
+  noindex
+>
+  <div class="wrap">
+    <h1>App diagnostic</h1>
+    <p class="standfirst">
+      What the offline app has actually stored on this device. Open this page
+      <strong>while online</strong>, wait for it to finish, then check again
+      after going offline.
+    </p>
+
+    <div id="report" class="pwa-report">Checking…</div>
+
+    <p class="note">
+      <button type="button" class="btn" id="recheck">Check again</button>
+      <button type="button" class="btn-ghost" id="reset">
+        Clear everything and reinstall
+      </button>
+    </p>
+
+    <div class="prose">
+      <h2>What the results mean</h2>
+      <p>
+        <strong>No service worker</strong> — the offline code never installed.
+        Nothing will work offline. Usually means the page hasn't been opened
+        online since the app was added, or the browser blocked it.
+      </p>
+      <p>
+        <strong>Worker running, cache empty or small</strong> — it installed
+        but hasn't finished downloading. Stay online on this page for a
+        moment and check again.
+      </p>
+      <p>
+        <strong>PDF engine missing</strong> — pages will load offline but the
+        tools won't run. That is the specific failure this page exists to catch.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const el = document.getElementById('report');
+
+  const row = (label, value, ok) =>
+    `<div class="pwa-row"><span>${label}</span><strong class="${
+      ok === undefined ? '' : ok ? 'pwa-ok' : 'pwa-bad'
+    }">${value}</strong></div>`;
+
+  async function check() {
+    el.innerHTML = 'Checking…';
+    const out = [];
+
+    // 1. Is the app installed, or running in a browser tab?
+    const standalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+    out.push(row('Running as installed app', standalone ? 'yes' : 'no (browser tab)'));
+
+    // 2. Is a service worker supported and registered?
+    if (!('serviceWorker' in navigator)) {
+      out.push(row('Service worker support', 'NOT SUPPORTED', false));
+      el.innerHTML = out.join('');
+      return;
+    }
+
+    const reg = await navigator.serviceWorker.getRegistration();
+    out.push(row('Service worker registered', reg ? 'yes' : 'NO', !!reg));
+    if (reg) {
+      const state = reg.active ? 'active' : reg.installing ? 'installing' : 'waiting';
+      out.push(row('Worker state', state, state === 'active'));
+      out.push(row('Controlling this page', navigator.serviceWorker.controller ? 'yes' : 'NO',
+        !!navigator.serviceWorker.controller));
+    }
+
+    // 3. What is actually in the cache?
+    const names = await caches.keys();
+    out.push(row('Cache buckets', names.length ? names.join(', ') : 'none', names.length > 0));
+
+    let total = 0;
+    let hasPdfEngine = false;
+    let pages = 0;
+    for (const name of names) {
+      const cache = await caches.open(name);
+      const keys = await cache.keys();
+      total += keys.length;
+      for (const k of keys) {
+        const p = new URL(k.url).pathname;
+        if (p.includes('pdfHelpers')) hasPdfEngine = true;
+        if (!p.startsWith('/_astro/') && !p.startsWith('/icons/')) pages++;
+      }
+    }
+    out.push(row('Items cached', String(total), total > 40));
+    out.push(row('Pages cached', String(pages), pages >= 10));
+    out.push(row('PDF engine (pdf-lib) cached', hasPdfEngine ? 'yes' : 'NO', hasPdfEngine));
+
+    // 4. Can we actually serve a tool page from cache right now?
+    let served = false;
+    for (const name of names) {
+      const cache = await caches.open(name);
+      if ((await cache.match('/merge-pdf/')) || (await cache.match('/merge-pdf'))) served = true;
+    }
+    out.push(row('/merge-pdf available offline', served ? 'yes' : 'NO', served));
+
+    out.push(row('Online right now', navigator.onLine ? 'yes' : 'no'));
+
+    const good = reg && navigator.serviceWorker.controller && hasPdfEngine && served;
+    out.unshift(
+      `<p class="${good ? 'pwa-verdict-ok' : 'pwa-verdict-bad'}">${
+        good ? 'Looks correct — offline should work.' : 'Something is missing. See below.'
+      }</p>`
+    );
+    el.innerHTML = out.join('');
+  }
+
+  document.getElementById('recheck').addEventListener('click', check);
+
+  document.getElementById('reset').addEventListener('click', async () => {
+    // Full reset: drop every cache and unregister every worker, then reload
+    // so a clean copy installs. Cheaper than uninstalling the app.
+    for (const n of await caches.keys()) await caches.delete(n);
+    for (const r of await navigator.serviceWorker.getRegistrations()) await r.unregister();
+    location.reload();
+  });
+
+  check();
+</script>
