@@ -53,10 +53,10 @@ const faqSchema = faq.length
       <span>{tool.title}</span>
     </nav>
 
-    <!-- 1. H1 = the exact search term -->
+    {/* 1. H1 = the exact search term */}
     <h1>{tool.h1}</h1>
 
-    <!-- 2. The tool, immediately, above the fold -->
+    {/* 2. The tool, immediately, above the fold */}
     <div class="tool-panel">
       <slot name="tool" />
     </div>
@@ -68,7 +68,7 @@ const faqSchema = faq.length
 
     <div class="ad-slot">Ad</div>
 
-    <!-- 3–5. Explanation, method, worked example -->
+    {/* 3–5. Explanation, method, worked example */}
     <div class="prose">
       <slot name="intro" />
 
@@ -79,7 +79,7 @@ const faqSchema = faq.length
       <slot name="example" />
     </div>
 
-    <!-- 6. FAQ -->
+    {/* 6. FAQ */}
     {faq.length > 0 && (
       <section class="prose">
         <h2>Common questions</h2>
@@ -92,7 +92,7 @@ const faqSchema = faq.length
       </section>
     )}
 
-    <!-- 7. Related tools -->
+    {/* 7. Related tools */}
     {related.length > 0 && (
       <section>
         <h2>Related tools</h2>
@@ -109,9 +109,20 @@ const faqSchema = faq.length
       </section>
     )}
 
-    <!-- Offer the embed where the person who wants it already is: a broker or
+    {/* Point PDF users at the explainer. Someone on a PDF tool page has the
+         file in front of them and is the most likely person to care whether it
+         gets uploaded — and this is the query class we can actually win. */}
+    {tool.category === 'pdf' && (
+      <p class="embed-offer-inline">
+        <strong>Your file is not uploaded.</strong> Everything happens on your
+        own device — <a href="/pdf-without-uploading">here's how to check that
+        for yourself</a>, and where upload-based tools are genuinely better.
+      </p>
+    )}
+
+    {/* Offer the embed where the person who wants it already is: a broker or
          conveyancer reading the stamp duty page is exactly who would put this
-         on their own site. Only shown for tools that are actually embeddable. -->
+         on their own site. Only shown for tools that are actually embeddable. */}
     {tool.embeddable && (
       <p class="embed-offer-inline">
         <strong>Want this calculator on your own website?</strong>{' '}
@@ -120,7 +131,7 @@ const faqSchema = faq.length
       </p>
     )}
 
-    <!-- Optional: data-source credits, where a licence requires attribution -->
+    {/* Optional: data-source credits, where a licence requires attribution */}
     {Astro.slots.has('credits') && (
       <p class="credits"><slot name="credits" /></p>
     )}

@@ -1,0 +1,174 @@
+---
+// The one page on this site aimed squarely at the thing competitors cannot
+// honestly claim.
+//
+// WHY IT EXISTS: every PDF tool page here used to target the head term —
+// "merge pdf", "split pdf" — which is ground iLovePDF, Smallpdf and Adobe
+// have owned for a decade. A new domain does not take that by frontal
+// assault. But "merge pdf without uploading" and its relatives are queries
+// those sites structurally cannot answer, because their whole architecture
+// depends on receiving the file. Low volume, genuinely winnable.
+//
+// WHY IT IS FAIR TO COMPETITORS: comparison pages that only flatter the
+// author get ignored. The section naming what upload-based services do
+// better is not modesty — it is the thing that makes the rest believable,
+// and it is also simply true.
+
+import Base from '../layouts/Base.astro';
+import { publishedTools } from '../data/site.js';
+
+const pdfTools = publishedTools.filter((t) => t.category === 'pdf');
+
+const faq = [
+  {
+    q: 'Is it actually safe to use online PDF tools?',
+    a: 'It depends entirely on whether the tool uploads your file. Reputable services encrypt transfers and delete files after a few hours, and for a holiday itinerary that is fine. For an employment contract, a medical letter, a passport scan or anything under NDA, the safer answer is a tool that never receives the file at all.',
+  },
+  {
+    q: 'How do I know a tool isn’t uploading my file?',
+    a: 'Turn off your wifi and try it. A tool that works with no connection cannot be sending your document anywhere. That is the whole test, and it takes ten seconds.',
+  },
+  {
+    q: 'Why do most PDF sites upload files then?',
+    a: 'Historically browsers could not do this work. Processing a PDF meant a server. Modern browsers can, but rebuilding an established service around that is a large change with no obvious commercial upside — a server-based tool is easier to meter, gate behind an account, and charge for.',
+  },
+  {
+    q: 'Is there a file size limit?',
+    a: 'There is no upload cap because there is no upload. The limit is your own device’s memory. On a laptop a few hundred pages is comfortable; on an older phone rather less. If a very large file struggles, that is the constraint you are hitting.',
+  },
+  {
+    q: 'Does this work offline?',
+    a: 'Yes. Load the page once, and the PDF tools keep working with no connection. You can add them to your phone’s home screen and use them on a plane.',
+  },
+];
+---
+<Base
+  title="PDF Tools That Don't Upload Your Files | gazza.ltd"
+  description="Merge, split and edit PDFs without uploading them anywhere. Everything runs in your browser, so confidential documents never leave your device. Free, no sign-up."
+>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> › <a href="/pdf">PDF Tools</a> › <span>Without uploading</span>
+    </nav>
+
+    <h1>PDF tools that don't upload your files</h1>
+    <p class="standfirst">
+      Most online PDF tools work by receiving your document, processing it on
+      their servers, and promising to delete it later. These ones never receive
+      it at all.
+    </p>
+
+    <div class="prose">
+      <h2>What normally happens to your file</h2>
+      <p>
+        When you drop a PDF onto a typical online tool, the file is transferred
+        to that company's servers, processed there, and held for a period before
+        deletion — commonly a few hours. The established services are
+        transparent about this and take it seriously: transfers are encrypted,
+        retention windows are short, and deletion is automated.
+      </p>
+      <p>
+        For most documents that is a perfectly sensible trade. You get powerful
+        processing for free and the file is gone by teatime.
+      </p>
+      <p>
+        But it is still a trade, and for some documents it is the wrong one. An
+        employment contract, a payslip, a medical letter, a passport scan, a
+        client file under NDA, anything covered by a confidentiality clause —
+        for these, "we delete it afterwards" is a promise you cannot verify,
+        made by a company you have no relationship with.
+      </p>
+
+      <h2>How to tell whether a tool uploads your file</h2>
+      <p>
+        You do not have to take anyone's word for it, including ours. There is a
+        test that takes ten seconds and cannot be faked:
+      </p>
+      <p>
+        <strong>Load the page, turn off your wifi, then use the tool.</strong>
+        If it still works, your file is not going anywhere — because it
+        physically cannot. If it fails or hangs, the work was happening on
+        somebody else's computer.
+      </p>
+      <p>
+        Try it here. Open <a href="/merge-pdf">the merge tool</a>, switch on
+        flight mode, and combine two files. It will work. That is not a claim
+        about our intentions; it is a fact about where the processing happens.
+      </p>
+
+      <h2>Where upload-based tools are genuinely better</h2>
+      <p>
+        Being straight about this, because it matters if you are choosing:
+      </p>
+      <ul>
+        <li>
+          <strong>OCR and text recognition.</strong> Turning a scanned image
+          into searchable text needs serious processing, and server-based tools
+          do it far better than anything running in a browser tab.
+        </li>
+        <li>
+          <strong>Heavy compression.</strong> Squeezing a large PDF down while
+          keeping it readable benefits from the same horsepower.
+        </li>
+        <li>
+          <strong>Very large files.</strong> A server has more memory than your
+          phone. If you are working with a 500-page scanned document, an upload
+          service will cope where a browser may not.
+        </li>
+        <li>
+          <strong>Conversion between formats.</strong> PDF to Word, Excel and
+          similar are hard problems that are still better solved server-side.
+        </li>
+      </ul>
+      <p>
+        If you need those, use a service that does them well. The point is not
+        that uploading is wrong — it is that for merging, splitting, rotating
+        and reordering, uploading is unnecessary, and unnecessary risk is worth
+        removing.
+      </p>
+
+      <h2>What runs entirely on your device</h2>
+    </div>
+
+    <ul class="card-grid">
+      {pdfTools.map((t) => (
+        <li>
+          <a class="card" href={`/${t.slug}`}>
+            <span class="name">{t.title}</span>
+            <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="prose">
+      <p>
+        All free, no sign-up, no account, no watermark and no file limit beyond
+        your own device's memory. They also work offline — you can
+        <a href="/pdf">add them to your home screen</a> and use them with no
+        connection at all.
+      </p>
+
+      <h2>Common questions</h2>
+      {faq.map((f) => (
+        <div class="faq-item">
+          <h3>{f.q}</h3>
+          <p set:html={f.a} />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    })}
+  />
+</Base>

@@ -149,6 +149,12 @@ export const categoryContent = {
     note: `Because everything runs locally, very large files are limited by your
            own device's memory rather than an upload cap. On a phone, a few hundred
            pages is a realistic ceiling.`,
+    offer: {
+      lead: 'Not sure whether a PDF tool is uploading your file?',
+      text: 'There is a ten-second test that cannot be faked, and an honest account of where upload-based services are genuinely better.',
+      href: '/pdf-without-uploading',
+      cta: 'Read it',
+    },
   },
 };
 

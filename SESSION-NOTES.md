@@ -122,6 +122,39 @@ than checking `navigator.onLine`, which lies on captive-portal wifi.
 
 ---
 
+## PDF repositioning — the strategic change
+
+Bing shows ~2M monthly searches around "pdf" and "merge pdf". **We are not
+getting those.** iLovePDF, Smallpdf, Adobe and PDF24 have a decade of
+authority on the head terms; a new domain does not take that ground.
+
+What was wrong: every PDF tool targeted exactly those head terms
+(`merge pdf`, `split pdf`, `rotate pdf`) and **not one keyword mentioned
+privacy, uploading or offline** — competing where we are weakest, ignoring the
+only ground where we are strongest.
+
+All eight tools are now repositioned around the privacy long tail
+(`merge pdf without uploading`, `pdf merger no upload`, `split pdf offline`),
+with the head term kept first since it still describes the tool. New page
+`/pdf-without-uploading` targets the category query and is linked from every
+PDF tool page and the hub.
+
+**Why this can work when the head terms cannot:** Smallpdf and iLovePDF
+*structurally cannot* write these pages honestly — their architecture depends
+on receiving the file. It is the one query class where authority does not
+decide the winner. Hundreds of searches a month, not millions, but reachable.
+
+The page is deliberately fair to competitors, including a section on what
+upload-based tools genuinely do better (OCR, compression, very large files,
+format conversion). That honesty is what makes the rest credible, and it is
+also true.
+
+**Do not** water down the "turn off your wifi and test it" section. That is
+the strongest thing on the page: a claim the reader can verify in ten seconds
+without trusting us.
+
+---
+
 ## Unverified — check these first
 
 1. **Do the embeds render on a real third-party site?** Tested once by the

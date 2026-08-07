@@ -37,23 +37,23 @@ const published = publishedTools;
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <!-- Installable PDF tools. The manifest is linked site-wide because a
+    {/* Installable PDF tools. The manifest is linked site-wide because a
          browser will only offer installation from a page that declares it,
          and people arrive at the PDF tools from search, not via /pdf. The
-         manifest's start_url sends them to /pdf regardless. -->
+         manifest's start_url sends them to /pdf regardless. */}
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="theme-color" content="#0f6b5c" />
     <meta name="apple-mobile-web-app-title" content="gazza PDF" />
 
-    <!-- Catch the install event as early as possible.
+    {/* Catch the install event as early as possible.
          Chrome fires `beforeinstallprompt` during page load, and the install
          panel's own script is a module — which browsers defer — so it can
          attach its listener AFTER the event has already fired and miss it
          entirely. The panel then never appears, even for someone who could
          install. This inline script runs immediately, stashes the event, and
          tells the panel it's ready. Must stay `is:inline` and stay in <head>;
-         bundling it would reintroduce the delay it exists to avoid. -->
+         bundling it would reintroduce the delay it exists to avoid. */}
     <script is:inline>
       window.__installPrompt = null;
       window.addEventListener('beforeinstallprompt', function (e) {

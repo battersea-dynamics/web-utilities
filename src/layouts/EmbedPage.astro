@@ -21,7 +21,7 @@ const canonical = `https://gazza.ltd/${toolSlug}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
 
-    <!-- Never index the embed itself; it duplicates the tool page. -->
+    {/* Never index the embed itself; it duplicates the tool page. */}
     <meta name="robots" content="noindex, follow" />
     <link rel="canonical" href={canonical} />
   </head>
@@ -30,9 +30,9 @@ const canonical = `https://gazza.ltd/${toolSlug}`;
     <main class="embed-shell">
       <slot />
 
-      <!-- Attribution inside the frame. This is a courtesy and a route back
+      {/* Attribution inside the frame. This is a courtesy and a route back
            for users; it is NOT the link that carries SEO value — that one
-           lives in the snippet the host pastes into their own page. -->
+           lives in the snippet the host pastes into their own page. */}
       <footer class="embed-foot">
         {verified && <span class="embed-verified">Rates as at {verified}</span>}
         <a href={canonical} target="_blank" rel="noopener">

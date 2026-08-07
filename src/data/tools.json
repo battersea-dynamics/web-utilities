@@ -604,14 +604,17 @@
     {
       "slug": "merge-pdf",
       "title": "Merge PDF",
-      "titleSuffix": "Combine PDF Files",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Merge PDF Files",
       "category": "pdf",
-      "metaDescription": "Combine several PDFs into one file in any order you choose. Runs entirely in your browser, so your documents are never uploaded to anybody's server.",
+      "metaDescription": "Combine PDF files in your browser. Nothing is uploaded — your documents never leave your device, so it's safe for contracts, payslips and anything confidential.",
       "keywords": [
         "merge pdf",
-        "combine pdf",
-        "join pdf files"
+        "merge pdf without uploading",
+        "combine pdf offline",
+        "pdf merger no upload",
+        "join pdf files privately",
+        "secure pdf merge"
       ],
       "related": [
         "split-pdf",
@@ -624,14 +627,16 @@
     {
       "slug": "split-pdf",
       "title": "Split PDF",
-      "titleSuffix": "Extract Pages",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Split PDF — Extract Pages",
       "category": "pdf",
-      "metaDescription": "Extract selected pages from a PDF into a new file, using single pages or ranges. Everything runs in your browser, so nothing is uploaded anywhere at all.",
+      "metaDescription": "Extract pages from a PDF without uploading it. Everything runs on your own device, so confidential documents never leave your computer.",
       "keywords": [
         "split pdf",
-        "extract pdf pages",
-        "separate pdf pages"
+        "split pdf without uploading",
+        "extract pdf pages offline",
+        "pdf splitter no upload",
+        "separate pdf pages privately"
       ],
       "related": [
         "merge-pdf",
@@ -644,13 +649,15 @@
     {
       "slug": "delete-pdf-pages",
       "title": "Delete PDF Pages",
-      "titleSuffix": "Remove Pages",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Delete Pages from a PDF",
       "category": "pdf",
-      "metaDescription": "Remove unwanted pages from a PDF and download the trimmed file. Strip blank scans, adverts or terms pages in seconds, with nothing uploaded to a server.",
+      "metaDescription": "Remove pages from a PDF privately. The file is processed in your browser and never uploaded — safe for documents you can't send to a stranger.",
       "keywords": [
         "delete pdf pages",
-        "remove pages from pdf"
+        "remove pdf pages without uploading",
+        "delete pages from pdf offline",
+        "redact pdf pages privately"
       ],
       "related": [
         "split-pdf",
@@ -663,14 +670,15 @@
     {
       "slug": "rotate-pdf",
       "title": "Rotate PDF",
-      "titleSuffix": "Fix Page Orientation",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Rotate PDF Pages",
       "category": "pdf",
-      "metaDescription": "Turn sideways or upside-down PDF pages the right way up, all at once or page by page. Rotation is lossless and happens entirely inside your browser.",
+      "metaDescription": "Turn sideways PDF pages the right way up without uploading the file. Runs entirely in your browser, offline if you like.",
       "keywords": [
         "rotate pdf",
-        "turn pdf pages",
-        "fix pdf orientation"
+        "rotate pdf without uploading",
+        "fix pdf orientation offline",
+        "turn pdf pages no upload"
       ],
       "related": [
         "split-pdf",
@@ -683,14 +691,15 @@
     {
       "slug": "reorder-pdf-pages",
       "title": "Reorder PDF Pages",
-      "titleSuffix": "Rearrange Pages",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Reorder PDF Pages",
       "category": "pdf",
-      "metaDescription": "Rearrange the pages of a PDF into any order you like and download the result. Move a page to the front or swap whole sections, with nothing uploaded.",
+      "metaDescription": "Rearrange PDF pages into any order without uploading. Everything happens on your own device, so private documents stay private.",
       "keywords": [
         "reorder pdf pages",
-        "rearrange pdf",
-        "change pdf page order"
+        "rearrange pdf without uploading",
+        "change pdf page order offline",
+        "organise pdf privately"
       ],
       "related": [
         "merge-pdf",
@@ -703,15 +712,16 @@
     {
       "slug": "images-to-pdf",
       "title": "Images to PDF",
-      "titleSuffix": "JPG & PNG to PDF",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Convert Images to PDF",
       "category": "pdf",
-      "metaDescription": "Turn JPG and PNG images into a single PDF, one image per page, with page size and margin options. Quality is preserved and nothing leaves your device.",
+      "metaDescription": "Turn JPG and PNG images into a PDF without uploading them. Photos of documents, receipts and ID stay on your device.",
       "keywords": [
         "images to pdf",
-        "jpg to pdf",
-        "png to pdf",
-        "photo to pdf"
+        "jpg to pdf without uploading",
+        "photo to pdf offline",
+        "png to pdf no upload",
+        "scan to pdf privately"
       ],
       "related": [
         "merge-pdf",
@@ -724,14 +734,14 @@
     {
       "slug": "add-page-numbers",
       "title": "Add Page Numbers to PDF",
-      "titleSuffix": "Number Any PDF",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Add Page Numbers to a PDF",
       "category": "pdf",
-      "metaDescription": "Add page numbers to a PDF in any position and format, with the option to skip a cover page or start from any number. Runs entirely in your browser.",
+      "metaDescription": "Add page numbers to a PDF without uploading it. Processed in your browser, so contracts and reports never leave your computer.",
       "keywords": [
         "add page numbers to pdf",
-        "number pdf pages",
-        "pdf page numbering"
+        "number pdf pages without uploading",
+        "pdf page numbering offline"
       ],
       "related": [
         "watermark-pdf",
@@ -744,14 +754,15 @@
     {
       "slug": "watermark-pdf",
       "title": "Watermark PDF",
-      "titleSuffix": "Add DRAFT Text",
+      "titleSuffix": "No Upload, Works Offline",
       "h1": "Add a Watermark to a PDF",
       "category": "pdf",
-      "metaDescription": "Stamp DRAFT, CONFIDENTIAL or your own text across every page of a PDF, with adjustable opacity and angle. Processed on your device and never uploaded.",
+      "metaDescription": "Stamp DRAFT or CONFIDENTIAL across a PDF without uploading it. The document is watermarked on your own device and never sent anywhere.",
       "keywords": [
         "watermark pdf",
-        "add watermark to pdf",
-        "stamp pdf draft"
+        "watermark pdf without uploading",
+        "add confidential stamp to pdf",
+        "draft watermark pdf offline"
       ],
       "related": [
         "add-page-numbers",
