@@ -1,347 +1,318 @@
-# Distribution: every route to visibility for gazza.ltd
+# Distribution plan — gazza.ltd
 
-Written August 2026. Everything is graded by how good the evidence actually is,
-because most published SEO advice is assertion dressed as fact.
+Last revised August 2026. Supersedes the earlier version and folds in the
+second reviewer's five points, with corrections.
 
-**Evidence key**
+---
+
+## How to read this
+
+**Evidence grades.** Most published SEO advice is assertion dressed as fact.
+Everything below is graded so you can tell the difference.
 
 | | Meaning |
 |---|---|
 | **[E]** | Evidenced — the platform documents it, or independent measurement supports it |
-| **[P]** | Practice — widely done by people who succeeded, but no controlled evidence |
-| **[G]** | Guess — plausible mechanism, untested, could be a waste of time |
-| **[X]** | Actively harmful — listed so you can recognise and avoid it |
+| **[P]** | Practice — widely done by people who succeeded, no controlled evidence |
+| **[G]** | Guess — plausible mechanism, untested |
+| **[X]** | Harmful — listed so you can recognise it |
 
-**Effort** is your hours. **Ceiling** is the realistic best case, not the dream.
+**The constraint that shapes everything.** You are one person with evenings.
+There are ~60 tactics listed here. Doing five properly beats attempting twenty.
+Part 1 is the plan; Part 2 exists so nothing is missed, not so it all gets done.
 
----
+**Three facts that decide the ordering**
 
-## 0. The uncomfortable framing
-
-Three facts that should shape everything below.
-
-**You cannot out-SEO your way in from zero.** Ranking requires authority;
-authority comes from being referenced elsewhere. So the first phase is not
-search at all — it is getting referenced. Search follows.
-
-**Brand mentions now beat backlinks for AI visibility. [E]** Analysis of LLM
-citation patterns found brand search volume the strongest single predictor of
-being cited by ChatGPT and Perplexity — ahead of traditional backlinks — and
-sites in the top quartile for web mentions get roughly ten times the AI
-visibility of the bottom quartile. This matters more each year: AI search
-referrals hit about 0.9% of all web traffic in March 2026, five times what they
-were a year earlier. Small, but the growth rate is the point.
-
-The practical consequence is awkward. The thing that works is **being talked
-about by name**, which is much harder to manufacture than a link.
-
-**Your two genuine assets are not the ones you've spent most time on.** The
-client-side PDF processing is a real technical differentiator that a specific
-audience cares about. The word tools have real volume. The UK finance
-calculators — six of them, the most tested code on the site — are competing
-against MoneySavingExpert, HMRC's own calculators, and every bank in Britain.
-That is the hardest possible category to enter and it is where the most effort
-has gone.
+1. **You cannot out-SEO your way in from zero.** Ranking needs authority;
+   authority comes from being referenced. Getting referenced comes first.
+2. **Brand mentions beat backlinks for AI visibility. [E]** Brand search volume
+   is the strongest single predictor of ChatGPT and Perplexity citations, ahead
+   of backlinks; top-quartile sites for web mentions get ~10× the AI visibility
+   of the bottom. AI referrals were ~0.9% of web traffic in March 2026, 5× the
+   year before. Small, but the direction matters.
+3. **Your assets are not where your effort went.** Six UK finance calculators —
+   your most tested code — compete with MoneySavingExpert, HMRC and every bank
+   in Britain. The client-side PDF tools are the genuine differentiator; the
+   word tools have the volume. Distribution effort should go where the
+   advantage is, not where the build effort was.
 
 ---
 
-## 1. Evidence-backed — do these first
+# PART 1 — Do these now
 
-### 1.1 Embeddable widgets [E] — effort: 2 days · ceiling: high
+Five things, in this order. Roughly six to eight evenings total.
 
-**The single best structural idea for a calculator site.** Let anyone drop your
-mortgage or stamp duty calculator onto their own page with an iframe, with a
-"powered by gazza.ltd" link underneath.
+## 1.1 The embed route — `/embed/<slug>` [E] · 2 days
 
-Why it works, mechanically: estate agents, mortgage brokers, personal-finance
-bloggers and accountants all want a calculator on their site and none of them
-want to build one. Each embed is a permanent, contextually relevant, editorially
-placed link from exactly the kind of site you need links from. This is how a lot
-of calculator sites acquired their early link profiles.
+**Why first.** Every embed is a permanent, editorially placed link from exactly
+the kind of site that makes finance pages rank. It uses what you have already
+built — the widgets are self-contained React islands. And unlike outreach, it
+keeps working without further effort. This is how calculator sites
+conventionally acquired their early link profiles.
 
-It fits your architecture almost for free — the widgets are already
-self-contained React islands. You'd need a `/embed/<slug>` route rendering the
-widget bare, an `X-Frame-Options` exception for those routes only, and a copy-paste
-snippet on each tool page.
+**Build:** a bare route per tool rendering the widget with no site chrome, and
+an `X-Frame-Options` exception for `/embed/*` only (your current `_headers`
+sets `SAMEORIGIN` site-wide, which would block all embedding).
 
-Risk to watch: the attribution link must be a real `<a>` in the iframe, and
-iframed content doesn't pass link equity the way an in-page link does. Put the
-attribution in the host page's snippet, not only inside the frame.
+**Critical technical point.** The attribution link goes in the snippet the host
+pastes into *their page*, outside the iframe — not only inside the frame.
+Content inside an iframe is attributed to the source domain, so an in-frame
+link does not pass value to you the way an in-page link does. Get this wrong
+and the whole exercise is decorative.
 
-### 1.2 Fix what's already indexed [E] — effort: 2 hours · ceiling: low but free
+**Do not version the URLs.** One unversioned URL per tool, served from your
+domain, rendering current rates. Then when rates change you push once and every
+host is correct within minutes. Versioning would freeze each host on whatever
+they pasted and destroy the single biggest advantage an iframe has over a
+copied script.
 
-Bing still lists Nexvita product URLs under your domain. The soft-404 is fixed,
-so these will decay, but Bing Webmaster Tools has a content-removal tool that
-does it in days rather than months. While you're there: submit the sitemap,
-enable IndexNow. Bing is ~5% of search and less competitive than Google, so a
-new site surfaces there sooner. Don't mistake it for a strategy — 5% of search
-is a rounding error against your problem — but it costs an hour.
+## 1.2 The `/embed` landing page [P] · 1 day
 
-### 1.3 Schema markup for rich results [E] — effort: 1 day · ceiling: medium
+**The sharpest idea in any of the three documents, and it came from the second
+reviewer.** People actively search "add mortgage calculator to website", "free
+stamp duty calculator widget", "mortgage calculator for WordPress". Those
+searchers are not looking for a calculator — they are looking for precisely
+what you are giving away. The conversion problem is solved before they arrive.
 
-You already emit FAQ schema. Missing and worth adding:
+Build it as a real page targeting those queries: a live preview, one-click copy
+snippets, and install instructions for WordPress, Squarespace, Wix and raw HTML.
 
-- `SoftwareApplication` or `WebApplication` on each tool page
-- `HowTo` on the PDF tools, which have genuine step sequences
-- `BreadcrumbList` — you have visual breadcrumbs but may not be marking them up
-- `Organization` with a real `sameAs` once you have any social presence
+**Realistic check:** competition here is thinner than for "stamp duty
+calculator" but not absent — several established calculator sites offer embeds.
+Your differentiator is UK-specific, four-nations, and sourced.
 
-Google has reduced how many rich results it shows, so this is no longer the win
-it was in 2020. But structured data is also what AI crawlers parse most reliably,
-which is where the growth is.
+## 1.3 Indexing hygiene [E] · 1 evening
 
-### 1.4 Don't block AI crawlers [E] — effort: 20 minutes · ceiling: unknown
+Unglamorous, cheap, and it unblocks everything else.
 
-Check `robots.txt` permits `PerplexityBot`, `OAI-SearchBot`, `ChatGPT-User`,
-`ClaudeBot` and `Google-Extended`. Many templates block these by default. If you
-want AI citations you must let the crawlers in — this is necessary, not
-sufficient.
+- **Bing Webmaster Tools** — verify, submit sitemap, enable IndexNow. Bing is
+  ~5% of search and less competitive, so new sites surface sooner. Not a
+  strategy; an hour well spent.
+- **Content removal** for the remaining Nexvita URLs. The soft-404 is fixed so they will
+  decay naturally, but the removal tool does it in days.
+- **Crawler check** — confirm `robots.txt` permits `PerplexityBot`,
+  `OAI-SearchBot`, `ChatGPT-User`, `ClaudeBot`, `Google-Extended`.
+  *Already verified: your robots.txt is `Allow: /`, nothing is blocked.*
+- **Schema** — you already emit `WebApplication` and `FAQPage`. Add `HowTo` to
+  the PDF tools and `BreadcrumbList` sitewide. Smaller job than expected.
 
-**Note on `llms.txt` [X-ish]:** it's heavily promoted and there is currently *no*
-evidence it produces citations. Analysis across 515 million LLM bot events found
-no measurable effect as of May 2026. It costs ten minutes, so add one if you
-like, but anyone selling it as a ranking factor is selling something.
+## 1.4 Budget day as a build deadline [P] · ongoing, ~2 days per event
 
-### 1.5 Open-source the repo [P/E] — effort: 1 day · ceiling: medium-high
+Stamp duty changes at every Budget. In the fortnight afterwards every broker
+and conveyancer needs updated figures and nobody wants to rebuild a calculator.
+That is your single best outreach window of the year and the one day you can
+outrun larger sites — but only if your rates are already correct and a "what
+changed" page publishes within hours.
 
-Your PDF tools do something genuinely uncommon: full manipulation in-browser with
-zero upload. As a public GitHub repo that is an interesting artefact rather than
-a marketing message. GitHub repos rank, get linked from awesome-lists, and get
-discovered by exactly the developers who write the roundup posts you want to be in.
+**This makes the Budget date a build deadline, not a marketing date.** Put it
+in the calendar. `taxData.js` carries `LAST_VERIFIED` for exactly this.
 
-Real cost: the code becomes copyable. For a free ad-funded tool site the moat was
-never the code — it's the domain and the traffic — so I think this is close to
-free. But it's a one-way door, so decide deliberately.
+## 1.5 One community, properly [P] · ongoing, 2–3 hours a week
 
----
+Pick **one**: r/UKPersonalFinance, r/HousingUK, r/privacy, r/scrabble or
+r/webdev — whichever you would genuinely enjoy. Participate for six weeks
+without linking. Then link only where your tool is unambiguously the best
+answer to that specific question.
 
-## 2. Standard practice — plausible, weakly evidenced
-
-### 2.1 Tool directories [P] — effort: 1 day · ceiling: low-medium
-
-AlternativeTo, SaaSHub, Slant, Product Hunt's alternatives pages, plus the long
-tail of "free online tools" directories. Most are low-quality and pass little
-value. Two or three are worth it: **AlternativeTo** in particular, because people
-genuinely search "iLovePDF alternative" and your no-upload angle is a real
-differentiator there.
-
-Timebox this. The directory long tail is a well-known way to feel productive for
-a week and gain nothing.
-
-### 2.2 Reddit [P] — effort: ongoing · ceiling: high, with a big caveat
-
-Where your tools are actually the answer to questions being asked:
-
-- r/UKPersonalFinance, r/HousingUK — stamp duty, mortgage overpayment
-- r/scrabble, r/wordgames — the word finders
-- r/pdf, r/techsupport — the PDF tools, where "without uploading" is the hook
-- r/webdev, r/programming — the developer tools
-
-**This is the channel with the highest ceiling and the highest chance of
-backfiring.** Reddit removes self-promotional links aggressively and bans
-accounts that pattern-match to it. The version that works is slow: participate
-genuinely for weeks, answer questions without linking, and link only when your
-tool is unambiguously the best answer to that specific question. If you can't
-commit to that, skip it — a burned account and a domain flagged as spam is worse
-than never posting.
-
-### 2.3 Hacker News [P] — effort: 1 hour · ceiling: very high variance
-
-One "Show HN" for the client-side PDF suite. Honest odds: most Show HN posts get
-almost no attention. But the privacy-preserving, no-upload, no-account angle is
-precisely what that audience responds to, and a front-page hit means tens of
-thousands of visitors plus durable links from people who blog about it.
-
-One shot, essentially. Lead with the technical claim, not the product: "PDF tools
-that never upload your file — everything runs in the browser." Have the site
-fast and working first.
-
-### 2.4 Answer questions where they're asked [P] — effort: ongoing · ceiling: medium
-
-Stack Overflow, Super User, MoneySavingExpert forums, Quora. Same rules as
-Reddit, generally more tolerant of a relevant link. MoneySavingExpert's forums
-are particularly on-target for the UK finance tools, and that audience is exactly
-who searches those terms.
-
-### 2.5 Original data or research [P] — effort: days · ceiling: high
-
-The thing that reliably earns links without asking is a number nobody else has.
-You are sitting on a natural one: **a stamp duty comparison across all four UK
-nations**, showing the same purchase price costing different amounts in England,
-Scotland and Wales. That's a genuine, linkable, journalist-friendly fact that
-your existing code already computes.
-
-Similar: the real cost difference between a low-rate-with-fee and higher-rate-no-fee
-mortgage across the whole price range. You built the engine for it already.
-
-### 2.6 Product Hunt and the launch platforms [P] — effort: 1 day · ceiling: low-medium
-
-Product Hunt, DevHunt, Uneed, MicroLaunch, BetaList. Product Hunt skews to SaaS
-and AI products now, so a free tools site is a weak fit. Worth one coordinated
-launch day for the links and the small traffic spike; don't expect it to matter.
-
-### 2.7 Chrome Web Store [G/P] — effort: 3-5 days · ceiling: medium
-
-A tiny extension wrapping your most-used tools. The store is its own search
-engine with far less competition than Google, extensions carry a homepage link,
-and installs create repeat users rather than one-off visits.
-
-Real ongoing cost: extensions need maintenance, and the review process is
-unpredictable. Only worth it if one tool proves genuinely popular first.
+This is the highest-ceiling and highest-risk channel. Reddit removes
+self-promotional links aggressively and bans accounts that pattern-match to
+spam. If you cannot commit to the slow version, skip it entirely — a burned
+account and a domain flagged as spam is worse than never posting.
 
 ---
 
-## 3. Long shots — cheap, low probability
+# PART 2 — Everything else
 
-### 3.1 Wikipedia external links [G] — ceiling: high, probability: very low
+## 2A. Worth doing — after Part 1, or if something proves out
 
-A link from a relevant Wikipedia article is enormously valuable and almost
-impossible to get legitimately. Editors remove commercial external links on sight,
-and adding your own is a conflict of interest under their rules. **Do not try
-directly.** The only honest route is being cited by others often enough that an
-editor adds you independently. Treat as a lagging indicator, not a tactic.
+| Idea | Grade | Effort | Verdict |
+|---|---|---|---|
+| **Four-nations stamp duty comparison** as original data | [P] | 2 days | **Do it.** Same house, three different tax bills — genuinely surprising, journalist-friendly, and your engine already computes it. Original data earns links without asking. |
+| **Discord bot for the word tools** | [G] | 3 days | **Strong.** Word-game Discord servers are large and active; bots get invoked constantly rather than visited once, and bot directories are their own discovery channel. Better fit than the WordPress plugin. |
+| **npm package of the calculation engines** | [G] | 1 day | **Underrated.** npm has a public dependents graph — every project installing it creates a permanent, crawlable reference. Developers building calculators are exactly who then links to you. |
+| **Open-source the repo** | [P] | 1 day | **Probably yes.** Client-side PDF manipulation is an interesting artefact, not a marketing message. Repos rank, get into awesome-lists, get found by people who write roundups. One-way door: decide deliberately. |
+| **Rate-change tracker + RSS** | [G] | 1 day | Become the canonical "what changed and when" source. Journalists need this and there is no clean one. |
+| **Open dataset on GitHub** — historical UK thresholds as CSV/JSON | [G] | 1 day | Datasets get cited by people building their own tools. Those citations are the "mentions" that drive the AI-visibility effect. |
+| **AlternativeTo listing** | [P] | 1 hour | People genuinely search "iLovePDF alternative" and your no-upload angle is a real differentiator. The one directory clearly worth the time. |
+| **Show HN** for the PDF suite | [P] | 1 hour | One shot. Most Show HN posts sink; the privacy angle is exactly what that audience responds to. Lead with the technical claim, not the product. Do it only once the site is fast and proven. |
+| **PWA, PDF tools only** | [P] | 1 day | Manifest with `start_url` at `/pdf`, service worker caching pdf-lib, install prompt only on PDF pages. AdSense works unchanged because it runs in the browser engine. Offline sessions earn nothing — accept that. Install rates are low, so treat it as an experiment that tells you whether the PDF tools have real users. |
+| **Shareable result cards** | [G] | 2 days | "My stamp duty is £14,200" as an image with the URL baked in. No SEO value; real brand-search value, which per §0 is what drives AI citations. |
+| **Comparison content about yourself** | [P] | 1 day | "gazza.ltd vs Smallpdf: what happens to your file." Ranks for competitor-brand searches, shared when genuinely fair — which means naming where they are better. |
 
-### 3.2 Being the source for a journalist [G] — ceiling: high
+## 2B. Think about — real trade-offs, decide later
 
-Stamp duty changes generate a flurry of UK press coverage every Budget. A
-journalist needs "here's what it costs now versus before" fast. If your calculator
-is the easiest way to get that, and you've published a comparison piece the week
-of the announcement, you can occasionally get picked up. Requires being ready
-*before* the news, which means watching the Budget calendar.
+**Direct outreach to brokers, conveyancers, accountants** [P]
 
-### 3.3 Teachers and .edu links [G] — ceiling: medium
+The second reviewer recommended targeting independent single-office firms
+because they convert best. **There is a legal problem with exactly that
+segment.** Under PECR, limited companies and LLPs are "corporate subscribers"
+and may be emailed without prior consent; **sole traders and ordinary
+partnerships are individual subscribers and require consent**. Independent
+single-office firms are disproportionately sole traders.
 
-Maths teachers link to calculators. Word game teachers link to unscramblers.
-A genuinely useful "for teachers" page — printable worksheets, classroom-safe,
-no ads on that page, no sign-up — occasionally gets picked up in school resource
-lists, which are often on high-authority domains.
+If you do this: filter by company type at Companies House first, rely on
+legitimate interest under UK GDPR, include an unsubscribe route, keep volumes
+modest. The ICO acts on complaints rather than scanning, but the exposure is
+real.
 
-### 3.4 Free public API [G] — ceiling: medium
+Also: her estimate of 5–15 embeds per 200 emails is optimistic. Cold B2B
+outreach converting to *action* is nearer 1% — so 200 emails is realistically
+one or two embeds. That changes whether the hours are worth it.
 
-Expose the stamp duty and mortgage engines as a JSON API. Developers who use it
-tend to credit it, and it gets you into "free APIs" awesome-lists, which are
-heavily linked. Cost: you now have an API to maintain and rate-limit.
+**WordPress plugin** [P] — *correction to my earlier advice*
 
-### 3.5 Niche communities nobody thinks of [G]
+I previously said a thin iframe wrapper risks rejection for insufficient
+functionality. **Checking the actual guidelines, I overstated this.** They
+explicitly permit plugins acting as an interface to an external service
+"provided the service itself provides functionality of substance" — a working
+calculator qualifies.
 
-- UK conveyancing and estate agency forums — stamp duty
-- Scrabble clubs and league sites, which still keep link pages
-- Accessibility communities — if your tools work well with screen readers, say so
-- Privacy communities (r/privacy, PrivacyTools) — the no-upload PDF angle is
-  genuinely on-message for them and this is an underrated fit
+The real constraint is different: plugins "may not contact external servers
+without explicit and authorized consent." An iframe loading from gazza.ltd on
+page render does exactly that, so you would need opt-in handling and a
+documented privacy policy in the readme. Bundling the calculator locally avoids
+that but forfeits auto-updating rates. **Which argues for iframe embeds as
+primary and the plugin much later, if at all.**
 
-### 3.6 Comparison content about yourself [G]
+**TikTok** [G] — you have no followers, which matters less than you would think
 
-"gazza.ltd vs Smallpdf: what happens to your file" — an honest comparison where
-you name the real trade-offs, including where competitors are better. These rank
-for competitor-brand searches and are shared when they're fair rather than
-self-serving.
+TikTok's For You algorithm is content-first rather than follower-first, so
+starting from zero is not the handicap it is elsewhere. But be clear about the
+mechanism: TikTok links are nofollow and bio-only, so there is no SEO value.
+The value is brand searches — making people search "gazza", not click through.
+Per §0 that is the strongest predictor of AI citations.
+
+Content that would plausibly work is the surprising fact, not the tool demo:
+the four-nations stamp duty gap, threshold cliff edges where one pound of price
+costs thousands in duty. Honest caveat: most accounts post for months into
+silence, and it is a completely different skill from building software.
+
+**Chrome extension** [G] — the store is its own search engine with far less
+competition, and listings carry a homepage link. Extensions need maintenance
+and review is unpredictable. Only after one tool proves genuinely popular.
+
+**Browser extension that detects an open PDF** [G] — higher intent than a store
+listing alone, same maintenance caveat.
+
+**Free public JSON API** [G] — developers who use it tend to credit it, and it
+gets you into "free APIs" awesome-lists which are heavily linked. Cost: an API
+to maintain and rate-limit.
+
+**Italian version of one tool** [G] — you already have the i18n structure. An
+Italian word unscrambler or *imposta di registro* calculator faces a fraction
+of the English competition. The version of your earlier Italian idea that has
+an actual mechanism.
+
+**Teachers and .edu resources** [G] — a genuine "for teachers" page, printable,
+ad-free, no sign-up. School resource lists sit on high-authority domains.
+
+**Product Hunt / DevHunt / Uneed / MicroLaunch / BetaList** [P] — Product Hunt
+skews to SaaS and AI now, so a free tools site is a weak fit. Worth one
+coordinated launch day for the links; do not expect it to matter.
+
+**Answering questions at scale** [P] — Stack Overflow, Super User,
+MoneySavingExpert forums, Quora. MSE is particularly on-target for the UK
+finance tools. Same slow-participation rules as Reddit.
+
+**Other communities worth a look** [G] — Indie Hackers, Lobsters, DEV.to,
+Hashnode, Mastodon, UK property Facebook groups, Scrabble club sites,
+conveyancing forums, r/privacy and PrivacyTools (genuinely on-message for the
+no-upload angle, and underrated).
+
+## 2C. Long shots — cheap, low probability, listed for completeness
+
+- **Wikipedia external links** [G] — enormously valuable, near-impossible
+  legitimately. Editors remove commercial links on sight and adding your own is
+  a conflict of interest. **Do not try directly.** Only arrives via being cited
+  elsewhere first. Treat as a lagging indicator.
+- **Being a journalist's source** [G] — requires being ready *before* the news.
+  See 1.4.
+- **Pub quiz / crossword newsletters** [G] — loyal readers, indexed archives.
+- **Sponsor a Scrabble club** [G] — £50–100 for a link and a targeted audience.
+- **Local press** [G] — "local company builds free tool" is a real story angle
+  for a slow news week.
+- **Podcast appearances, newsletter sponsorship, guest posts** [P] — all
+  standard, all require a hook you do not yet have.
+- **Pinterest** [G] — genuinely works for calculators and infographics, oddly.
+- **LinkedIn** [G] — plausible for the B2B finance angle, if you would use it.
+- **A daily word game as a toy** [G] — toys spread in ways utilities never do.
+  High variance, high ceiling, and the dictionary is already there.
+
+## 2D. Absurd — as requested, ordered by descending sanity
+
+- **QR codes on cards in estate agent windows.** A stamp duty calculator is
+  exactly what someone standing outside an estate agent wants. Nobody is there.
+- **Laminated reference cards posted to mortgage brokers.** Brokers do keep
+  reference cards.
+- **Answer every "merge PDF without uploading" question ever asked.** Old
+  threads still rank and still get traffic. Tedious; occasionally exactly right.
+- **Wikipedia edit-a-thons for word-game articles** — not to link yourself, but
+  to become known to the editors who write about word games. Absurdly indirect,
+  non-zero.
+- **A Raspberry Pi running the calculator in a shop window.**
+- **Radio phone-in about stamp duty changes.**
+
+## 2E. Do not do — and why
+
+| | Grade | Why |
+|---|---|---|
+| **Buying links** | [X] | Direct breach of Google's spam policies. Risk is a manual action removing you from search entirely. |
+| **PBNs, link exchanges, "50 free backlinks" services** | [X] | Same category. Note that these sites rank well *for that search term* — which is not evidence they work for you. |
+| **Mass directory submission** | [X] | Useful in 2010. Now a footprint of a spam site. |
+| **Programmatic long-tail pages** ("words starting with AA", ×3,000) | [X] | Exactly what the scaled-content-abuse policy targets. You already deferred this; keep deferring. |
+| **AI-written blog posts at volume** | [X] | Same policy. The site already carries formulaic supporting prose across 35 tools — more increases the pattern, not the value. |
+| **Reddit link-dropping** | [X] | Fastest route to a domain-level spam flag. |
+| **Fake reviews / sockpuppets** | [X] | Detectable, and the downside is total. |
+| **Buying an expired domain to redirect** | [X] | Works, is a known spam signal, has been devalued for years, and risks poisoning your domain permanently. |
+| **Native app in the App Store** | [X] | Apple explicitly rejects repackaged websites. AdSense does not run in native apps — you would need AdMob, a separate integration. And nobody searches an app store for "stamp duty calculator". PWA instead. |
+| **`llms.txt` as a ranking tactic** | [X-ish] | Heavily promoted, **no evidence it produces citations** — analysis across 515 million LLM bot events found no measurable effect as of May 2026. Costs ten minutes so add one if you like, but anyone selling it as a ranking factor is selling something. |
 
 ---
 
-## 4. Absurd, desperate, or just interesting
+# PART 3 — Risks the plan itself creates
 
-You asked for these. Ordered by descending sanity.
+**Stale rates become a distributed liability.** The sharpest observation from
+the review exchange. Once your stamp duty calculator sits on fifty broker
+sites, a wrong rate in April produces wrong figures in fifty places at once,
+under fifty different brands, and none of those firms can fix it. This changes
+the annual tax-data review from housekeeping to an obligation.
 
-**Print QR codes on cards for estate agent windows.** Genuinely absurd. But a
-stamp duty calculator is exactly what someone standing outside an estate agent
-wants, and no competitor is there.
+Mitigations: unversioned embed URLs (so one push corrects everyone), a visible
+"rates as at" date inside the frame, and a short `/embed-terms` page hosts
+agree to.
 
-**Buy a dead domain with existing backlinks and redirect it.** Works. Also a
-well-known spam signal, and Google has been devaluing redirected expired domains
-for years. High risk of poisoning your domain permanently. **I'd avoid it.**
+**Framing worth keeping.** Treat the verification date as a competitive
+advantage rather than a legal shield. Purplebricks does not tell you when their
+figures were last checked; neither do the banks. Yours are tested against HMRC
+and Revenue Scotland worked examples and dated. For a broker choosing whose
+calculator to embed, that is the reason to pick yours. Keep it light on the
+page — a dated line under the result, not a wall of legal text — and put the
+real terms on `/embed-terms`.
 
-**Build a genuinely fun toy** — a daily word game, a "what's my stamp duty"
-shareable card. Toys spread in ways utilities never do. High variance, high
-ceiling, and the word dictionary is already sitting there.
+**Support burden.** Embeds generate email when they break. Budget for it.
 
-**Get a tool mentioned in a pub quiz / crossword newsletter.** Word finder,
-crossword audience, newsletters have loyal readers and their archives get indexed.
-
-**Wikipedia edit-a-thons for word game articles.** Not to link yourself — to
-become known to the editors who write about word games. Absurdly indirect,
-non-zero.
-
-**Sponsor a tiny Scrabble tournament.** £50-100 for a link from a club site and
-a genuinely targeted audience.
-
-**Translate one tool into a language with no competition.** You already have the
-i18n structure. An Italian stamp duty equivalent (*imposta di registro*) or an
-Italian word unscrambler faces a fraction of the English competition. You raised
-Italian before, and this is the version of that idea with an actual mechanism.
-
-**Answer every "how do I merge PDFs without uploading" question that has ever
-been asked**, going back years. Old threads still rank and still get traffic.
-Tedious, mostly ignored, occasionally exactly the right answer.
-
-**Put the calculators on a physical laminated card and post them to mortgage
-brokers.** Absurd. Brokers do keep reference cards. Nobody else is doing this.
+**Open-sourcing is a one-way door.** The code becomes copyable. For a free
+ad-funded tool site the moat was never the code — it is the domain and the
+traffic — but decide deliberately rather than by drift.
 
 ---
 
-## 5. Actively harmful — recognise and avoid
+# PART 4 — Measurement
 
-- **[X] Buying links.** Directly against Google's spam policies; the risk is a
-  manual action that removes you from search entirely.
-- **[X] Private blog networks, link exchanges, "50 free backlinks" services.**
-  Same category. The sites offering these rank well *for that search term*,
-  which is not evidence they work for you.
-- **[X] Mass directory submission.** Was mildly useful in 2010, is now a footprint
-  of a spam site.
-- **[X] Auto-generating thousands of programmatic pages** — "words starting with
-  AA", "words starting with AB", and so on. Tempting, since you have the data.
-  This is precisely what Google's scaled-content-abuse policy targets, and you
-  already deferred it pending Search Console data. Keep deferring it.
-- **[X] AI-written blog posts at volume.** Same policy. Also, the site already
-  carries formulaic supporting prose across 35 tools; adding more increases the
-  pattern rather than the value.
-- **[X] Reddit link-dropping.** Covered above. Fastest way to get a domain
-  flagged.
-- **[X] Fake reviews or sockpuppet recommendations.** Beyond the ethics, both
-  Reddit and Google are good at detecting it, and the downside is total.
+Set up before starting, or you will never know what worked.
 
----
-
-## 6. What I'd actually do, in order
-
-Not a plan for a team. A plan for one person with limited evenings.
-
-**First: embeddable widgets.** Highest structural leverage, uses what you've
-already built, and every embed is a permanent link from a relevant site. Two days
-of work that keeps paying.
-
-**Then: Bing Webmaster Tools, IndexNow, crawler check, schema.** One evening
-of unglamorous hygiene that unblocks everything else.
-
-**Then: pick one community and be a real participant.** One. r/UKPersonalFinance
-or r/wordgames or r/privacy, whichever you'd genuinely enjoy. Six weeks of
-contributing without linking, then link only where it's the honest answer. This
-is slow and it is the thing that actually compounds.
-
-**Then: the four-nations stamp duty comparison** as a genuine piece of original
-data. You have the engine; this is writing, not building.
-
-**Then, once the site is fast and proven: one Show HN** for the PDF suite.
-
-Everything else is optional and most of it is noise.
-
----
-
-## 7. Measuring it — so you can stop doing what doesn't work
-
-Set up before you start, or you'll never know which of the above worked:
-
-- **Search Console and Bing Webmaster Tools** — impressions before clicks.
-  Impressions rising means you're being seen; that's the first signal.
-- **Referrer traffic**, so a Reddit or HN spike is attributable.
+- **Search Console + Bing Webmaster Tools** — impressions move before clicks.
+  Rising impressions is the first real signal.
+- **Referrer traffic** — so a Reddit or HN spike is attributable.
 - **Brand searches for "gazza"** — the leading indicator for both rankings and
-  AI citations, per the evidence in §0.
-- **A monthly check of whether ChatGPT or Perplexity mention you** for queries
-  like "calculate stamp duty UK" or "merge PDF without uploading". Crude, but
-  it's the only feedback loop available for AI visibility.
+  AI citations, per §0.
+- **Which sites embed you** — check Search Console's links report monthly.
+- **A monthly manual check** of whether ChatGPT or Perplexity mention you for
+  "calculate stamp duty UK" or "merge PDF without uploading". Crude, but it is
+  the only feedback loop available for AI visibility.
 
-Give anything you try at least eight weeks before judging it. Most of this is
-slower than it feels like it should be.
+**Give anything eight weeks before judging it.** All of this is slower than it
+feels like it should be.
 
 ---
 
@@ -351,3 +322,5 @@ slower than it feels like it should be.
 - llms.txt evidence review — <https://livegodigital.com/the-great-llms-txt-confusion-of-2026/>
 - How AI engines source information — <https://www.leapd.ai/blog/ai-visibility/how-chatgpt-google-ai-overviews-and-perplexity-source-information-in-2026>
 - Google on word count and thin content — <https://www.seroundtable.com/google-word-count-34092.html>
+- ICO, business-to-business marketing — <https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/business-to-business-marketing/>
+- WordPress detailed plugin guidelines — <https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/>

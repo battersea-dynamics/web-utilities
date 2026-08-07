@@ -1,0 +1,44 @@
+---
+// Bare layout for embeddable widgets — no header, no footer, no navigation.
+//
+// This renders inside an iframe on somebody else's website, so it must not
+// carry any of the site furniture. It also must not compete with the real
+// tool page in search results, hence noindex: the widget content is a
+// duplicate of the tool page, and we want the tool page to be the one that
+// ranks.
+//
+// The canonical points at the real tool page for the same reason.
+
+import '../styles/global.css';
+
+const { title, toolSlug, toolTitle, category = null, verified = null } = Astro.props;
+const canonical = `https://gazza.ltd/${toolSlug}`;
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+
+    <!-- Never index the embed itself; it duplicates the tool page. -->
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonical} />
+  </head>
+
+  <body data-cat={category} class="embed-body">
+    <main class="embed-shell">
+      <slot />
+
+      <!-- Attribution inside the frame. This is a courtesy and a route back
+           for users; it is NOT the link that carries SEO value — that one
+           lives in the snippet the host pastes into their own page. -->
+      <footer class="embed-foot">
+        {verified && <span class="embed-verified">Rates as at {verified}</span>}
+        <a href={canonical} target="_blank" rel="noopener">
+          {toolTitle} by gazza.ltd
+        </a>
+      </footer>
+    </main>
+  </body>
+</html>

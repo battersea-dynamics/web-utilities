@@ -11,6 +11,18 @@
 #   Assets — cached forever, safe precisely because the filename changes
 #            whenever the contents do.
 
+# Embeddable widgets. These exist to be put in an iframe on other people's
+# websites, so the site-wide X-Frame-Options below must NOT apply to them.
+#
+# Cloudflare applies the most specific matching rule, so listing /embed/*
+# before /* is what allows framing here and blocks it everywhere else.
+# Removing this section silently breaks every embed in the wild — the widget
+# just refuses to render, with no error the host can see.
+/embed/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cache-Control: public, max-age=0, must-revalidate
+
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

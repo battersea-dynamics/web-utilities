@@ -590,6 +590,68 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-gloss { display: block; margin-top: 0.2rem; }
 
+/* ─── Embeddable widgets ───────────────────────────────────────────────
+   These render inside an iframe on somebody else's website, so the shell
+   must be minimal and must not assume our page background. */
+.embed-body {
+  background: var(--surface);
+  margin: 0;
+}
+.embed-shell {
+  padding: var(--sp-3);
+  max-width: 100%;
+}
+.embed-title {
+  font-size: var(--text-body);
+  margin: 0 0 var(--sp-2);
+}
+.embed-foot {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-2);
+  border-top: var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+.embed-verified { font-family: var(--font-num); }
+
+/* The /embed landing page */
+.embed-offer {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: var(--border);
+}
+.embed-demo {
+  margin: var(--sp-2) 0;
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+.embed-demo iframe {
+  display: block;
+  border: 0;
+  width: 100%;
+}
+/* The snippet. Must be selectable and must not wrap in a way that breaks
+   the HTML when copied. */
+.embed-code {
+  margin: var(--sp-1) 0 var(--sp-2);
+  padding: var(--sp-2);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+  -webkit-user-select: all;
+  user-select: all;
+}
+
 /* Word-game results, scored view. A ranked list where the score is the
    point of the row, so it's aligned right and given the numeric font. */
 .play-list {

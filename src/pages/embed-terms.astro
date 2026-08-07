@@ -1,0 +1,103 @@
+---
+// Terms for people embedding the calculators on their own sites.
+//
+// This exists because the liability changes shape once a calculator is on
+// fifty other websites: a stale rate is then wrong in fifty places, under
+// fifty different brands, and none of those firms can fix it themselves.
+//
+// Kept deliberately short and readable. A wall of legal text on a free tool
+// undermines the trust that makes people embed it in the first place.
+
+import Base from '../layouts/Base.astro';
+import { LAST_VERIFIED } from '../components/tools/taxData.js';
+---
+<Base
+  title="Embed terms | gazza.ltd"
+  description="The terms for embedding gazza.ltd calculators on your own website."
+>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> › <a href="/embed">Embed a calculator</a> › <span>Terms</span>
+    </nav>
+
+    <h1>Embed terms</h1>
+    <p class="standfirst">
+      Short version: use them freely, keep the credit link, and don't present
+      the results as professional advice.
+    </p>
+
+    <div class="prose">
+      <h2>What you may do</h2>
+      <p>
+        Embed any calculator listed on <a href="/embed">the embed page</a> on any
+        website, including a commercial one, at no cost and without asking
+        permission. You may embed as many as you like, on as many pages as you
+        like. You may set the width, height and border to suit your layout.
+      </p>
+
+      <h2>What we ask</h2>
+      <p>
+        Keep the credit link that comes with the snippet, visible and
+        followable, on the same page as the calculator. That link is the only
+        thing we get in return, and it's what makes the calculators free.
+      </p>
+      <p>
+        Please don't imply that gazza.ltd endorses you, your firm or your
+        services, and don't present the calculator as your own product.
+      </p>
+
+      <h2>Accuracy, and what you're responsible for</h2>
+      <p>
+        We take the figures seriously. Tax bands, thresholds and reliefs come
+        from HMRC, Revenue Scotland and the Welsh Revenue Authority, each
+        calculator's maths is tested against worked examples published by those
+        bodies, and the verification date — currently {LAST_VERIFIED} — is shown
+        inside the calculator so your visitors can judge it for themselves.
+      </p>
+      <p>
+        That said, the calculators are provided as-is, without warranty. They
+        are general information, not financial, legal, tax or professional
+        advice. If you are regulated — a mortgage broker, a solicitor, an
+        accountant — you remain responsible for what appears on your own website
+        and for any advice you give based on it. Check anything that matters
+        against the official source.
+      </p>
+      <p>
+        We aren't liable for losses arising from use of the calculators, whether
+        on this site or embedded on yours.
+      </p>
+
+      <h2>Updates and availability</h2>
+      <p>
+        The calculators are served from gazza.ltd, so we can and do update them
+        — when rates change, your embed changes with them, usually within
+        minutes and with nothing required from you. The flip side is that if
+        this site is down, the calculator on your page won't load. We don't
+        offer an uptime guarantee.
+      </p>
+      <p>
+        We may change or retire a calculator. If we ever retire one that's in
+        active use we'll leave the URL working and tell anyone who has been in
+        touch, but we can't promise a URL will exist forever.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        The embedded calculators run entirely in the visitor's browser. Nothing
+        anyone types is transmitted to us or stored. We set no cookies in the
+        embed and there are no adverts or tracking scripts inside it, so
+        embedding a calculator shouldn't require any change to your cookie
+        banner or privacy policy. Our own site's
+        <a href="/privacy-policy">privacy policy</a> covers gazza.ltd itself.
+      </p>
+
+      <h2>Getting in touch</h2>
+      <p>
+        Questions, problems, or a calculator you'd like that we don't have:
+        <a href="mailto:hello@gazza.ltd">hello@gazza.ltd</a>. If you tell us
+        where you've embedded one, we'll let you know before anything changes
+        that would affect you.
+      </p>
+    </div>
+  </div>
+</Base>

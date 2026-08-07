@@ -1,0 +1,174 @@
+---
+// The /embed landing page.
+//
+// This is not a documentation page — it is a page targeting real searches:
+// "add mortgage calculator to website", "free stamp duty calculator widget",
+// "mortgage calculator for WordPress". People searching those have already
+// decided they want this; the job is to remove every obstacle between landing
+// and pasting.
+//
+// Which is why the snippets are visible and copyable without a sign-up, an
+// email address, or an account. Anything that adds friction here costs links.
+
+import Base from '../layouts/Base.astro';
+import { embeddableTools, embedSnippet, SITE } from '../data/embeds.js';
+import { LAST_VERIFIED } from '../components/tools/taxData.js';
+
+const title = 'Free Calculator Widgets for Your Website | gazza.ltd';
+const description =
+  'Add a free mortgage, stamp duty or take-home pay calculator to your website. One line of HTML, no sign-up, works with WordPress, Squarespace and Wix.';
+
+const snippets = embeddableTools.map((t) => ({
+  tool: t,
+  code: embedSnippet(t),
+}));
+---
+<Base title={title} description={description}>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> › <span>Embed a calculator</span>
+    </nav>
+
+    <h1>Put a free calculator on your website</h1>
+    <p class="standfirst">
+      Copy one line of HTML. No sign-up, no account, no cost, and nothing to
+      maintain — when tax rates change, every calculator updates itself.
+    </p>
+
+    <div class="prose">
+      <p>
+        If you're a mortgage broker, conveyancer, accountant or estate agent,
+        your clients keep asking the same questions: what will the monthly
+        payment be, how much stamp duty is due, what does that salary actually
+        pay. A calculator on your own page answers them before anyone picks up
+        the phone.
+      </p>
+      <p>
+        These are the same calculators that run on gazza.ltd. They work on
+        phones, they need no plugin, and they don't collect anything about your
+        visitors — every figure is worked out in the browser, so nothing is sent
+        anywhere.
+      </p>
+    </div>
+
+    <h2>Pick a calculator</h2>
+    <ul class="card-grid">
+      {embeddableTools.map((t) => (
+        <li>
+          <a class="card" href={`#${t.slug}`}>
+            <span class="name">{t.title}</span>
+            <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {snippets.map(({ tool, code }) => (
+      <section class="embed-offer" id={tool.slug}>
+        <h3>{tool.title}</h3>
+
+        <div class="embed-demo">
+          <iframe
+            src={`/embed/${tool.slug}`}
+            title={`${tool.title} preview`}
+            width="100%"
+            height={tool.embedHeight ?? 700}
+            loading="lazy"
+          ></iframe>
+        </div>
+
+        <p class="label">Paste this into your page</p>
+        <pre class="embed-code"><code>{code}</code></pre>
+
+        <p class="note">
+          The second line is the credit link. Please keep it — it's the only
+          thing we ask in return, and it's what pays for the calculators being
+          free.
+        </p>
+      </section>
+    ))}
+
+    <div class="prose">
+      <h2>How to add it to your site</h2>
+
+      <h3>WordPress</h3>
+      <p>
+        Edit the page, add a <strong>Custom HTML</strong> block, and paste the
+        code in. In the older Classic editor, switch from Visual to
+        <strong> Text</strong> first. You don't need a plugin.
+      </p>
+
+      <h3>Squarespace</h3>
+      <p>
+        Edit the page, add a <strong>Code</strong> block, paste the code, and
+        save. Code blocks are available on all paid plans.
+      </p>
+
+      <h3>Wix</h3>
+      <p>
+        Add → <strong>Embed Code</strong> → <strong>Embed HTML</strong>, choose
+        "Code", and paste. Drag the box out to at least the height given in the
+        snippet or the calculator will be cut off.
+      </p>
+
+      <h3>Anything else</h3>
+      <p>
+        Paste it wherever HTML goes. It's a plain iframe with no scripts and no
+        dependencies, so it works in almost any content editor, email platform
+        or site builder that permits custom HTML.
+      </p>
+
+      <h2>Common questions</h2>
+
+      <h3>Is it really free?</h3>
+      <p>
+        Yes, and there's no catch to find later. The calculators are funded by
+        advertising on gazza.ltd itself. The embedded version carries no adverts
+        at all — just the credit link.
+      </p>
+
+      <h3>Do I have to update it when tax rates change?</h3>
+      <p>
+        No, and this is the main reason to embed rather than build your own. The
+        calculator is served from gazza.ltd, so when a Budget changes stamp duty
+        we update it once and your page is correct within minutes. You do
+        nothing. Our figures were last verified on {LAST_VERIFIED} and the date
+        is shown inside the calculator so your visitors can see it too.
+      </p>
+
+      <h3>Will it slow my page down?</h3>
+      <p>
+        Barely. The snippet uses lazy loading, so the calculator only loads if a
+        visitor scrolls to it. There are no tracking scripts and no external
+        fonts.
+      </p>
+
+      <h3>Does it collect data about my visitors?</h3>
+      <p>
+        No. Every calculation happens in the visitor's own browser. Nothing they
+        type is sent to us or stored anywhere, so embedding this doesn't add
+        anything to your cookie banner or privacy policy.
+      </p>
+
+      <h3>Can I change how it looks?</h3>
+      <p>
+        You can set the width and height in the snippet, and adjust the border
+        in the inline style. The calculator itself inherits our styling. If you
+        need something to match your brand more closely,
+        <a href="mailto:hello@gazza.ltd">tell us what you need</a>.
+      </p>
+
+      <h3>Can I remove the credit link?</h3>
+      <p>
+        We'd rather you didn't. It costs you one small line and it's the entire
+        reason we can offer this for nothing. See the
+        <a href="/embed-terms">embed terms</a> for the full picture.
+      </p>
+    </div>
+
+    <p class="note">
+      Questions, or a calculator you'd like that isn't here?
+      <a href="mailto:hello@gazza.ltd">hello@gazza.ltd</a>.
+    </p>
+  </div>
+</Base>

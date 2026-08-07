@@ -1,0 +1,59 @@
+---
+// One bare, embeddable page per tool: /embed/stamp-duty-calculator etc.
+//
+// These are the URLs other websites iframe. They are deliberately:
+//   - unversioned, so a rate change fixes every host at once
+//   - noindex + canonical to the real tool page, so they never outrank it
+//   - free of site chrome, because they render inside someone else's design
+//
+// WHY THE WIDGETS ARE LISTED ONE BY ONE rather than looked up from a map:
+// Astro generates the hydration script for `client:load` at build time by
+// statically analysing the import, so a component pulled out of an object
+// fails with "No matching import has been found". Each widget therefore needs
+// its own explicit reference. Verbose, but it is the only thing that works.
+//
+// Adding a tool needs three edits: "embeddable": true in tools.json, a height
+// there too, and a line below. The test suite checks all three agree.
+
+import EmbedPage from '../../layouts/EmbedPage.astro';
+import { embeddableTools } from '../../data/embeds.js';
+import { LAST_VERIFIED } from '../../components/tools/taxData.js';
+
+import MortgageWidget from '../../components/tools/MortgageWidget.jsx';
+import MortgageCompareWidget from '../../components/tools/MortgageCompareWidget.jsx';
+import MortgageOverpaymentWidget from '../../components/tools/MortgageOverpaymentWidget.jsx';
+import StampDutyWidget from '../../components/tools/StampDutyWidget.jsx';
+import TakeHomePayWidget from '../../components/tools/TakeHomePayWidget.jsx';
+import CompoundInterestWidget from '../../components/tools/CompoundInterestWidget.jsx';
+import BmiWidget from '../../components/tools/BmiWidget.jsx';
+
+// Only tools whose figures can go stale need the verification date shown.
+const DATED = new Set(['stamp-duty-calculator', 'take-home-pay-calculator']);
+
+export function getStaticPaths() {
+  return embeddableTools.map((t) => ({
+    params: { tool: t.slug },
+    props: { tool: t },
+  }));
+}
+
+const { tool } = Astro.props;
+const slug = tool.slug;
+---
+<EmbedPage
+  title={`${tool.title} | gazza.ltd`}
+  toolSlug={slug}
+  toolTitle={tool.title}
+  category={tool.category}
+  verified={DATED.has(slug) ? LAST_VERIFIED : null}
+>
+  <h1 class="embed-title">{tool.h1}</h1>
+
+  {slug === 'mortgage-calculator' && <MortgageWidget client:load />}
+  {slug === 'mortgage-comparison-calculator' && <MortgageCompareWidget client:load />}
+  {slug === 'mortgage-overpayment-calculator' && <MortgageOverpaymentWidget client:load />}
+  {slug === 'stamp-duty-calculator' && <StampDutyWidget client:load />}
+  {slug === 'take-home-pay-calculator' && <TakeHomePayWidget client:load />}
+  {slug === 'compound-interest-calculator' && <CompoundInterestWidget client:load />}
+  {slug === 'bmi-calculator' && <BmiWidget client:load />}
+</EmbedPage>
