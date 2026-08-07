@@ -146,6 +146,14 @@ describe('service worker safety', () => {
       'the build no longer injects the precache list — offline will silently break');
   });
 
+  test('error responses are never cached', () => {
+    // Caching a 404 pins that URL to "page doesn't exist" for offline use,
+    // even after the page has been deployed. Hit for real: /pwa-check was
+    // visited a minute before it went live and stayed missing afterwards.
+    assert.match(sw, /if \(response\.ok\)/,
+      'the HTML branch caches responses without checking they succeeded');
+  });
+
   test('the offline fallback page exists', () => {
     assert.ok(sw.includes("'/offline'"), 'no offline fallback listed');
     assert.ok(fs.existsSync(path.join(root, 'src/pages/offline.astro')), 'offline page missing');

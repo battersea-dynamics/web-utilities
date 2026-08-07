@@ -32,7 +32,7 @@
  *   the placeholder below must stay exactly as it is.
  */
 
-const CACHE = 'gazza-pdf-v2';
+const CACHE = 'gazza-pdf-v3';
 
 /* Written at build time by scripts/build-sw.mjs. Do not edit by hand and do
    not change the placeholder text — the script matches on it. */
@@ -111,10 +111,16 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE).then((cache) => {
-            for (const v of variants(url.pathname)) cache.put(v, copy.clone());
-          });
+          // Only cache successes. Caching a 404 stores the "page doesn't
+          // exist" response under that URL, so the page stays missing offline
+          // even after it has been deployed — which is exactly what happened
+          // when /pwa-check was visited a minute before it went live.
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE).then((cache) => {
+              for (const v of variants(url.pathname)) cache.put(v, copy.clone());
+            });
+          }
           return response;
         })
         .catch(async () => {
