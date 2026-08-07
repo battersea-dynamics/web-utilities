@@ -104,7 +104,7 @@ describe('service worker safety', () => {
   });
 
   test('precaches every published PDF tool, and nothing unpublished', () => {
-    const listed = [...sw.matchAll(/^\s*'(\/[a-z0-9-]*)',$/gm)].map((m) => m[1]);
+    const listed = [...sw.matchAll(/^\s*'(\/[a-z0-9-]*)\/?',$/gm)].map((m) => m[1]);
     const pdf = tools.tools.filter((t) => t.published && t.category === 'pdf');
     for (const t of pdf) {
       assert.ok(listed.includes(`/${t.slug}`), `${t.slug} is a published PDF tool but not precached`);
@@ -114,6 +114,36 @@ describe('service worker safety', () => {
       if (['/pdf', '/offline'].includes(url)) continue;
       assert.ok(published.has(url), `sw.js precaches ${url}, which is not a published tool`);
     }
+  });
+
+  test('precached pages use the trailing-slash form the site serves', () => {
+    // Astro builds directories, so the real URL is /merge-pdf/. v1 precached
+    // '/merge-pdf', every offline lookup missed on the exact-URL match, and
+    // the offline fallback missed for the same reason. Found only by testing
+    // on a phone.
+    const pages = sw.match(/const PAGES = \[([\s\S]*?)\];/)[1].match(/'([^']+)'/g)
+      .map((s) => s.replace(/'/g, ''));
+    for (const p of pages) {
+      assert.match(p, /\/$/, `"${p}" has no trailing slash — offline lookup will miss`);
+    }
+  });
+
+  test('lookups tolerate either slash form', () => {
+    assert.match(sw, /function variants/, 'no slash-tolerant lookup helper');
+  });
+
+  test('the build injects a real precache list', () => {
+    // pdf-lib is a 411KB lazy chunk that no page's HTML references, so a
+    // worker caching only what it has seen fetched will not have it. Anyone
+    // installing from /pdf and going offline without opening a tool had no
+    // PDF engine at all.
+    // Checked against the raw file: the placeholder is itself a comment, so
+    // the comment-stripped copy used elsewhere in this file doesn't have it.
+    assert.match(swRaw, /const ASSETS = \/\*__PRECACHE_ASSETS__\*\/ \[\]/,
+      'the placeholder scripts/build-sw.mjs replaces has been altered');
+    const pkg = JSON.parse(read('package.json'));
+    assert.match(pkg.scripts.build, /build-sw\.mjs/,
+      'the build no longer injects the precache list — offline will silently break');
   });
 
   test('the offline fallback page exists', () => {
