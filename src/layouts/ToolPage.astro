@@ -109,6 +109,17 @@ const faqSchema = faq.length
       </section>
     )}
 
+    <!-- Offer the embed where the person who wants it already is: a broker or
+         conveyancer reading the stamp duty page is exactly who would put this
+         on their own site. Only shown for tools that are actually embeddable. -->
+    {tool.embeddable && (
+      <p class="embed-offer-inline">
+        <strong>Want this calculator on your own website?</strong>{' '}
+        <a href="/embed">Copy one line of HTML</a> — free, no sign-up, and it
+        updates itself when tax rates change.
+      </p>
+    )}
+
     <!-- Optional: data-source credits, where a licence requires attribution -->
     {Astro.slots.has('credits') && (
       <p class="credits"><slot name="credits" /></p>

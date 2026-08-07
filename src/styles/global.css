@@ -590,6 +590,19 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
 }
 .word-gloss { display: block; margin-top: 0.2rem; }
 
+/* Inline offer to embed a calculator, shown on embeddable tool pages.
+   Quiet — it is for the small minority of visitors who run a website, and
+   must not distract the majority who just want the answer. */
+.embed-offer-inline {
+  margin-top: var(--sp-5);
+  padding: var(--sp-2) var(--sp-3);
+  border-left: 3px solid var(--accent);
+  background: var(--accent-tint);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  max-width: var(--prose);
+}
+
 /* ─── Install prompt (PDF tools only) ─────────────────────────────────
    Hidden by default and revealed by script, so it never appears on desktop,
    in an already-installed app, or on a browser that can't install. */

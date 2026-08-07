@@ -88,6 +88,13 @@ const choosing = (content?.choosing ?? []).filter((c) =>
 
     {content?.note && <p class="note hub-note">{content.note}</p>}
 
+    {content?.offer && (
+      <p class="embed-offer-inline">
+        <strong>{content.offer.lead}</strong> {content.offer.text}{' '}
+        <a href={content.offer.href}>{content.offer.cta}</a>.
+      </p>
+    )}
+
     {soon.length > 0 && (
       <section class="hub-soon">
         <h2>Coming next</h2>

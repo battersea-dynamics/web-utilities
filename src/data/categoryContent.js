@@ -42,6 +42,16 @@ export const categoryContent = {
     note: `These calculators are for working things out, not for advice. For
            anything you're relying on — a mortgage offer, a tax position — check
            the figure against the lender or the official source before acting on it.`,
+    // Rendered as a linked call-out, separate from the disclaimer above — a
+    // note about liability is the wrong place to advertise. The finance hub is
+    // the best spot on the site for this: brokers, conveyancers and
+    // accountants land here, and they are exactly who embeds a calculator.
+    offer: {
+      lead: 'Run a website?',
+      text: 'Put any of these calculators on it, free — one line of HTML, no sign-up, and it updates itself when tax rates change.',
+      href: '/embed',
+      cta: 'See how',
+    },
   },
 
   health: {

@@ -224,6 +224,36 @@ describe('the /embed landing page', () => {
     assert.ok(fs.existsSync(path.join(root, 'src/pages/embed-terms.astro')));
   });
 
+  test('the site actually links to it', () => {
+    // /embed was orphaned on first build: nothing but the terms page linked
+    // to it, so no visitor browsing the site could ever reach the one page
+    // the whole distribution plan depends on. Orphaned pages also rank worse.
+    const base = fs.readFileSync(path.join(root, 'src/layouts/Base.astro'), 'utf8');
+    assert.match(base, /href="\/embed"/, 'no footer link to /embed');
+
+    const toolPage = fs.readFileSync(path.join(root, 'src/layouts/ToolPage.astro'), 'utf8');
+    assert.match(toolPage, /tool\.embeddable &&/, 'embeddable tool pages do not offer the embed');
+    assert.match(toolPage, /href="\/embed"/);
+  });
+
+  test('the embed offer only appears on tools that are embeddable', () => {
+    const toolPage = fs.readFileSync(path.join(root, 'src/layouts/ToolPage.astro'), 'utf8');
+    const block = toolPage.slice(toolPage.indexOf('tool.embeddable &&'));
+    assert.ok(
+      block.indexOf('embed-offer-inline') < block.indexOf('credits'),
+      'the offer is not inside the embeddable guard'
+    );
+  });
+
+  test('the offer link on a hub is a real link, not bare text', () => {
+    // First attempt put "see /embed" inside the hub's disclaimer note, which
+    // renders as plain text — unclickable, and the wrong place for an offer.
+    const content = fs.readFileSync(path.join(root, 'src/data/categoryContent.js'), 'utf8');
+    assert.ok(!/note:[^`]*`[^`]*\/embed/s.test(content), 'an /embed URL is buried in a note');
+    const hub = fs.readFileSync(path.join(root, 'src/pages/[category]/index.astro'), 'utf8');
+    assert.match(hub, /content\.offer\.href/, 'hub does not render the offer as a link');
+  });
+
   test('shows the rate verification date', () => {
     // The reason a broker picks this calculator over a bank's.
     assert.ok(page.includes('LAST_VERIFIED'), 'verification date not shown');
