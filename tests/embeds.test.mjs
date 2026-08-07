@@ -50,6 +50,18 @@ describe('embeddable tool list', () => {
     }
   });
 
+  test('embeds hide cross-links and ad slots', () => {
+    // Four widgets carry .tool-actions links to other calculators. Useful on
+    // gazza.ltd; wrong inside a broker's website, where they pull the host's
+    // visitor away and read as advertising on a page they own. They would
+    // also open our site *inside* their iframe, which looks broken.
+    const css = fs.readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
+    const rule = css.match(/\.embed-body \.tool-actions[^}]*}/s);
+    assert.ok(rule, 'no rule hiding .tool-actions inside embeds');
+    assert.match(rule[0], /display:\s*none/);
+    assert.match(rule[0], /\.ad-slot/, 'ad slots are not hidden in embeds');
+  });
+
   test('no PDF tool is embeddable', () => {
     // File pickers and downloads behave unpredictably inside a third-party
     // iframe, so these are deliberately excluded.

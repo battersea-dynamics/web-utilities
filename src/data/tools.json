@@ -64,7 +64,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 700
+      "embedHeight": 620
     },
     {
       "slug": "mortgage-comparison-calculator",
@@ -86,7 +86,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 900
+      "embedHeight": 820
     },
     {
       "slug": "mortgage-overpayment-calculator",
@@ -108,7 +108,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 760
+      "embedHeight": 680
     },
     {
       "slug": "stamp-duty-calculator",
@@ -129,7 +129,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 660
+      "embedHeight": 560
     },
     {
       "slug": "take-home-pay-calculator",
@@ -150,7 +150,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 680
+      "embedHeight": 620
     },
     {
       "slug": "compound-interest-calculator",
@@ -171,7 +171,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 700
+      "embedHeight": 640
     },
     {
       "slug": "bmi-calculator",
@@ -193,7 +193,7 @@
       "published": true,
       "contentStatus": "complete",
       "embeddable": true,
-      "embedHeight": 560
+      "embedHeight": 500
     },
     {
       "slug": "blood-sugar-converter",

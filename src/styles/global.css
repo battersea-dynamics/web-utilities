@@ -601,6 +601,26 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
   padding: var(--sp-3);
   max-width: 100%;
 }
+
+/* Strip anything that pulls the host's visitor away or sells to them.
+   Four widgets carry .tool-actions cross-links to other calculators, which
+   are useful on gazza.ltd and wrong inside somebody else's website: the link
+   would open our site inside their iframe, and it reads as advertising on a
+   page they own. Same for ad slots. Hidden here rather than removed from the
+   widgets, so the tool pages keep them. */
+.embed-body .tool-actions,
+.embed-body .ad-slot {
+  display: none;
+}
+
+/* The panel already sits inside the host's own bordered frame, so a second
+   border and full padding just wastes vertical space. */
+.embed-body .tool-panel {
+  border: 0;
+  padding: 0;
+  margin-bottom: 0;
+  background: transparent;
+}
 .embed-title {
   font-size: var(--text-body);
   margin: 0 0 var(--sp-2);
