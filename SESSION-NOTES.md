@@ -4,7 +4,7 @@ Handover for the next session. What was built, what's unverified, and what's
 next. Read `DISTRIBUTION.md` alongside this — it holds the plan; this holds
 the state.
 
-**Where things stand:** 35 tools, 54 pages, 280 tests, all passing. Live at
+**Where things stand:** 35 tools, 55 pages, 288 tests, all passing. Live at
 gazza.ltd. `origin/main` at `05ce4eb`. Nothing uncommitted.
 
 ---
@@ -80,6 +80,38 @@ Eight tests enforce this.
 
 ---
 
+## OPEN BUG — offline still fails despite a correct cache
+
+**Start here next session.** Android phone, tested repeatedly.
+
+`/pwa-check` on the device reports everything green with the v2 worker:
+service worker registered, active, controlling the page; 73 items cached;
+25 pages; pdf-lib present; `/merge-pdf` matchable from cache; verdict "offline
+should work". **And offline still does not work.**
+
+So the two bugs already fixed (trailing-slash cache keys, build-time precache
+of pdf-lib) were real but were not the whole story. Something else is wrong,
+and the diagnostic as written cannot see it — it proves the cache contains the
+right things, not that the fetch handler serves them.
+
+Candidates not yet ruled out:
+
+- The `catch` branch in `sw.js` may not run as expected when Android drops the
+  network — Chrome can serve its own offline page before the worker responds.
+- `start_url` is `/pdf?source=pwa`. The handler strips the query via
+  `url.pathname`, but this was never tested with a query string present.
+- The app may be launching a navigation the worker does not intercept at all.
+
+**What to capture first:** what actually appears offline — Chrome's dinosaur
+page, our own `/offline` page, a blank screen, or the tool loading but the
+merge button doing nothing. Each points somewhere different, and we do not yet
+have this detail.
+
+**Do not assume user error.** The diagnostic contradicts the symptom, which
+means the diagnostic is measuring the wrong thing.
+
+---
+
 ## Unverified — check these first
 
 1. **Do the embeds render on a real third-party site?** Tested once by the
@@ -87,11 +119,13 @@ Eight tests enforce this.
 2. **Do the trimmed embed heights fit?** They are estimates, not measurements
    — I can't render a page. Scrollbar inside means too short; gap underneath
    means too tall. Numbers live in `tools.json` as `embedHeight`.
-3. **Does the PWA install and work offline on a real phone?** Never tested on
-   hardware.
-4. **Does the 404 return a real 404 status, not just look like one?** The page
-   renders; the status code was never confirmed in DevTools. If it's 200, the
-   Cloudflare setting is under **Settings → Build → Not Found handling**.
+3. ~~**Does the PWA install work?**~~ Yes — confirmed on Android. Installing
+   works; the prompt only hides because the app is already installed, and
+   Chrome disables installation in incognito entirely. Offline is a separate
+   open bug, above.
+4. ~~**Does the 404 return a real 404?**~~ Effectively confirmed. A fake URL
+   now returns an empty body where it previously returned the full homepage at
+   200. Exact status code still unread in DevTools, but the soft-404 is gone.
 5. **AdSense in an installed PWA — genuinely unresolved.** I first said ads
    work normally, then found AdSense prohibits ad units in software
    applications and that scripts may suppress ads in standalone mode. No
