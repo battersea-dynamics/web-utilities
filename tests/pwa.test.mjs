@@ -154,6 +154,29 @@ describe('service worker safety', () => {
       'the HTML branch caches responses without checking they succeeded');
   });
 
+  test('a failed fetch falls back to cache even when it does not throw', () => {
+    // Chrome can *resolve* a fetch with its own error response when the
+    // network is gone, rather than rejecting. A catch-only fallback then
+    // never runs and the user sees the dinosaur page while we hold a good
+    // copy. Found on a real phone: the app worked offline from a tool page
+    // but not from its own launch screen.
+    assert.match(sw, /return \(await fromCache\(url\)\) \|\| response/,
+      'a non-ok response is returned without trying the cache');
+  });
+
+  test('cache lookups ignore query strings', () => {
+    // start_url used to be /pdf?source=pwa. Cache matching compares the whole
+    // URL, so a page stored as /pdf was never found for /pdf?source=pwa.
+    assert.match(sw, /ignoreSearch: true/, 'lookups will miss on any query string');
+  });
+
+  test('start_url carries no query string', () => {
+    // Belt and braces alongside ignoreSearch: nothing needs the parameter,
+    // and its absence removes the whole class of problem.
+    assert.ok(!manifest.start_url.includes('?'),
+      `start_url is "${manifest.start_url}" — a query string breaks cache matching`);
+  });
+
   test('the offline fallback page exists', () => {
     assert.ok(sw.includes("'/offline'"), 'no offline fallback listed');
     assert.ok(fs.existsSync(path.join(root, 'src/pages/offline.astro')), 'offline page missing');

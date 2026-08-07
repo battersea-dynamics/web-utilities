@@ -32,7 +32,7 @@
  *   the placeholder below must stay exactly as it is.
  */
 
-const CACHE = 'gazza-pdf-v3';
+const CACHE = 'gazza-pdf-v4';
 
 /* Written at build time by scripts/build-sw.mjs. Do not edit by hand and do
    not change the placeholder text — the script matches on it. */
@@ -56,6 +56,29 @@ const PAGES = [
 function variants(pathname) {
   const bare = pathname.replace(/\/$/, '');
   return bare === '' ? ['/'] : [bare, bare + '/'];
+}
+
+/**
+ * Find a cached page for this URL, tolerating slashes and query strings.
+ *
+ * `ignoreSearch` matters because the app launches at a URL with a query on
+ * it. Cache lookups compare the whole URL by default, so a page stored as
+ * /pdf would not be found when the request is /pdf?source=pwa — which is
+ * exactly why the app worked offline from a tool page but not from its own
+ * launch screen.
+ */
+async function fromCache(url) {
+  const cache = await caches.open(CACHE);
+  for (const v of variants(url.pathname)) {
+    const hit =
+      (await cache.match(v)) || (await cache.match(v, { ignoreSearch: true }));
+    if (hit) return hit;
+  }
+  return (
+    (await cache.match('/offline/')) ||
+    (await cache.match('/offline')) ||
+    null
+  );
 }
 
 self.addEventListener('install', (event) => {
@@ -109,8 +132,10 @@ self.addEventListener('fetch', (event) => {
 
   if (isHTML) {
     event.respondWith(
-      fetch(request)
-        .then((response) => {
+      (async () => {
+        try {
+          const response = await fetch(request);
+
           // Only cache successes. Caching a 404 stores the "page doesn't
           // exist" response under that URL, so the page stays missing offline
           // even after it has been deployed — which is exactly what happened
@@ -120,24 +145,25 @@ self.addEventListener('fetch', (event) => {
             caches.open(CACHE).then((cache) => {
               for (const v of variants(url.pathname)) cache.put(v, copy.clone());
             });
+            return response;
           }
-          return response;
-        })
-        .catch(async () => {
-          const cache = await caches.open(CACHE);
-          for (const v of variants(url.pathname)) {
-            const hit = await cache.match(v);
-            if (hit) return hit;
-          }
+
+          // A failed fetch does not always *reject*. Chrome can resolve with
+          // its own error response when the network is gone, in which case a
+          // catch-only fallback never runs and the user sees the dinosaur page
+          // even though we hold a perfectly good copy. So treat any non-ok
+          // response as a miss and fall through to the cache.
+          return (await fromCache(url)) || response;
+        } catch {
           return (
-            (await cache.match('/offline/')) ||
-            (await cache.match('/offline')) ||
+            (await fromCache(url)) ||
             new Response('<h1>Offline</h1>', {
               status: 503,
               headers: { 'Content-Type': 'text/html' },
             })
           );
-        })
+        }
+      })()
     );
     return;
   }
