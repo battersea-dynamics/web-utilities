@@ -164,6 +164,35 @@ describe('service worker safety', () => {
       'a non-ok response is returned without trying the cache');
   });
 
+  test('a redirect is handed back, not treated as a failure', () => {
+    // Navigation requests carry redirect: "manual". Every internal link on
+    // this site is bare (/finance, not /finance/) and every page is a
+    // directory, so Cloudflare 301s them all — and fetch returns an opaque
+    // redirect: type "opaqueredirect", status 0, ok FALSE. Reading that as an
+    // error showed the offline page for every calculator *while online*. The
+    // PDF tools hid it, because being precached they fell back to a real copy.
+    assert.match(sw, /opaqueredirect/,
+      'an opaque redirect will be mistaken for a failed request');
+    const idx = sw.indexOf('opaqueredirect');
+    const okIdx = sw.indexOf('if (response.ok)');
+    assert.ok(idx < okIdx, 'the redirect check must come before the ok check');
+  });
+
+  test('a missing page is not reported as "no connection"', () => {
+    // fromCache used to fall back to /offline internally, so every caller got
+    // "no connection" for any page that simply was not cached — including a
+    // real 404. The offline page is the caller's decision.
+    const fn = sw.slice(sw.indexOf('async function fromCache'), sw.indexOf('async function offlinePage'));
+    assert.ok(!/offline/i.test(fn),
+      'fromCache still substitutes the offline page for any uncached URL');
+  });
+
+  test('the offline page is only used when the network actually failed', () => {
+    // i.e. inside the catch, not on a non-ok response.
+    const catchBlock = sw.slice(sw.indexOf('} catch {'));
+    assert.match(catchBlock, /offlinePage\(\)/, 'the catch branch has no offline fallback');
+  });
+
   test('cache lookups ignore query strings', () => {
     // start_url used to be /pdf?source=pwa. Cache matching compares the whole
     // URL, so a page stored as /pdf was never found for /pdf?source=pwa.

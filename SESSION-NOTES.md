@@ -4,7 +4,7 @@ Handover for the next session. What was built, what's unverified, and what's
 next. Read `DISTRIBUTION.md` alongside this — it holds the plan; this holds
 the state.
 
-**Where things stand:** 35 tools, 55 pages, 291 tests, all passing. Live at
+**Where things stand:** 35 tools, 55 pages, 294 tests, all passing. Live at
 gazza.ltd. `origin/main` at `05ce4eb`. Nothing uncommitted.
 
 ---
@@ -80,7 +80,7 @@ Eight tests enforce this.
 
 ---
 
-## Offline — FIXED and confirmed working on Android (v4)
+## Offline — FIXED and confirmed working on Android (v5)
 
 **The symptom that cracked it:** offline worked from a tool page like
 `/merge-pdf`, but not from the app's own launch screen `/pdf`. That is a very
@@ -96,9 +96,18 @@ specific difference, and it pointed at two things:
    which then never ran — so the dinosaur page showed while a perfectly good
    copy sat in the cache. Any non-ok response now falls through to the cache.
 
-Together with the two earlier fixes (trailing-slash cache keys, build-time
-precache of pdf-lib) that is four separate bugs in the same feature, none
-visible without a real phone.
+3. **A redirect is not a failure.** Navigation requests carry
+   `redirect: "manual"`. Every internal link on the site is bare
+   (`/finance`, not `/finance/`) and every page is a directory, so Cloudflare
+   301s all of them — and `fetch` then returns an *opaque redirect*: type
+   `opaqueredirect`, status 0, **`ok: false`**. Fix (2) above read that as a
+   failure, so every calculator showed "no connection" **while online**. The
+   PDF tools masked it: being precached, the fallback found a real copy. This
+   was a regression introduced by fix (2) and caught within the hour.
+
+Five separate bugs in this one feature, none visible without a real phone.
+The pattern is worth noting: each fix exposed the next, and three of them
+turned on the difference between `/x` and `/x/`.
 
 **Confirmed working** on a real Android phone: the installed app launches
 offline, opens on `/pdf`, and merges PDFs with no connection.

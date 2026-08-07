@@ -32,7 +32,7 @@
  *   the placeholder below must stay exactly as it is.
  */
 
-const CACHE = 'gazza-pdf-v4';
+const CACHE = 'gazza-pdf-v5';
 
 /* Written at build time by scripts/build-sw.mjs. Do not edit by hand and do
    not change the placeholder text — the script matches on it. */
@@ -74,11 +74,18 @@ async function fromCache(url) {
       (await cache.match(v)) || (await cache.match(v, { ignoreSearch: true }));
     if (hit) return hit;
   }
-  return (
-    (await cache.match('/offline/')) ||
-    (await cache.match('/offline')) ||
-    null
-  );
+  // Deliberately returns null rather than the offline page. An earlier version
+  // fell back to /offline in here, which meant every caller got "no connection"
+  // for any page that simply wasn't cached — including a genuine 404. Whether
+  // the offline page is the right answer is the caller's decision, not this
+  // function's.
+  return null;
+}
+
+/** The offline page, if we have it. */
+async function offlinePage() {
+  const cache = await caches.open(CACHE);
+  return (await cache.match('/offline/')) || (await cache.match('/offline')) || null;
 }
 
 self.addEventListener('install', (event) => {
@@ -136,6 +143,18 @@ self.addEventListener('fetch', (event) => {
         try {
           const response = await fetch(request);
 
+          // A REDIRECT IS NOT A FAILURE — and this one is easy to get wrong.
+          // Navigation requests carry redirect: "manual", so when Cloudflare
+          // sends /mortgage-calculator to /mortgage-calculator/ the response
+          // comes back as an opaque redirect: type "opaqueredirect", status 0,
+          // ok false, no body. Treating that as an error showed the offline
+          // page for every calculator *while online*. The PDF tools masked it,
+          // because they are precached and the fallback found a real copy.
+          // Hand it straight back and let the browser follow the redirect.
+          if (response.type === 'opaqueredirect' || response.redirected) {
+            return response;
+          }
+
           // Only cache successes. Caching a 404 stores the "page doesn't
           // exist" response under that URL, so the page stays missing offline
           // even after it has been deployed — which is exactly what happened
@@ -148,15 +167,18 @@ self.addEventListener('fetch', (event) => {
             return response;
           }
 
-          // A failed fetch does not always *reject*. Chrome can resolve with
-          // its own error response when the network is gone, in which case a
-          // catch-only fallback never runs and the user sees the dinosaur page
-          // even though we hold a perfectly good copy. So treat any non-ok
-          // response as a miss and fall through to the cache.
+          // A genuinely failed fetch does not always *reject*: Chrome can
+          // resolve with its own error response when the network is gone. So
+          // check the cache — but only ever substitute a real cached copy of
+          // *this* page. A 404 must still render as a 404, not as "no
+          // connection".
           return (await fromCache(url)) || response;
         } catch {
+          // Only here — a thrown fetch, meaning the network really is gone —
+          // is the offline page the honest answer.
           return (
             (await fromCache(url)) ||
+            (await offlinePage()) ||
             new Response('<h1>Offline</h1>', {
               status: 503,
               headers: { 'Content-Type': 'text/html' },
