@@ -1,5 +1,8 @@
 # web-utilities
 
+> **Picking this up again?** Read `SESSION-NOTES.md` first — what was
+> built recently, what is still unverified, and what comes next.
+
 The utilities site behind **gazza.ltd**. Astro (static HTML) with React islands for the interactive widgets.
 
 **Repo:** `github.com/battersea-dynamics/web-utilities`
@@ -85,7 +88,7 @@ npm run preview   # serve the built site locally
 
 ## What's built so far
 
-**35 tools across 44 pages, in five live categories.** Categories with no published tools are hidden automatically and appear the moment they gain one — see `src/data/site.js`.
+**35 tools across 54 pages, in five live categories.** Categories with no published tools are hidden automatically and appear the moment they gain one — see `src/data/site.js`.
 
 **Homepage** — a brand facade only: category cards, no individual tool content. Every tool lives on its own flat URL.
 
@@ -103,7 +106,7 @@ npm run preview   # serve the built site locally
 
 **Site pages** — `/about` (with the magpie story) and `/privacy-policy`, both linked in the footer alongside a feedback link. The privacy policy carries the cookie and ad-vendor disclosures AdSense requires.
 
-**Tests** — 240, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
+**Tests** — 280, run with `npm test`. The finance and health engines are checked against worked examples published by HMRC, Revenue Scotland and the WHO; the hashes against the RFC 1321 and SHA specification vectors.
 
 ---
 
