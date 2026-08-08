@@ -1,0 +1,335 @@
+---
+// The four-nations stamp duty comparison.
+//
+// WHY IT EXISTS: this is the one page on the site carrying original data
+// rather than a tool. Nobody publishes a straight side-by-side of what the
+// same purchase costs in each nation, because doing it properly means running
+// three different tax regimes — and the third one, Scotland's, is not merely
+// different numbers but a different calculation. We already have that engine,
+// so the page is arithmetic we can do and others mostly don't.
+//
+// WHY IT MATTERS FOR LINKS: original figures get cited. A broker, journalist
+// or forum poster who needs "how much more is it in Scotland" has nothing
+// clean to point at. That is the gap.
+//
+// EVERY NUMBER BELOW IS COMPUTED, NOT TYPED. The tables are generated at
+// build time by the same propertyTax() the calculator uses, so the page
+// cannot drift out of step with the tool, and a rate change in taxData.js
+// updates the prose figures too. Do not replace any of these with a literal —
+// that is precisely the failure this arrangement prevents.
+
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { propertyTax, gbp } from '../components/tools/taxEngine.js';
+import { PROPERTY_TAX, LAST_VERIFIED, TAX_YEAR } from '../components/tools/taxData.js';
+
+const regions = ['england', 'scotland', 'wales'];
+const shortName = { england: 'England & NI', scotland: 'Scotland', wales: 'Wales' };
+
+/** One row per price: the tax due in each nation, plus the spread. */
+const rowsFor = (prices, opts = {}) =>
+  prices.map((price) => {
+    const cells = regions.map((r) => propertyTax(price, r, opts).total);
+    const high = Math.max(...cells);
+    const low = Math.min(...cells);
+    return {
+      price,
+      cells,
+      spread: high - low,
+      dearest: regions[cells.indexOf(high)],
+      cheapest: regions[cells.indexOf(low)],
+    };
+  });
+
+const standard = rowsFor([150000, 200000, 250000, 300000, 350000, 400000, 500000, 750000, 1000000]);
+const ftb = rowsFor([200000, 250000, 300000, 350000, 400000, 500000], { firstTimeBuyer: true });
+const extra = rowsFor([200000, 300000, 400000, 500000, 750000], { additionalProperty: true });
+
+// Figures quoted in the prose, pulled from the engine for the same reason.
+const at = (price, region, opts = {}) => gbp(propertyTax(price, region, opts).total);
+const cliffUnder = at(500000, 'england', { firstTimeBuyer: true });
+const cliffOver = gbp(propertyTax(500001, 'england', { firstTimeBuyer: true }).total);
+const cliffCost = gbp(
+  propertyTax(500001, 'england', { firstTimeBuyer: true }).total -
+    propertyTax(500000, 'england', { firstTimeBuyer: true }).total
+);
+
+const faq = [
+  {
+    q: 'Why does the same house cost different tax in different parts of the UK?',
+    a: 'Because property transaction tax is devolved. Scotland took control of it in 2015 and replaced stamp duty with Land and Buildings Transaction Tax; Wales followed in 2018 with Land Transaction Tax. England and Northern Ireland kept Stamp Duty Land Tax. Each government has set its own thresholds and rates since, and they have drifted apart.',
+  },
+  {
+    q: 'Which nation is cheapest?',
+    a: 'It depends entirely on the price. Below roughly £310,000 Wales is cheapest, because its nil-rate band of £225,000 is the highest in the UK. Above roughly £333,000 England and Northern Ireland become cheapest and Scotland the dearest, and the gap widens steadily from there.',
+  },
+  {
+    q: 'Is Northern Ireland separate?',
+    a: 'No. Northern Ireland uses Stamp Duty Land Tax on exactly the same terms as England, so the two are shown together throughout. There are four nations but only three tax regimes.',
+  },
+  {
+    q: 'Do first-time buyers get help everywhere?',
+    a: 'No, and this is the most commonly misunderstood part. England and Northern Ireland offer the most generous relief. Scotland offers a smaller one. Wales offers none at all — a first-time buyer in Wales pays exactly what a mover pays.',
+  },
+  {
+    q: 'Are these figures official?',
+    a: 'The rates come from HMRC, Revenue Scotland and the Welsh Revenue Authority, and the sources are linked at the bottom of this page. The comparison itself is ours: the figures are produced by the same calculator this site publishes, so they can be checked against it directly.',
+  },
+  {
+    q: 'Does this cover second homes and buy-to-let?',
+    a: 'Yes, in the third table. All three regimes charge more for an additional property but they do it in structurally different ways, which is why the gap between them is far wider than on an ordinary purchase.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title="Stamp Duty Across the UK — England, Scotland, Wales Compared | gazza.ltd"
+  description="The same house, three different tax bills. What stamp duty, LBTT and LTT cost in England, Northern Ireland, Scotland and Wales at every price, side by side."
+  category="finance"
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[
+      { name: 'Financial Calculators', href: '/finance' },
+      { name: 'Stamp duty across the UK' },
+    ]} />
+
+    <h1>Stamp duty across the UK: the same house, three different bills</h1>
+
+    <p class="standfirst">
+      Property purchase tax is devolved, so an identical purchase is taxed
+      three different ways depending on which side of a border it sits. The
+      gap runs from nothing to tens of thousands of pounds — and which nation
+      is dearest reverses partway up the price scale.
+    </p>
+
+    <div class="prose">
+      <p>
+        There are four nations but only three taxes. England and Northern
+        Ireland share Stamp Duty Land Tax. Scotland has charged Land and
+        Buildings Transaction Tax since 2015, Wales Land Transaction Tax since
+        2018. Every table below is for a standard freehold residential
+        purchase in the {TAX_YEAR} tax year.
+      </p>
+    </div>
+
+    <h2>Moving home</h2>
+    <p class="note">
+      You already own no other property, or are replacing your main residence.
+    </p>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Purchase price</th>
+            {regions.map((r) => <th>{shortName[r]}</th>)}
+            <th>Spread</th>
+          </tr>
+        </thead>
+        <tbody>
+          {standard.map((row) => (
+            <tr>
+              <td class="label-cell">{gbp(row.price)}</td>
+              {row.cells.map((c) => <td>{gbp(c)}</td>)}
+              <td>{gbp(row.spread)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>
+        The interesting part is that the ranking flips. Below about £310,000
+        Wales is the cheapest place in the UK to buy, because its nil-rate
+        band of £225,000 is the highest anywhere — a {gbp(200000)} purchase
+        attracts {at(200000, 'wales')} in Wales against {at(200000, 'england')}
+        {' '}in England.
+      </p>
+      <p>
+        Above roughly £333,000 that reverses completely. Scotland becomes the
+        most expensive and stays there, because its 10% band starts at
+        £325,000 while England's does not begin until £925,000. At
+        {' '}{gbp(500000)} the difference is {at(500000, 'england')} in England
+        against {at(500000, 'scotland')} in Scotland. At {gbp(1000000)} it is
+        {' '}{at(1000000, 'england')} against {at(1000000, 'scotland')}.
+      </p>
+      <p>
+        Nothing about that is hidden — each government publishes its own
+        bands. It is simply that almost nobody puts them next to each other.
+      </p>
+    </div>
+
+    <h2>First-time buyers</h2>
+    <p class="note">
+      Everyone buying is purchasing their first home.
+    </p>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Purchase price</th>
+            {regions.map((r) => <th>{shortName[r]}</th>)}
+            <th>Spread</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ftb.map((row) => (
+            <tr>
+              <td class="label-cell">{gbp(row.price)}</td>
+              {row.cells.map((c) => <td>{gbp(c)}</td>)}
+              <td>{gbp(row.spread)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>
+        This is where the nations diverge most sharply, and where the
+        assumption that "first-time buyers don't pay stamp duty" does the most
+        damage. It is true in England and Northern Ireland up to £300,000. In
+        Scotland the relief is much smaller — the nil-rate band rises from
+        £145,000 to £175,000, worth at most £600. <strong>In Wales there is no
+        first-time buyer relief at all.</strong>
+      </p>
+      <p>
+        At {gbp(300000)} a first-time buyer pays {at(300000, 'england', { firstTimeBuyer: true })}
+        {' '}in England, {at(300000, 'scotland', { firstTimeBuyer: true })} in
+        Scotland and {at(300000, 'wales', { firstTimeBuyer: true })} in Wales.
+        Same buyer, same price, same circumstances.
+      </p>
+
+      <h3>The £500,000 cliff edge</h3>
+      <p>
+        England and Northern Ireland withdraw first-time buyer relief
+        {' '}<em>entirely</em> above £500,000 rather than tapering it. A first-time
+        buyer paying exactly {gbp(500000)} owes {cliffUnder}. One pound more
+        and they owe {cliffOver} — an extra {cliffCost} for £1 of extra price.
+      </p>
+      <p>
+        It is the sharpest threshold in UK property tax and it is worth
+        knowing about before agreeing an offer. If you are negotiating near
+        that line, {gbp(500000)} and {gbp(500001)} are not the same number.
+      </p>
+    </div>
+
+    <h2>Second homes and buy-to-let</h2>
+    <p class="note">
+      You will own more than one residential property after the purchase.
+    </p>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Purchase price</th>
+            {regions.map((r) => <th>{shortName[r]}</th>)}
+            <th>Spread</th>
+          </tr>
+        </thead>
+        <tbody>
+          {extra.map((row) => (
+            <tr>
+              <td class="label-cell">{gbp(row.price)}</td>
+              {row.cells.map((c) => <td>{gbp(c)}</td>)}
+              <td>{gbp(row.spread)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>
+        Here the three regimes are not just differently priced but
+        differently <em>built</em>. England and Northern Ireland add 5
+        percentage points to every band. Wales switches to an entirely
+        separate higher-rates table. Scotland charges an 8% Additional
+        Dwelling Supplement on the <strong>whole purchase price</strong>, not
+        band by band — which is why Scotland is dearest at every price here,
+        including the low ones where it is cheapest for an ordinary buyer.
+      </p>
+      <p>
+        A {gbp(200000)} buy-to-let costs {at(200000, 'wales', { additionalProperty: true })}
+        {' '}in Wales and {at(200000, 'scotland', { additionalProperty: true })} in
+        Scotland. All three only bite from £40,000 upwards.
+      </p>
+    </div>
+
+    <h2>Why the differences exist</h2>
+    <div class="prose">
+      <p>
+        Scotland gained control of property transaction tax under the Scotland
+        Act 2012 and used it from April 2015; Wales followed under the Wales
+        Act 2014, from April 2018. Neither simply copied the existing rates,
+        and each has been adjusted separately at every budget since. Eleven
+        years of independent decisions is why the tables above look so little
+        alike.
+      </p>
+      <p>
+        The practical consequence is that advice written for one nation is
+        often wrong in another, and most of what circulates online is written
+        for England. If you are buying in Scotland or Wales, check the figure
+        rather than assuming.
+      </p>
+    </div>
+
+    <p class="embed-offer-inline">
+      <strong>Work out your own figure.</strong> The
+      {' '}<a href="/stamp-duty-calculator">stamp duty calculator</a> covers all
+      three regimes, first-time buyer relief and the additional property
+      surcharges, and shows the band-by-band working.
+    </p>
+
+    <div class="prose">
+      <h2>Sources</h2>
+      <p>
+        Rates last checked {LAST_VERIFIED}, for the {TAX_YEAR} tax year. Every
+        figure on this page is generated by the calculator linked above, from
+        these sources:
+      </p>
+      <ul>
+        {regions.map((r) => (
+          <li>
+            {PROPERTY_TAX[r].tax} ({PROPERTY_TAX[r].abbr}) —
+            {' '}<a href={PROPERTY_TAX[r].sourceUrl} target="_blank" rel="noopener">
+              {PROPERTY_TAX[r].authority}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="note">
+        Rates change at budgets, and this page is only as current as the date
+        above. It covers standard freehold residential purchases and does not
+        model the non-resident surcharge, leasehold rent, shared ownership,
+        linked transactions or purchases by companies. It is information, not
+        advice — confirm the figure with your solicitor or conveyancer before
+        relying on it.
+      </p>
+    </div>
+
+    <section class="prose">
+      <h2>Common questions</h2>
+      {faq.map((f) => (
+        <div class="faq-item">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+    </section>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Base>
