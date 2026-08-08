@@ -50,6 +50,16 @@ One URL per tool, forever. A rate change then corrects every host within
 minutes of a push. Versioning would freeze each host on whatever they pasted
 and destroy the only real advantage an iframe has over a copied script.
 
+### Figures on `/stamp-duty-england-scotland-wales` are computed, never typed
+
+Every number in those three tables and in the surrounding prose is produced at
+build time by the same `propertyTax()` the calculator uses. Replacing any of
+them with a literal would look like a harmless simplification and would work
+perfectly — until the next Budget, when the calculator updates and the page
+quietly starts publishing last year's figures under a "last checked" date that
+says otherwise. The page is only worth linking to because it cannot disagree
+with the tool.
+
 ### `sw.js` — HTML is always network-first
 
 Cached HTML pins visitors to an old build whose fingerprinted CSS and JS no
