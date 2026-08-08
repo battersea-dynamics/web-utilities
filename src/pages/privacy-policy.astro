@@ -1,14 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 ---
 <Base
   title="Privacy Policy | gazza.ltd"
   description="How gazza.ltd handles your data: what the calculators do and don't collect, how advertising cookies are used, and how to opt out of personalised ads."
 >
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <span>Privacy Policy</span>
-    </nav>
+    <Breadcrumbs trail={[{ name: 'Privacy Policy' }]} />
 
     <h1>Privacy Policy</h1>
     <p class="standfirst">Last updated 3 August 2026.</p>

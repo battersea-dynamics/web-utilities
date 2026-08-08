@@ -43,6 +43,50 @@ describe('404 handling', () => {
   });
 });
 
+describe('breadcrumbs', () => {
+  // Walk every .astro file under src/, layouts included.
+  const files = [];
+  (function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith('.astro')) files.push(full);
+    }
+  })(path.join(root, 'src'));
+
+  test('nobody hand-writes a breadcrumb trail', () => {
+    // The visible trail and the BreadcrumbList schema have to agree. Google
+    // treats a mismatch as a reason to discard the markup, and a mismatch is
+    // invisible on the page — so the only safe arrangement is one component
+    // emitting both. A hand-written <nav class="crumbs"> gets the trail with
+    // no schema, or worse, a schema that has quietly drifted.
+    const component = path.join(root, 'src/components/Breadcrumbs.astro');
+    for (const file of files) {
+      if (file === component) continue;
+      const src = fs.readFileSync(file, 'utf8');
+      assert.ok(
+        !src.includes('class="crumbs"'),
+        `${path.relative(root, file)} writes its own breadcrumbs — use <Breadcrumbs trail={…} />`
+      );
+    }
+  });
+
+  test('the trail never repeats Home', () => {
+    // Breadcrumbs.astro prepends Home itself. A caller passing it again would
+    // emit "Home › Home › …" and a schema with two position-1 entries.
+    for (const file of files) {
+      const src = fs.readFileSync(file, 'utf8');
+      const calls = src.match(/<Breadcrumbs[\s\S]*?\/>/g) || [];
+      for (const call of calls) {
+        assert.ok(
+          !/name:\s*'Home'/.test(call),
+          `${path.relative(root, file)} passes Home in the trail — it is added automatically`
+        );
+      }
+    }
+  });
+});
+
 describe('canonical host', () => {
   test('the site is configured with one canonical origin', () => {
     const config = fs.readFileSync(path.join(root, 'astro.config.mjs'), 'utf8');

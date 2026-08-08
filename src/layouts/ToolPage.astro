@@ -2,6 +2,7 @@
 import Base from './Base.astro';
 import data from '../data/tools.json';
 import InstallPdfApp from '../components/InstallPdfApp.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const { slug } = Astro.props;
 
@@ -47,11 +48,10 @@ const faqSchema = faq.length
 ---
 <Base title={metaTitle} description={tool.metaDescription} category={tool.category}>
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> ›
-      <a href={`/${category.slug}`}>{category.name}</a> ›
-      <span>{tool.title}</span>
-    </nav>
+    <Breadcrumbs trail={[
+      { name: category.name, href: `/${category.slug}` },
+      { name: tool.title },
+    ]} />
 
     {/* 1. H1 = the exact search term */}
     <h1>{tool.h1}</h1>

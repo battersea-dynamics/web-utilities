@@ -1,0 +1,47 @@
+---
+// The breadcrumb trail, rendered once for people and once for machines.
+//
+// Both used to be written by hand in seven separate pages, which is exactly
+// the arrangement where the visible trail and the structured data drift apart
+// without anyone noticing — and a BreadcrumbList that disagrees with the page
+// is worse than none, because Google treats a mismatch as a reason to ignore
+// the markup entirely.
+//
+// Callers pass the trail WITHOUT "Home" — it is added here, because it is the
+// same on every page. The final entry is the current page and takes no href:
+// it is not a link on screen, and schema.org treats the last `item` as
+// optional for the same reason.
+//
+//   <Breadcrumbs trail={[{ name: 'PDF Tools', href: '/pdf' },
+//                        { name: 'Merge PDF' }]} />
+
+const { trail = [] } = Astro.props;
+
+const SITE = 'https://gazza.ltd';
+const items = [{ name: 'Home', href: '/' }, ...trail];
+
+// Absolute URLs: Google requires them here even though the visible links are
+// relative. The last item is deliberately left without one.
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.name,
+    ...(it.href && i < items.length - 1 ? { item: new URL(it.href, SITE).href } : {}),
+  })),
+};
+---
+<nav class="crumbs" aria-label="Breadcrumb">
+  {items.map((it, i) => (
+    <Fragment>
+      {i > 0 && ' › '}
+      {it.href && i < items.length - 1
+        ? <a href={it.href}>{it.name}</a>
+        : <span>{it.name}</span>}
+    </Fragment>
+  ))}
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

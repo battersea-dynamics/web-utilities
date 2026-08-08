@@ -13,6 +13,7 @@
 import Base from '../layouts/Base.astro';
 import { embeddableTools, embedSnippet, SITE } from '../data/embeds.js';
 import { LAST_VERIFIED } from '../components/tools/taxData.js';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const title = 'Free Calculator Widgets for Your Website | gazza.ltd';
 const description =
@@ -25,9 +26,7 @@ const snippets = embeddableTools.map((t) => ({
 ---
 <Base title={title} description={description}>
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <span>Embed a calculator</span>
-    </nav>
+    <Breadcrumbs trail={[{ name: 'Embed a calculator' }]} />
 
     <h1>Put a free calculator on your website</h1>
     <p class="standfirst">

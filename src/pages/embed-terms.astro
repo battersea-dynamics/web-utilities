@@ -10,15 +10,17 @@
 
 import Base from '../layouts/Base.astro';
 import { LAST_VERIFIED } from '../components/tools/taxData.js';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 ---
 <Base
   title="Embed terms | gazza.ltd"
   description="The terms for embedding gazza.ltd calculators on your own website."
 >
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <a href="/embed">Embed a calculator</a> › <span>Terms</span>
-    </nav>
+    <Breadcrumbs trail={[
+      { name: 'Embed a calculator', href: '/embed' },
+      { name: 'Terms' },
+    ]} />
 
     <h1>Embed terms</h1>
     <p class="standfirst">

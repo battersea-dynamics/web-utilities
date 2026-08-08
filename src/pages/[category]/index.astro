@@ -4,6 +4,7 @@ import data from '../../data/tools.json';
 import { visibleCategories } from '../../data/site.js';
 import { contentFor } from '../../data/categoryContent.js';
 import InstallPdfApp from '../../components/InstallPdfApp.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 // Only categories with at least one published tool get a hub page at all.
 // No page means no sitemap entry and no crawlable dead end.
@@ -35,9 +36,7 @@ const choosing = (content?.choosing ?? []).filter((c) =>
   category={category.slug}
 >
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <span>{category.name}</span>
-    </nav>
+    <Breadcrumbs trail={[{ name: category.name }]} />
 
     <h1>{category.name}</h1>
     <p class="standfirst">{category.blurb}</p>

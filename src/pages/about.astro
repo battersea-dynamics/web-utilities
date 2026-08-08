@@ -1,14 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 ---
 <Base
   title="About | gazza.ltd"
   description="What gazza.ltd is, how the tools work and the terms of using them. Free calculators that show their working, with nothing uploaded and no sign-up needed."
 >
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <span>About</span>
-    </nav>
+    <Breadcrumbs trail={[{ name: 'About' }]} />
 
     <h1>About gazza.ltd</h1>
     <p class="standfirst">

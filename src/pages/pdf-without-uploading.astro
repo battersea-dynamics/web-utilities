@@ -16,6 +16,7 @@
 
 import Base from '../layouts/Base.astro';
 import { publishedTools } from '../data/site.js';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const pdfTools = publishedTools.filter((t) => t.category === 'pdf');
 
@@ -47,9 +48,10 @@ const faq = [
   description="Merge, split and edit PDFs without uploading them anywhere. Everything runs in your browser, so confidential documents never leave your device. Free, no sign-up."
 >
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> › <a href="/pdf">PDF Tools</a> › <span>Without uploading</span>
-    </nav>
+    <Breadcrumbs trail={[
+      { name: 'PDF Tools', href: '/pdf' },
+      { name: 'Without uploading' },
+    ]} />
 
     <h1>PDF tools that don't upload your files</h1>
     <p class="standfirst">
