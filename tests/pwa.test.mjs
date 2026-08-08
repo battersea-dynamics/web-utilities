@@ -111,7 +111,10 @@ describe('service worker safety', () => {
     }
     const published = new Set(tools.tools.filter((t) => t.published).map((t) => `/${t.slug}`));
     for (const url of listed) {
-      if (['/pdf', '/offline'].includes(url)) continue;
+      // Real pages that aren't tools: the hub, the offline fallback, and the
+      // no-upload explainer that every PDF tool page links to. Without the
+      // last one, tapping that link offline lands on "no connection".
+      if (['/pdf', '/offline', '/pdf-without-uploading'].includes(url)) continue;
       assert.ok(published.has(url), `sw.js precaches ${url}, which is not a published tool`);
     }
   });

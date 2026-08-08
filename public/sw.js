@@ -49,6 +49,7 @@ const PAGES = [
   '/images-to-pdf/',
   '/add-page-numbers/',
   '/watermark-pdf/',
+  '/pdf-without-uploading/',
   '/offline/',
 ];
 
