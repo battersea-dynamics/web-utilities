@@ -39,6 +39,21 @@ export const categoryContent = {
       { when: 'Turn a salary into actual take-home pay', slug: 'take-home-pay-calculator' },
       { when: 'Project how savings or investments grow over time', slug: 'compound-interest-calculator' },
     ],
+    // Pages that explain rather than calculate. Kept separate from `choosing`
+    // because those entries must map to a tool in tools.json, and a guide is
+    // not a tool — it has no widget and no entry there. Without this list a
+    // guide has nowhere on the site to be found from, which is how a page
+    // ends up reachable only by search.
+    guides: [
+      {
+        href: '/stamp-duty-england-scotland-wales',
+        title: 'Stamp duty across the UK, compared',
+        blurb: `The same house taxed three different ways. Wales is cheapest
+                below about £310,000, Scotland dearest above about £333,000,
+                and one extra pound at £500,000 costs an English first-time
+                buyer £5,000.`,
+      },
+    ],
     note: `These calculators are for working things out, not for advice. For
            anything you're relying on — a mortgage offer, a tax position — check
            the figure against the lender or the official source before acting on it.`,

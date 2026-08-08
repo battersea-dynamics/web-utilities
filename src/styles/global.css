@@ -826,6 +826,27 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
   white-space: nowrap;
 }
 
+/* Hub "Guides" — explanatory pages rather than tools. Stacked rather than
+   two-column, because a guide needs a sentence to justify the click in a way
+   a tool name doesn't. */
+.hub-guides { margin-top: var(--sp-4); }
+.guide-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--border);
+}
+.guide-list li {
+  padding: var(--sp-2) 0;
+  border-bottom: var(--border);
+}
+.guide-title { font-weight: 600; display: block; }
+.guide-blurb {
+  color: var(--ink-soft);
+  display: block;
+  margin-top: 0.15rem;
+}
+
 /* Data-source attribution, where a licence requires it to be shown. */
 .credits {
   margin-top: var(--sp-4);

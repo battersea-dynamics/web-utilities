@@ -85,6 +85,20 @@ const choosing = (content?.choosing ?? []).filter((c) =>
       </section>
     )}
 
+    {(content?.guides ?? []).length > 0 && (
+      <section class="hub-guides">
+        <h2>Guides</h2>
+        <ul class="guide-list">
+          {content.guides.map((g) => (
+            <li>
+              <a class="guide-title" href={g.href}>{g.title}</a>
+              <span class="guide-blurb">{g.blurb}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     {content?.note && <p class="note hub-note">{content.note}</p>}
 
     {content?.offer && (

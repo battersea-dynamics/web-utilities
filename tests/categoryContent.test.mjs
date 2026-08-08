@@ -64,6 +64,32 @@ describe('category hub content', () => {
     }
   });
 
+  test('every guide points at a page that exists', () => {
+    // A guide href is typed by hand and is not checked against tools.json,
+    // because a guide is not a tool. Nothing else would catch a typo or a
+    // renamed page — the build would succeed and the hub would link to a 404.
+    const pages = path.join(root, 'src/pages');
+    for (const [cat, content] of Object.entries(categoryContent)) {
+      for (const g of content.guides ?? []) {
+        assert.match(g.href, /^\/[a-z0-9-]+$/, `${cat}: "${g.href}" is not a site-root path`);
+        const file = path.join(pages, `${g.href.slice(1)}.astro`);
+        assert.ok(fs.existsSync(file), `${cat}: guide "${g.href}" has no page at ${file}`);
+        assert.ok(g.title && g.blurb, `${cat}: guide "${g.href}" is missing a title or blurb`);
+      }
+    }
+  });
+
+  test('a guide is never also a tool', () => {
+    // The two lists are rendered as separate sections. The same page in both
+    // is duplicate internal linking and tells a reader the hub is confused.
+    for (const [cat, content] of Object.entries(categoryContent)) {
+      for (const g of content.guides ?? []) {
+        const slug = g.href.slice(1);
+        assert.ok(!published.has(slug), `${cat}: "${slug}" is a tool, so it belongs in choosing`);
+      }
+    }
+  });
+
   test('the "when" descriptions are distinct within a category', () => {
     for (const [cat, content] of Object.entries(categoryContent)) {
       const whens = (content.choosing ?? []).map((c) => c.when.toLowerCase());
