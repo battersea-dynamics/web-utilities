@@ -186,9 +186,9 @@
         "bmi chart"
       ],
       "related": [
-        "blood-sugar-converter",
-        "take-home-pay-calculator",
-        "compound-interest-calculator"
+        "calorie-calculator",
+        "protein-intake-calculator",
+        "blood-sugar-converter"
       ],
       "published": true,
       "contentStatus": "complete",
@@ -210,8 +210,51 @@
       ],
       "related": [
         "bmi-calculator",
-        "mortgage-calculator",
-        "word-counter"
+        "calorie-calculator",
+        "protein-intake-calculator"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "protein-intake-calculator",
+      "title": "Protein Intake Calculator",
+      "titleSuffix": "Grams Per Day",
+      "h1": "Protein Intake Calculator",
+      "category": "health",
+      "metaDescription": "Work out your daily protein in grams from the official EFSA reference intake, plus the published range for people who train. Shows the source for every figure.",
+      "keywords": [
+        "protein intake calculator",
+        "how much protein do i need",
+        "protein per kg body weight",
+        "daily protein calculator"
+      ],
+      "related": [
+        "calorie-calculator",
+        "bmi-calculator",
+        "blood-sugar-converter"
+      ],
+      "published": true,
+      "contentStatus": "complete"
+    },
+    {
+      "slug": "calorie-calculator",
+      "title": "Calorie Calculator",
+      "titleSuffix": "Daily Energy Needs",
+      "h1": "Daily Calorie Needs Calculator",
+      "category": "health",
+      "metaDescription": "Estimate your daily energy use from the Mifflin-St Jeor equation and the FAO/WHO activity bands. Shows a range rather than a false single number.",
+      "keywords": [
+        "calorie calculator",
+        "daily calorie needs",
+        "bmr calculator",
+        "tdee calculator",
+        "how many calories do i need"
+      ],
+      "related": [
+        "protein-intake-calculator",
+        "bmi-calculator",
+        "blood-sugar-converter"
       ],
       "published": true,
       "contentStatus": "complete"

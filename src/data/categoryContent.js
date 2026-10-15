@@ -73,15 +73,20 @@ export const categoryContent = {
     intro: [
       `Health numbers are often quoted in whichever unit the person quoting them
        happens to use, which is how you end up with a reading in mmol/L and a
-       target in mg/dL. These tools convert between the common measures and
-       explain what the result actually describes.`,
+       target in mg/dL. These tools convert between the common measures, work
+       out the standard reference figures, and explain what each result
+       actually describes.`,
       `Each one shows the formula it applies and where the thresholds come from,
        so you can see whether a figure is a firm clinical boundary or a rough
-       population guide. Several of them are the latter, and the pages say so.`,
+       population guide. Several of them are the latter, and the pages say so.
+       Where a published figure is a range rather than a single value, these
+       pages report the range instead of inventing a number.`,
     ],
     choosing: [
       { when: 'Work out BMI and see where it sits on the standard scale', slug: 'bmi-calculator' },
       { when: 'Convert blood sugar between mmol/L, mg/dL and HbA1c units', slug: 'blood-sugar-converter' },
+      { when: 'Turn the official protein reference values into grams', slug: 'protein-intake-calculator' },
+      { when: 'Estimate how much energy you use in a day', slug: 'calorie-calculator' },
     ],
     note: `Nothing here is medical advice or a diagnosis. These are reference
            conversions and general population measures — a doctor interpreting your

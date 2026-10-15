@@ -1,0 +1,95 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import ProteinIntakeWidget from '../components/tools/ProteinIntakeWidget.jsx';
+
+// Deliberately reports published reference figures rather than a personal
+// target. There is no goal selector, nothing reacts to a desired weight, and
+// the page never tells the reader to take anything. That restraint is the
+// point: a page that converts official reference values into grams is
+// defensible, a page that prescribes an intake is not.
+
+const faq = [
+  {
+    q: 'How much protein does an adult actually need?',
+    a: 'The European Food Safety Authority sets the population reference intake at 0.83 g per kilogram of body weight per day for adults of all ages. For someone weighing 70 kg that is about 58 g. The reference intake is pitched to cover nearly everyone in a healthy population, so most people need less than it rather than more.',
+  },
+  {
+    q: 'Why does the calculator show three figures instead of one?',
+    a: 'Because three separate published figures exist and they answer different questions. The average requirement (0.66 g/kg) is what a typical person needs. The reference intake (0.83 g/kg) is set high enough to cover almost everyone. The 1.2 to 2.0 g/kg band comes from sports nutrition guidance for people training regularly. Showing one number would mean choosing for you.',
+  },
+  {
+    q: 'Do I need more protein if I train?',
+    a: 'Sports nutrition guidance generally quotes 1.2 to 2.0 g per kilogram per day to support repair, remodelling and protein turnover in people training regularly. It is published as a range rather than a figure, and the same guidance notes that athletes should no longer be sorted into fixed strength or endurance targets.',
+  },
+  {
+    q: 'Is most of Europe already getting enough?',
+    a: 'EFSA reports that average adult protein intake across Europe is typically at or above the reference intake — roughly 67 to 114 g a day for men and 59 to 102 g for women — and concludes that intake is adequate for all population groups. Falling short is not the common situation.',
+  },
+  {
+    q: 'Does the figure change if I am trying to lose weight?',
+    a: 'This calculator uses your current body weight and does not model weight change, deliberately. Protein needs during energy restriction are an active research area and the published reference values were not set for that purpose. If you are dieting and want a target, that is a conversation with a dietitian rather than a number from a web page.',
+  },
+  {
+    q: 'When do these figures not apply?',
+    a: 'They are for healthy adults. Needs differ in pregnancy and breastfeeding, throughout childhood and adolescence, and for anyone with kidney or liver disease, where higher protein intake can be actively harmful. In any of those cases the figures here are the wrong starting point.',
+  },
+];
+---
+<ToolPage slug="protein-intake-calculator" faq={faq}>
+  <ProteinIntakeWidget client:load slot="tool" />
+
+  <p slot="intro">
+    Turn the published protein reference values into grams for your own body
+    weight. This converts official figures into a number you can use — it does
+    not set you a target, recommend a diet, or suggest you need a supplement.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      All three figures are a simple multiplication: grams per kilogram of body
+      weight, times your weight. The work is in knowing which multiplier to
+      use and where it came from.
+    </p>
+    <p>
+      The European Food Safety Authority derived its figures from nitrogen
+      balance studies. The average requirement for healthy adults is 0.66 g per
+      kilogram per day. The population reference intake is 0.83 g — higher,
+      because it is set at the 97.5th percentile of the requirement
+      distribution so that it covers almost everyone in a group rather than the
+      average person. That distinction is routinely lost when reference intakes
+      are quoted as though they were individual minimums.
+    </p>
+    <p>
+      The 1.2 to 2.0 g band is from the 2016 joint position paper of the
+      Academy of Nutrition and Dietetics, Dietitians of Canada and the American
+      College of Sports Medicine. It is a range in the source and stays a range
+      here.
+    </p>
+    <p>
+      Nothing on this page responds to a goal, a body composition figure or a
+      training programme, because the published evidence does not support that
+      level of precision and a calculator that pretends otherwise is inventing
+      numbers.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      Someone weighing 70 kg: the average requirement works out at about 46 g a
+      day, the reference intake at about 58 g, and the training range at 84 g
+      to 140 g.
+    </p>
+    <p>
+      For a sense of scale, a chicken breast is roughly 30 g of protein, a tin
+      of tuna about 25 g, a 200 g pot of Greek yoghurt around 18 g, and three
+      eggs about 19 g. The 58 g reference figure is two or three ordinary
+      portions — which is why most people in Europe reach it without planning
+      to.
+    </p>
+    <p>
+      At 90 kg the same multipliers give about 59 g, 75 g, and 108 g to 180 g.
+      The gap between the bottom and top of the training range widens with body
+      weight, which is another reason it should not be read as one target.
+    </p>
+  </div>
+</ToolPage>

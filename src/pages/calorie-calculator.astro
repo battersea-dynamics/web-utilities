@@ -1,0 +1,92 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import CalorieNeedsWidget from '../components/tools/CalorieNeedsWidget.jsx';
+
+// Reports a range rather than a single number, because the activity
+// multiplier is a band in the source. Most competing calculators collapse it
+// to one figure using multipliers (1.2, 1.375, 1.55 …) that no standards body
+// published — they circulate from fitness sites, not from FAO/WHO/UNU. Using
+// the real bands produces a less satisfying answer and a correct one.
+
+const faq = [
+  {
+    q: 'How many calories do I need a day?',
+    a: 'There is no single right answer, which is why this page gives a range. Your resting energy use is estimated from height, weight, age and sex, then multiplied by an activity level that the source publishes as a band rather than a number. Two people with identical measurements and the same lifestyle can genuinely differ by several hundred calories a day.',
+  },
+  {
+    q: 'What is BMR, and why is it lower than the main figure?',
+    a: 'Basal metabolic rate is what your body uses at complete rest — breathing, circulation, maintaining temperature and tissue. It accounts for roughly 45 to 70 per cent of total daily energy use in adults. Everything you do on top of that, including digesting food and walking to the kettle, is the difference between your BMR and your total.',
+  },
+  {
+    q: 'Which equation does this use?',
+    a: 'Mifflin–St Jeor, published in the American Journal of Clinical Nutrition in 1990 and derived from 498 healthy adults aged 19 to 78. It is generally the most accurate of the common predictive equations for people whose body fat percentage is unknown. The older Harris-Benedict equations, from 1919, overestimate measured resting expenditure by around 5 per cent.',
+  },
+  {
+    q: 'Where do the activity multipliers come from?',
+    a: 'The FAO/WHO/UNU report Human energy requirements (2004), Table 5.3, which classifies lifestyles into three bands: 1.40 to 1.69 for sedentary or light activity, 1.70 to 1.99 for active or moderately active, and 2.00 to 2.40 for vigorously active. The report notes that sustained levels above 2.40 are difficult to maintain. Many online calculators use a finer-grained set of multipliers that no standards body published.',
+  },
+  {
+    q: 'How accurate is it?',
+    a: 'Predictive equations of this kind land within about 10 per cent of measured resting expenditure for most healthy adults, and are less reliable for people with obesity, for athletes with high muscle mass, and for anyone with a condition affecting metabolism. Ten per cent of 2,000 kcal is 200 kcal, so treat the output as an estimate rather than a measurement.',
+  },
+  {
+    q: 'Can I use this to work out a weight-loss target?',
+    a: 'This page estimates what you use, not what you should eat, and it deliberately does not calculate deficits or project weight change. The estimate carries an error margin wide enough that building a precise deficit on top of it is false precision. If weight is something you want to act on, a GP or dietitian can work from measurements rather than an equation.',
+  },
+];
+---
+<ToolPage slug="calorie-calculator" faq={faq}>
+  <CalorieNeedsWidget client:load slot="tool" />
+
+  <p slot="intro">
+    An estimate of how much energy your body uses in a day, shown as a range
+    because that is what the underlying method actually supports. It reports
+    what you use — it does not set a target, calculate a deficit or project
+    weight change.
+  </p>
+
+  <div slot="how-it-works">
+    <p>
+      Two steps. First your resting energy use is estimated with the
+      Mifflin–St Jeor equation: ten times your weight in kilograms, plus 6.25
+      times your height in centimetres, minus five times your age, then plus 5
+      if the equation's male constant is used or minus 161 if the female one
+      is. That sex term is a statistical intercept from the original
+      regression, not a statement about any individual.
+    </p>
+    <p>
+      Second, that resting figure is multiplied by a physical activity level —
+      the ratio of total daily energy use to resting use. FAO/WHO/UNU publishes
+      these as bands, so multiplying by the bottom and top of your band gives
+      the range shown. The single "representative figure" is the worked example
+      the same report uses for that lifestyle, included for anyone who needs
+      one number rather than two.
+    </p>
+    <p>
+      Most calculators online use multipliers like 1.2, 1.375, 1.55, 1.725 and
+      1.9. Those are not from any standards body — they circulate from fitness
+      sites. Using the published bands gives a vaguer answer, and a correct
+      one.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A 40-year-old woman, 170 cm and 70 kg: ten times 70 is 700, plus 6.25
+      times 170 is 1,062.5, minus five times 40 is 200, minus 161. That gives
+      a resting rate of about 1,402 kcal a day.
+    </p>
+    <p>
+      With a sedentary or light-activity lifestyle, the band is 1.40 to 1.69,
+      so her total daily use is somewhere between about 1,962 and 2,369 kcal.
+      The report's representative figure for that lifestyle is 1.53, giving
+      roughly 2,145 kcal.
+    </p>
+    <p>
+      If she took up an hour of moderate exercise most days she would move into
+      the active band, 1.70 to 1.99 — between about 2,383 and 2,790 kcal. The
+      FAO report makes exactly this point: an hour of daily moderate-to-vigorous
+      exercise shifts a person's typical level from around 1.55 to around 1.75.
+    </p>
+  </div>
+</ToolPage>
