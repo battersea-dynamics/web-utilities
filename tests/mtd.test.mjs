@@ -106,9 +106,9 @@ describe('BuyBox sales state', () => {
   });
 
   test('no link: disabled Coming soon, no consent box, no href', async () => {
-    const html = await renderBuyBox({ href: checkoutUrl('https://buy.stripe.com/REPLACE_ME'), contactEmail: 'battersea.dynamics@gmail.com' });
+    const html = await renderBuyBox({ href: checkoutUrl('https://buy.stripe.com/REPLACE_ME'), contactEmail: 'hello@gazza.ltd' });
     assert.match(html, /<button[^>]*disabled[^>]*>\s*Coming soon/);
-    assert.match(html, /Sales open soon\. Email <a href="mailto:battersea\.dynamics@gmail\.com">battersea\.dynamics@gmail\.com<\/a> to be notified\./);
+    assert.match(html, /Sales open soon\. Email <a href="mailto:hello@gazza\.ltd">hello@gazza\.ltd<\/a> to be notified\./);
     assert.doesNotMatch(html, /ccr-consent|type="checkbox"|stripe\.com|Buy the tracker/);
   });
 
