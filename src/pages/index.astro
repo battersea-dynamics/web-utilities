@@ -30,7 +30,7 @@ const liveCount = tools.length;
         const liveInCat = tools.filter((t) => t.category === c.slug).length;
         return (
           <li>
-            <a class="category-card" href={`/${c.slug}`}>
+            <a class="category-card" href={`/${c.slug}/`}>
               <span class="cat-name">{c.name}</span>
               <span class="cat-blurb">{c.blurb}</span>
               <span class="cat-count">

@@ -12,6 +12,9 @@ export function sitemapFilter(page) {
   // DOES belong — it targets "add mortgage calculator to website".
   if (/\/embed\/[^/]+\/?$/.test(page)) return false;
 
+  // Service-worker fallback page: noindex, thin, not content.
+  if (/\/offline\/?$/.test(page)) return false;
+
   // Internal diagnostic, not content.
   if (/\/pwa-check\/?$/.test(page)) return false;
 

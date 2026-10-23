@@ -43,7 +43,7 @@ const categories = visibleCategories;
       <ul class="card-grid">
         {categories.map((c) => (
           <li>
-            <a class="card" href={`/${c.slug}`}>
+            <a class="card" href={`/${c.slug}/`}>
               <span class="name">{c.name}</span>
               <span class="desc">{c.blurb}</span>
             </a>

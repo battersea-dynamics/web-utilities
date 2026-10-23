@@ -232,8 +232,8 @@ export default function MortgageWidget() {
           </details>
 
           <div className="tool-actions">
-            <a className="card" href="/mortgage-comparison-calculator">Compare mortgages →</a>
-            <a className="card" href="/mortgage-overpayment-calculator">Model overpayments →</a>
+            <a className="card" href="/mortgage-comparison-calculator/">Compare mortgages →</a>
+            <a className="card" href="/mortgage-overpayment-calculator/">Model overpayments →</a>
           </div>
         </>
       )}

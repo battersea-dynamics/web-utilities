@@ -6,5 +6,6 @@ import { sitemapFilter } from './src/data/sitemapFilter.js';
 export default defineConfig({
   site: 'https://gazza.ltd',
   integrations: [react(), sitemap({ filter: sitemapFilter })],
+  trailingSlash: 'always',
   build: { inlineStylesheets: 'auto' },
 });

@@ -49,7 +49,7 @@ const faq = [
 >
   <div class="wrap">
     <Breadcrumbs trail={[
-      { name: 'PDF Tools', href: '/pdf' },
+      { name: 'PDF Tools', href: '/pdf/' },
       { name: 'Without uploading' },
     ]} />
 
@@ -93,7 +93,7 @@ const faq = [
         somebody else's computer.
       </p>
       <p>
-        Try it here. Open <a href="/merge-pdf">the merge tool</a>, switch on
+        Try it here. Open <a href="/merge-pdf/">the merge tool</a>, switch on
         flight mode, and combine two files. It will work. That is not a claim
         about our intentions; it is a fact about where the processing happens.
       </p>
@@ -135,7 +135,7 @@ const faq = [
     <ul class="card-grid">
       {pdfTools.map((t) => (
         <li>
-          <a class="card" href={`/${t.slug}`}>
+          <a class="card" href={`/${t.slug}/`}>
             <span class="name">{t.title}</span>
             <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
           </a>
@@ -147,7 +147,7 @@ const faq = [
       <p>
         All free, no sign-up, no account, no watermark and no file limit beyond
         your own device's memory. They also work offline — you can
-        <a href="/pdf">add them to your home screen</a> and use them with no
+        <a href="/pdf/">add them to your home screen</a> and use them with no
         connection at all.
       </p>
 
