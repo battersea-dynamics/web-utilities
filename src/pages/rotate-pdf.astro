@@ -4,6 +4,14 @@ import PdfPagesWidget from '../components/tools/PdfPagesWidget.jsx';
 
 const faq = [
   {
+    q: 'Should I rotate or reorder?',
+    a: 'Rotate when a page is in the right place but facing the wrong way. If the pages are upright but in the wrong sequence, use reorder PDF pages instead. A scanned stack often needs both: rotate first, then reorder.',
+  },
+  {
+    q: 'Which way should I rotate a sideways page?',
+    a: 'If the top of the text points left, rotate 90° clockwise. If it points right, rotate 90° anticlockwise. If the page is upside down, choose 180°.',
+  },
+  {
     q: 'Can I rotate only some pages?',
     a: 'Yes. List the pages in the box — for example "3, 7-9". Leave it blank and every page in the document is rotated instead.',
   },
@@ -49,6 +57,12 @@ const faq = [
     <p>
       Rotation wraps around at 360°, so rotating four times by 90° returns a page
       to where it started.
+    </p>
+    <p>
+      Because the file is opened and saved inside your browser, this works on
+      confidential scans as well. <a href="/pdf-without-uploading/">How the
+      PDF tools work without uploading</a> explains what happens to the file
+      and how to check it yourself.
     </p>
   </div>
 

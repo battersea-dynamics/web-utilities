@@ -3,7 +3,8 @@
 // EVERY figure here is transcribed from an official source, listed below.
 // Nothing in this file should be edited from memory — check the source first.
 //
-// Sources, last verified 4 August 2026:
+// Sources, last verified 4 August 2026 (property taxes re-verified 23 October 2026;
+// this found and fixed stale Welsh LTT higher rates):
 //   SDLT (England & NI) ... gov.uk/stamp-duty-land-tax/residential-property-rates
 //   LBTT (Scotland) ....... revenue.scot/taxes/land-buildings-transaction-tax/residential-property
 //   LBTT ADS .............. revenue.scot — 8% for contracts from 5 December 2024
@@ -17,6 +18,8 @@
 // how current the figures are.
 
 export const LAST_VERIFIED = '4 August 2026';
+// Property taxes (SDLT, LBTT incl. ADS, LTT incl. higher rates) re-checked separately.
+export const PROPERTY_LAST_VERIFIED = '23 October 2026';
 export const TAX_YEAR = '2026/27';
 
 /* ------------------------------------------------------------------ */
@@ -98,12 +101,13 @@ export const PROPERTY_TAX = {
       type: 'separate-bands',
       minPrice: 40000,
       bands: [
-        { upTo: 180000, rate: 4 },
-        { upTo: 250000, rate: 7.5 },
-        { upTo: 400000, rate: 9 },
-        { upTo: 750000, rate: 11.5 },
-        { upTo: 1500000, rate: 14 },
-        { upTo: null, rate: 16 },
+        // Rates for effective dates on or after 11 December 2024 (gov.wales).
+        { upTo: 180000, rate: 5 },
+        { upTo: 250000, rate: 8.5 },
+        { upTo: 400000, rate: 10 },
+        { upTo: 750000, rate: 12.5 },
+        { upTo: 1500000, rate: 15 },
+        { upTo: null, rate: 17 },
       ],
     },
   },

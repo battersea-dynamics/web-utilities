@@ -42,3 +42,21 @@ test('built HTML has no slashless internal links', { skip: !existsSync('dist') }
   w('dist');
   assert.deepEqual([...bad], []);
 });
+
+test('sitemap lastmod maps URLs to real source files', async () => {
+  const { sourceFor } = await import('../src/data/sitemapLastmod.js');
+  assert.equal(sourceFor('https://gazza.ltd/'), 'src/pages/index.astro');
+  assert.equal(sourceFor('https://gazza.ltd/rotate-pdf/'), 'src/pages/rotate-pdf.astro');
+  assert.equal(sourceFor('https://gazza.ltd/health/'), 'src/data/categoryContent.js');
+});
+
+test('no two published tools share a title or meta description', () => {
+  const data = JSON.parse(readFileSync('src/data/tools.json', 'utf8'));
+  const tools = (data.tools ?? data).filter((t) => t.published);
+  const titles = tools.map((t) => `${t.title} — ${t.titleSuffix ?? ''}`);
+  const suffixes = tools.map((t) => t.titleSuffix).filter(Boolean);
+  const descs = tools.map((t) => t.metaDescription);
+  assert.equal(new Set(titles).size, titles.length, 'duplicate title');
+  assert.equal(new Set(descs).size, descs.length, 'duplicate meta description');
+  assert.equal(new Set(suffixes).size, suffixes.length, 'shared title suffix pattern');
+});

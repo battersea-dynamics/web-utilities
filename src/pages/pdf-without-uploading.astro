@@ -44,8 +44,8 @@ const faq = [
 ];
 ---
 <Base
-  title="PDF Tools That Don't Upload Your Files | gazza.ltd"
-  description="Merge, split and edit PDFs without uploading them anywhere. Everything runs in your browser, so confidential documents never leave your device. Free, no sign-up."
+  title="How to Edit a PDF Without Uploading It: Local Processing Explained | gazza.ltd"
+  description="What happens to your file when an online PDF tool processes it, how browser-only processing works step by step, a 10-second offline test, and when uploading is still the better choice."
 >
   <div class="wrap">
     <Breadcrumbs trail={[
@@ -53,7 +53,7 @@ const faq = [
       { name: 'Without uploading' },
     ]} />
 
-    <h1>PDF tools that don't upload your files</h1>
+    <h1>How to edit a PDF without uploading it</h1>
     <p class="standfirst">
       Most online PDF tools work by receiving your document, processing it on
       their servers, and promising to delete it later. These ones never receive
@@ -98,6 +98,44 @@ const faq = [
         about our intentions; it is a fact about where the processing happens.
       </p>
 
+      <h2>How local processing works, step by step</h2>
+      <p>
+        This is what happens when you use one of the PDF tools on this
+        site. It is the same for every tool, whether you merge, split or rotate.
+      </p>
+      <ol>
+        <li>
+          <strong>The page and its code load once.</strong> Your browser
+          downloads the page and a JavaScript PDF library called
+          pdf-lib, which is open source. That is the only download, and it
+          contains no document of yours.
+        </li>
+        <li>
+          <strong>You choose a file.</strong> The browser reads it from your
+          disk into memory with its built-in file reader. Nothing is sent over
+          the network at this step.
+        </li>
+        <li>
+          <strong>The work happens in that browser tab.</strong> pdf-lib
+          copies, rotates or reorders pages in memory, using your device's
+          processor.
+        </li>
+        <li>
+          <strong>The result is saved straight back to you.</strong> The new
+          PDF is handed to your browser as a download from memory. It is never
+          stored anywhere else.
+        </li>
+        <li>
+          <strong>Close the tab and it is gone.</strong> No copy exists
+          anywhere except the files on your own device.
+        </li>
+      </ol>
+      <p>
+        The PDF tools can also be installed as an app. A service worker keeps
+        a copy of the pages and the PDF library on your device, so they open
+        and work with no connection at all.
+      </p>
+
       <h2>Where upload-based tools are genuinely better</h2>
       <p>
         Being straight about this, because it matters if you are choosing:
@@ -130,6 +168,13 @@ const faq = [
       </p>
 
       <h2>What runs entirely on your device</h2>
+      <p>
+        Every tool in the <a href="/pdf/">PDF tools</a> section works this
+        way. A few starting points: <a href="/merge-pdf/">merge</a> for
+        combining files, <a href="/rotate-pdf/">rotate</a> for sideways
+        scans, and <a href="/reorder-pdf-pages/">reorder</a> for pages in
+        the wrong sequence.
+      </p>
     </div>
 
     <ul class="card-grid">
