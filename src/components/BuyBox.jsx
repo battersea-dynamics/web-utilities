@@ -12,7 +12,7 @@ import { useState } from 'react';
 //
 // If href is null (no real Stripe Payment Link yet) the box shows a disabled
 // "Coming soon" button and a contact line, with no consent box and no link.
-export default function BuyBox({ href, priceLabel, termsHref, refundHref, contactEmail = 'battersea.dynamics@gmail.com' }) {
+export default function BuyBox({ href, priceLabel, termsHref, refundHref, contactEmail = 'hello@gazza.ltd' }) {
   const [agreed, setAgreed] = useState(false);
   const [nudge, setNudge] = useState(false);
 
