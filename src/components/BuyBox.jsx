@@ -9,7 +9,10 @@ import { useState } from 'react';
 // statement is confirmed by email afterwards (reg 16(3)) — see the Worker.
 //
 // Do not pre-tick this box, and do not replace it with "by buying you agree".
-export default function BuyBox({ href, priceLabel, termsHref, refundHref }) {
+//
+// If href is null (no real Stripe Payment Link yet) the box shows a disabled
+// "Coming soon" button and a contact line, with no consent box and no link.
+export default function BuyBox({ href, priceLabel, termsHref, refundHref, contactEmail = 'battersea.dynamics@gmail.com' }) {
   const [agreed, setAgreed] = useState(false);
   const [nudge, setNudge] = useState(false);
 
@@ -19,6 +22,22 @@ export default function BuyBox({ href, priceLabel, termsHref, refundHref }) {
       setNudge(true);
     }
   };
+
+  if (!href) {
+    return (
+      <div className="buy-box buy-box-soon">
+        <p className="buy-price"><span className="price">{priceLabel}</span> one-off · instant download · no account</p>
+        <p>
+          <button type="button" className="btn btn-buy is-disabled" disabled aria-disabled="true">
+            Coming soon
+          </button>
+        </p>
+        <p className="muted-block">
+          Sales open soon. Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a> to be notified.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="buy-box">

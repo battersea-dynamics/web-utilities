@@ -36,8 +36,16 @@ export const LEGAL_LAST_UPDATED = '[DATE]';
 export const TERMS_VERSION = '1.0';
 
 /** Checkout URL with the consent version attached. */
-export const checkoutUrl = () =>
-  `${STRIPE_PAYMENT_LINK}?client_reference_id=${encodeURIComponent(CONSENT_VERSION)}`;
+// Sales are "open" only once a real Payment Link is set. While the link is empty
+// or still the REPLACE_ME placeholder, checkoutUrl() returns null and BuyBox
+// shows a disabled "Coming soon" button instead of linking anywhere.
+export const isPaymentLinkLive = (link = STRIPE_PAYMENT_LINK) =>
+  typeof link === 'string' && link.trim() !== '' && !link.includes('REPLACE_ME');
+
+export const checkoutUrl = (link = STRIPE_PAYMENT_LINK) =>
+  isPaymentLinkLive(link)
+    ? `${link}?client_reference_id=${encodeURIComponent(CONSENT_VERSION)}`
+    : null;
 
 // Shown on every product, legal and checker page. Keep wording in sync with the workbook and delivery email.
 export const NOT_HMRC_NOTICE = 'This is an independent spreadsheet from Battersea Dynamics Ltd to help you organise your records and prepare for Making Tax Digital (MTD). It is not affiliated with or endorsed by HMRC, it does not submit anything to HMRC, and it is not MTD-compatible software; you will still need HMRC-recognised software or bridging software to file.';

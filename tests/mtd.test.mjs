@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 import { mtdStart, qualifyingIncome, MTD_PHASES } from '../src/components/tools/mtdEngine.js';
 import { sitemapFilter } from '../src/data/sitemapFilter.js';
-import { checkoutUrl, CONSENT_VERSION, STRIPE_PAYMENT_LINK } from '../src/data/shop.js';
+import { checkoutUrl, isPaymentLinkLive, CONSENT_VERSION, STRIPE_PAYMENT_LINK } from '../src/data/shop.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const y = (a, b, c) => ({
@@ -58,8 +58,12 @@ describe('shop pages', () => {
     assert.equal(sitemapFilter('https://gazza.ltd/mtd-tracker/'), true);
   });
   test('checkout URL carries the consent version', () => {
-    assert.ok(checkoutUrl().startsWith(STRIPE_PAYMENT_LINK));
-    assert.ok(checkoutUrl().includes(`client_reference_id=${CONSENT_VERSION}`));
+    if (isPaymentLinkLive()) {
+      assert.ok(checkoutUrl().startsWith(STRIPE_PAYMENT_LINK));
+      assert.ok(checkoutUrl().includes(`client_reference_id=${CONSENT_VERSION}`));
+    } else {
+      assert.equal(checkoutUrl(), null);
+    }
   });
   test('consent box is never pre-ticked', () => {
     const src = fs.readFileSync(path.join(root, 'src/components/BuyBox.jsx'), 'utf8');
@@ -72,5 +76,48 @@ describe('shop pages', () => {
       const src = fs.readFileSync(path.join(pages, f), 'utf8');
       assert.doesNotMatch(src, /buy\.stripe\.com/, `${f} hard-codes a Stripe link`);
     }
+  });
+});
+
+// BuyBox in both states: placeholder link -> "Coming soon"; real link -> consent-gated Buy.
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+async function renderBuyBox(props) {
+  const esbuild = require('esbuild');
+  const src = fs.readFileSync(path.join(root, 'src/components/BuyBox.jsx'), 'utf8');
+  const { code } = await esbuild.transform(src, { loader: 'jsx', jsx: 'automatic', format: 'esm' });
+  const tmp = path.join(root, 'node_modules', '.buybox-test.mjs');
+  fs.writeFileSync(tmp, code);
+  const { default: BuyBox } = await import(`${tmp}?t=${Date.now()}`);
+  const { createElement } = await import('react');
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  return renderToStaticMarkup(createElement(BuyBox, { priceLabel: '£9', termsHref: '/t', refundHref: '/r', ...props }));
+}
+
+describe('BuyBox sales state', () => {
+  test('placeholder or empty Payment Link counts as not live', () => {
+    for (const l of ['https://buy.stripe.com/REPLACE_ME', '', '  ', undefined]) {
+      assert.equal(isPaymentLinkLive(l), false);
+      assert.equal(checkoutUrl(l), null);
+    }
+    assert.equal(isPaymentLinkLive('https://buy.stripe.com/abc123'), true);
+    assert.equal(checkoutUrl('https://buy.stripe.com/abc123'),
+      `https://buy.stripe.com/abc123?client_reference_id=${encodeURIComponent(CONSENT_VERSION)}`);
+  });
+
+  test('no link: disabled Coming soon, no consent box, no href', async () => {
+    const html = await renderBuyBox({ href: checkoutUrl('https://buy.stripe.com/REPLACE_ME'), contactEmail: 'battersea.dynamics@gmail.com' });
+    assert.match(html, /<button[^>]*disabled[^>]*>\s*Coming soon/);
+    assert.match(html, /Sales open soon\. Email <a href="mailto:battersea\.dynamics@gmail\.com">battersea\.dynamics@gmail\.com<\/a> to be notified\./);
+    assert.doesNotMatch(html, /ccr-consent|type="checkbox"|stripe\.com|Buy the tracker/);
+  });
+
+  test('real link: unticked consent box and gated Buy button', async () => {
+    const html = await renderBuyBox({ href: checkoutUrl('https://buy.stripe.com/abc123') });
+    assert.match(html, /<input id="ccr-consent" type="checkbox"\/>/);
+    assert.doesNotMatch(html, /checked/);
+    assert.match(html, /aria-disabled="true"/);
+    assert.match(html, /Buy the tracker/);
+    assert.doesNotMatch(html, /Coming soon/);
   });
 });
