@@ -1,0 +1,115 @@
+---
+// DRAFT — have a solicitor review before launch. Placeholders live in
+// src/data/shop.js (SELLER, LEGAL_LAST_UPDATED, TERMS_VERSION).
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { PRODUCT, SELLER, LEGAL_LAST_UPDATED, TERMS_VERSION, NOT_HMRC_NOTICE } from '../data/shop.js';
+---
+<Base
+  title="Terms of Sale | gazza.ltd"
+  description="The terms that apply when you buy the Making Tax Digital (MTD) Income Tax Readiness Tracker from gazza.ltd: price, delivery, your licence, refunds and your rights."
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[{ name: 'Terms of Sale' }]} />
+
+    <h1>Terms of Sale</h1>
+    <p class="standfirst">Last updated {LEGAL_LAST_UPDATED} · Version {TERMS_VERSION}</p>
+
+    <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
+
+    <div class="prose">
+      <p>
+        These terms apply when you buy the {PRODUCT.name} (<strong>the workbook</strong>)
+        through gazza.ltd. Please read them before you buy. You can save or print this page.
+      </p>
+
+      <h2>1. Who we are</h2>
+      <p>
+        The workbook is sold and licensed by <strong>{SELLER.name}</strong> (<strong>we</strong>,
+        {' '}<strong>us</strong>), a company registered in England and Wales, company number
+        {' '}{SELLER.companyNumber}, registered office {SELLER.registeredOffice}. Email:
+        {' '}<a href={`mailto:${SELLER.email}`}>{SELLER.email}</a>.
+      </p>
+      <p>
+        You buy directly from us. Payments are processed by <strong>Stripe</strong>, our
+        payment provider; Stripe does not sell the workbook and is not responsible for it.
+      </p>
+
+      <h2>2. The product, price and delivery</h2>
+      <ul>
+        <li>The workbook is a single Microsoft Excel (.xlsx) file for the 2027/28 tax year. The <a href="/mtd-tracker/">product page</a> describes what it contains and what you need to open it.</li>
+        <li>The price is {PRODUCT.priceLabel}, including any VAT. It's a one-off payment with no subscription.</li>
+        <li>After payment you get a download link straight away, on screen and by email. The link works for 72 hours and up to 5 downloads; if it expires, email us and we'll send a new one. Your contract starts when your payment is confirmed.</li>
+        <li><strong>Instant download:</strong> before you buy, you ask for immediate access and confirm that you understand you lose your 14-day right to cancel once the download is made available. This doesn't affect your rights if the workbook is faulty. We also offer a goodwill refund within 14 days. See our <a href="/refund-policy/">refund policy</a>.</li>
+      </ul>
+
+      <h2>3. Your licence</h2>
+      <p>
+        We own the workbook and all rights in it. Some content is public sector
+        information used under the Open Government Licence v3.0. When you buy, we give
+        you a non-exclusive, non-transferable licence to use the workbook for your own
+        <strong> personal use</strong>, or for <strong>one business</strong> (yours, or the one you buy it for).
+      </p>
+      <p>You may:</p>
+      <ul>
+        <li>keep copies for your own use and backup</li>
+        <li>fill in, change and adapt your copy</li>
+        <li>share your completed copy with your own accountant, bookkeeper or adviser so they can help you</li>
+      </ul>
+      <p>You may not:</p>
+      <ul>
+        <li><strong>resell, share, give away, sublicense or publish</strong> the workbook, blank or adapted, including as a template</li>
+        <li>use it for clients or other businesses without buying a copy for each</li>
+      </ul>
+
+      <h2>4. Not advice and not MTD software</h2>
+      <ul>
+        <li>The workbook is a <strong>record-keeping and planning aid only</strong>. It isn't tax, legal, accounting or financial advice, and it doesn't work out your tax.</li>
+        <li>It <strong>isn't MTD-compatible software</strong> and can't send anything to HMRC. Quarterly updates and tax returns must be sent using HMRC-recognised software. A spreadsheet can only be used for MTD with HMRC-compatible bridging software, which isn't included.</li>
+        <li>It doesn't cover exemptions or deferrals, foreign property, partnerships or more than one business of the same type.</li>
+        <li>You're responsible for your own records, what you send to HMRC and meeting HMRC deadlines. If you're unsure about your position, speak to HMRC, an accountant or a tax adviser.</li>
+      </ul>
+
+      <h2>5. Accuracy and updates</h2>
+      <ul>
+        <li>The workbook is based on GOV.UK guidance as at 19 October 2026 and is for the 2027/28 tax year.</li>
+        <li>We've taken reasonable care to make it accurate, but HMRC rules and guidance can change. Please check GOV.UK before you rely on a date or threshold.</li>
+        <li>If we find a mistake in the workbook, we'll aim to correct it and make an updated file available to existing buyers where we reasonably can.</li>
+        <li>We don't have to produce versions for later tax years, or to update the workbook for changes made after 19 October 2026. That doesn't affect your rights if the workbook was faulty when you received it.</li>
+      </ul>
+
+      <h2>6. If something goes wrong</h2>
+      <ul>
+        <li>If the workbook is faulty or not as described, contact us at <a href={`mailto:${SELLER.email}`}>{SELLER.email}</a>. You have legal rights under the Consumer Rights Act 2015, summarised in our <a href="/refund-policy/">refund policy</a>: repair or replacement, and if that isn't possible, a price reduction up to a full refund.</li>
+        <li><strong>Our liability:</strong> unless the law says otherwise, our total liability to you for anything arising from the workbook or these terms is limited to the <strong>price you paid</strong>.</li>
+        <li><strong>What we don't limit.</strong> Nothing in these terms excludes or limits our liability for death or personal injury caused by our negligence; fraud or fraudulent misrepresentation; your statutory rights as a consumer, including your rights under the Consumer Rights Act 2015 about the quality and description of digital content, and damage to your device or other digital content caused by our failure to use reasonable care and skill; or anything else that can't be excluded or limited by law.</li>
+        <li><strong>Business losses.</strong> If you're using the workbook for business, we're not responsible for loss of profit, loss of business or business interruption.</li>
+        <li><strong>Penalties.</strong> We're not responsible for tax, interest or penalties that are due because of your own figures, filings or deadlines.</li>
+      </ul>
+
+      <h2>7. Your personal data</h2>
+      <ul>
+        <li>Stripe processes your payment details under its own privacy policy. We never see your full card number.</li>
+        <li>We receive your name, email address and order details so we can deliver your download, support you and handle refunds. We email your download link using our email provider, Resend.</li>
+        <li>See our <a href="/privacy-policy/">privacy policy</a> for how we use your information.</li>
+        <li>The workbook itself runs on your computer. Nothing you type into it is sent to us.</li>
+      </ul>
+
+      <h2>8. Changes to these terms</h2>
+      <p>
+        We may update these terms from time to time. The version that applies to your
+        purchase is the one shown when you bought.
+      </p>
+
+      <h2>9. Law and disputes</h2>
+      <p>
+        These terms are governed by the law of England and Wales. The courts of England
+        and Wales can hear any dispute. If you're a consumer living in Scotland or
+        Northern Ireland, you can also bring a claim in your local courts, and you keep
+        any protection given by the law where you live. Please contact us first at
+        {' '}<a href={`mailto:${SELLER.email}`}>{SELLER.email}</a> — we'll try to sort
+        things out quickly and fairly.
+      </p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,81 @@
+---
+// Where the Stripe Payment Link sends the buyer after paying:
+//   https://gazza.ltd/mtd-tracker-thanks/?session_id={CHECKOUT_SESSION_ID}
+// The page asks the delivery Worker for the download link belonging to that
+// session. The Worker may take a few seconds to receive Stripe's webhook, so
+// the script retries for about a minute before telling the buyer to check
+// their email. noindex, and excluded from the sitemap.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { DELIVERY_API, PRODUCT, SELLER } from '../data/shop.js';
+---
+<Base
+  title="Thank you — your download | gazza.ltd"
+  description="Download your Making Tax Digital (MTD) Income Tax Readiness Tracker Readiness Tracker."
+  noindex={true}
+  category="finance"
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[{ name: 'MTD Readiness Tracker', href: '/mtd-tracker/' }, { name: 'Thank you' }]} />
+
+    <h1>Thank you for your order</h1>
+    <p class="standfirst">
+      Your {PRODUCT.name} is ready. We've also emailed you a link and a copy of your
+      order details, including your instant-download confirmation.
+    </p>
+
+    <div class="product-cta" id="dl" data-api={DELIVERY_API}>
+      <p id="dl-status">Getting your download link…</p>
+      <p><a id="dl-link" class="btn" href="#" hidden>Download the workbook (.xlsx)</a></p>
+      <p class="muted-block">
+        The link works for 72 hours and up to 5 downloads. Save the file somewhere safe.
+        Problems? Email <a href={`mailto:${SELLER.email}`}>{SELLER.email}</a>.
+      </p>
+    </div>
+
+    <div class="prose">
+      <p>
+        Reminder: the workbook is a planning and record-keeping aid, not tax advice,
+        and it can't send anything to HMRC. See our <a href="/refund-policy/">refund policy</a>
+        {' '}and <a href="/terms-of-sale/">terms of sale</a>.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const box = document.getElementById('dl');
+    const status = document.getElementById('dl-status');
+    const link = document.getElementById('dl-link');
+    const sid = new URLSearchParams(location.search).get('session_id');
+    const api = box?.dataset.api;
+
+    const fail = (msg) => { if (status) status.textContent = msg; };
+
+    if (!sid || !/^cs_[A-Za-z0-9_]+$/.test(sid)) {
+      fail('We could not find your order reference. Your download link has been emailed to you.');
+    } else {
+      let tries = 0;
+      const poll = async () => {
+        tries += 1;
+        try {
+          const res = await fetch(`${api}/api/download-link?session_id=${encodeURIComponent(sid)}`);
+          if (res.ok) {
+            const { url } = await res.json();
+            if (link && url) {
+              link.href = url;
+              link.hidden = false;
+              fail('Your download is ready.');
+              return;
+            }
+          }
+          if (res.status !== 404 && res.status !== 202) {
+            return fail('Something went wrong fetching your link. It has been emailed to you — or contact us and we will sort it out.');
+          }
+        } catch (_) { /* network blip: retry */ }
+        if (tries < 20) setTimeout(poll, 3000);
+        else fail('This is taking longer than usual. Your link will arrive by email shortly.');
+      };
+      poll();
+    }
+  </script>
+</Base>

@@ -18,5 +18,8 @@ export function sitemapFilter(page) {
   // Internal diagnostic, not content.
   if (/\/pwa-check\/?$/.test(page)) return false;
 
+  // Post-purchase download page: noindex, only useful with a session_id.
+  if (/\/mtd-tracker-thanks\/?$/.test(page)) return false;
+
   return true;
 }
