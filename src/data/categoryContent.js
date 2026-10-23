@@ -38,6 +38,7 @@ export const categoryContent = {
       { when: 'Find the stamp duty on a purchase, anywhere in the UK', slug: 'stamp-duty-calculator' },
       { when: 'Turn a salary into actual take-home pay', slug: 'take-home-pay-calculator' },
       { when: 'Project how savings or investments grow over time', slug: 'compound-interest-calculator' },
+      { when: 'Find out if and when you must join Making Tax Digital', slug: 'mtd-checker' },
     ],
     // Pages that explain rather than calculate. Kept separate from `choosing`
     // because those entries must map to a tool in tools.json, and a guide is

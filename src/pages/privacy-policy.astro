@@ -1,16 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
 ---
 <Base
   title="Privacy Policy | gazza.ltd"
-  description="How gazza.ltd handles your data: what the calculators do and don't collect, how advertising cookies are used, and how to opt out of personalised ads."
+  description="How gazza.ltd handles your data: what the calculators don't collect, what we keep when you buy something, advertising cookies, and your rights."
 >
   <div class="wrap">
     <Breadcrumbs trail={[{ name: 'Privacy Policy' }]} />
 
     <h1>Privacy Policy</h1>
-    <p class="standfirst">Last updated 3 August 2026.</p>
+    <p class="standfirst">Last updated {LEGAL_LAST_UPDATED}.</p>
 
     <div class="prose">
       <h2>The short version</h2>
@@ -22,9 +23,62 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
         collect the numbers, letters or text you enter.
       </p>
       <p>
+        The one exception is buying something. If you buy the Making Tax Digital (MTD) Income Tax
+        Readiness Tracker, we need your name, email address and order details
+        to take payment and send you the file. That's explained under
+        "If you buy from us" below.
+      </p>
+      <p>
         This site does use cookies for advertising and, once ads are
         enabled, third-party vendors including Google may use cookies to
         serve and measure ads. That's covered in detail below.
+      </p>
+
+      <h2>If you buy from us</h2>
+      <p>
+        {SELLER.name} (company number {SELLER.companyNumber}, registered office
+        {' '}{SELLER.registeredOffice}) is the data controller for purchases.
+      </p>
+      <ul>
+        <li>
+          <strong>Payment — Stripe.</strong> Checkout runs on Stripe. Stripe collects
+          your card details, name, email address and billing country, and we never see
+          your full card number. Stripe processes this under its
+          {' '}<a href="https://stripe.com/gb/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>.
+          Stripe shares your name, email, country, the amount paid and an order
+          reference with us.
+        </li>
+        <li>
+          <strong>Delivery — Cloudflare.</strong> To give you a download link we store
+          your order reference, your email address and a download counter on
+          Cloudflare. That delivery record is deleted automatically after 72 hours.
+        </li>
+        <li>
+          <strong>Email — Resend.</strong> We send your download link and order
+          confirmation using Resend, an email delivery service, which processes your
+          email address and the message under its
+          {' '}<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">privacy policy</a>.
+          Some of these providers are based in the USA; transfers are covered by
+          the UK–US data bridge or standard contractual clauses.
+        </li>
+      </ul>
+      <p>
+        <strong>Why:</strong> to perform our contract with you (taking payment,
+        delivering the file, refunds and support) and to meet legal obligations
+        (tax and accounting records). We don't use your purchase details for
+        marketing and we don't sell them.
+      </p>
+      <p>
+        <strong>How long:</strong> order records in Stripe are kept for six years
+        after the end of the financial year of the sale, because UK company and tax
+        law requires it. Delivery records are deleted after 72 hours.
+      </p>
+      <p>
+        <strong>Your rights:</strong> you can ask for a copy of your data, ask us to
+        correct or delete it (where we're not required to keep it), or object to how
+        we use it, by emailing <a href={`mailto:${SELLER.email}`}>{SELLER.email}</a>.
+        If you're unhappy with how we've handled your data you can complain to the
+        {' '}<a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener noreferrer">Information Commissioner's Office</a>.
       </p>
 
       <h2>Advertising cookies</h2>
@@ -83,7 +137,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
       <h2>Contact</h2>
       <p>
         Questions about this policy can be sent to
-        <a href="mailto:hello@gazza.ltd">hello@gazza.ltd</a>.
+        <a href={`mailto:${SELLER.email}`}>{SELLER.email}</a>.
       </p>
 
       <h2>Changes to this policy</h2>
