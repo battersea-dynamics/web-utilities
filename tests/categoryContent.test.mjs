@@ -71,8 +71,8 @@ describe('category hub content', () => {
     const pages = path.join(root, 'src/pages');
     for (const [cat, content] of Object.entries(categoryContent)) {
       for (const g of content.guides ?? []) {
-        assert.match(g.href, /^\/[a-z0-9-]+$/, `${cat}: "${g.href}" is not a site-root path`);
-        const file = path.join(pages, `${g.href.slice(1)}.astro`);
+        assert.match(g.href, /^\/[a-z0-9-]+\/$/, `${cat}: "${g.href}" is not a site-root path`);
+        const file = path.join(pages, `${g.href.slice(1, -1)}.astro`);
         assert.ok(fs.existsSync(file), `${cat}: guide "${g.href}" has no page at ${file}`);
         assert.ok(g.title && g.blurb, `${cat}: guide "${g.href}" is missing a title or blurb`);
       }

@@ -47,7 +47,7 @@ export const categoryContent = {
     // ends up reachable only by search.
     guides: [
       {
-        href: '/stamp-duty-england-scotland-wales',
+        href: '/stamp-duty-england-scotland-wales/',
         title: 'Stamp duty across the UK, compared',
         blurb: `The same house taxed three different ways. Wales is cheapest
                 below about £310,000, Scotland dearest above about £333,000,
@@ -65,7 +65,7 @@ export const categoryContent = {
     offer: {
       lead: 'Run a website?',
       text: 'Put any of these calculators on it, free — one line of HTML, no sign-up, and it updates itself when tax rates change.',
-      href: '/embed',
+      href: '/embed/',
       cta: 'See how',
     },
   },
@@ -173,7 +173,7 @@ export const categoryContent = {
     offer: {
       lead: 'Not sure whether a PDF tool is uploading your file?',
       text: 'There is a ten-second test that cannot be faked, and an honest account of where upload-based services are genuinely better.',
-      href: '/pdf-without-uploading',
+      href: '/pdf-without-uploading/',
       cta: 'Read it',
     },
   },

@@ -50,7 +50,7 @@ const choosing = (content?.choosing ?? []).filter((c) =>
       <ul class="card-grid">
         {live.map((t) => (
           <li>
-            <a class="card" href={`/${t.slug}`}>
+            <a class="card" href={`/${t.slug}/`}>
               <span class="name">{t.title}</span>
               <span class="desc">{t.metaDescription.slice(0, 80)}…</span>
             </a>
@@ -78,7 +78,7 @@ const choosing = (content?.choosing ?? []).filter((c) =>
           {choosing.map((c) => (
             <li>
               <span class="choose-when">{c.when}</span>
-              <a class="choose-tool" href={`/${c.slug}`}>{titleOf(c.slug)}</a>
+              <a class="choose-tool" href={`/${c.slug}/`}>{titleOf(c.slug)}</a>
             </li>
           ))}
         </ul>

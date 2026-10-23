@@ -71,7 +71,7 @@ const faqSchema = {
 >
   <div class="wrap">
     <Breadcrumbs trail={[
-      { name: 'Financial Calculators', href: '/finance' },
+      { name: 'Financial Calculators', href: '/finance/' },
       { name: 'MTD Readiness Tracker' },
     ]} />
 
@@ -93,7 +93,7 @@ const faqSchema = {
       <h2>Get the tracker</h2>
       <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
       <BuyBox client:load href={checkoutUrl()} contactEmail={SELLER.email} priceLabel={PRODUCT.priceLabel}
-        termsHref="/terms-of-sale" refundHref="/refund-policy" />
+        termsHref="/terms-of-sale/" refundHref="/refund-policy/" />
       <p class="muted-block">
         A planning and record-keeping aid, not tax advice. It can't send anything to
         HMRC: you'll need HMRC-recognised software, or bridging software if you keep
@@ -101,7 +101,7 @@ const faqSchema = {
         as at 19 October 2026. Doesn't cover exemptions, foreign property,
         partnerships or multiple businesses of the same type.
       </p>
-      <p><a href="/mtd-checker">Check if you need MTD first (free)</a></p>
+      <p><a href="/mtd-checker/">Check if you need MTD first (free)</a></p>
     </div>
 
     <section class="prose">
@@ -113,9 +113,9 @@ const faqSchema = {
         </div>
       ))}
       <p>
-        Full details: <a href="/disclaimer">important information</a>,
-        {' '}<a href="/terms-of-sale">terms of sale</a> and
-        {' '}<a href="/refund-policy">refund policy</a>.
+        Full details: <a href="/disclaimer/">important information</a>,
+        {' '}<a href="/terms-of-sale/">terms of sale</a> and
+        {' '}<a href="/refund-policy/">refund policy</a>.
       </p>
     </section>
   </div>

@@ -125,7 +125,7 @@ export default function StampDutyWidget() {
           </p>
 
           <div className="tool-actions">
-            <a className="card" href="/mortgage-calculator">Mortgage calculator →</a>
+            <a className="card" href="/mortgage-calculator/">Mortgage calculator →</a>
           </div>
         </>
       )}

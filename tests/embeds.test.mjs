@@ -234,11 +234,11 @@ describe('the /embed landing page', () => {
     // to it, so no visitor browsing the site could ever reach the one page
     // the whole distribution plan depends on. Orphaned pages also rank worse.
     const base = fs.readFileSync(path.join(root, 'src/layouts/Base.astro'), 'utf8');
-    assert.match(base, /href="\/embed"/, 'no footer link to /embed');
+    assert.match(base, /href="\/embed\/"/, 'no footer link to /embed');
 
     const toolPage = fs.readFileSync(path.join(root, 'src/layouts/ToolPage.astro'), 'utf8');
     assert.match(toolPage, /tool\.embeddable &&/, 'embeddable tool pages do not offer the embed');
-    assert.match(toolPage, /href="\/embed"/);
+    assert.match(toolPage, /href="\/embed\/"/);
   });
 
   test('the embed offer only appears on tools that are embeddable', () => {

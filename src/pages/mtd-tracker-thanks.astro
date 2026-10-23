@@ -1,6 +1,6 @@
 ---
 // Where the Stripe Payment Link sends the buyer after paying:
-//   https://gazza.ltd/mtd-tracker-thanks?session_id={CHECKOUT_SESSION_ID}
+//   https://gazza.ltd/mtd-tracker-thanks/?session_id={CHECKOUT_SESSION_ID}
 // The page asks the delivery Worker for the download link belonging to that
 // session. The Worker may take a few seconds to receive Stripe's webhook, so
 // the script retries for about a minute before telling the buyer to check
@@ -16,7 +16,7 @@ import { DELIVERY_API, PRODUCT, SELLER } from '../data/shop.js';
   category="finance"
 >
   <div class="wrap">
-    <Breadcrumbs trail={[{ name: 'MTD Readiness Tracker', href: '/mtd-tracker' }, { name: 'Thank you' }]} />
+    <Breadcrumbs trail={[{ name: 'MTD Readiness Tracker', href: '/mtd-tracker/' }, { name: 'Thank you' }]} />
 
     <h1>Thank you for your order</h1>
     <p class="standfirst">
@@ -36,8 +36,8 @@ import { DELIVERY_API, PRODUCT, SELLER } from '../data/shop.js';
     <div class="prose">
       <p>
         Reminder: the workbook is a planning and record-keeping aid, not tax advice,
-        and it can't send anything to HMRC. See our <a href="/refund-policy">refund policy</a>
-        {' '}and <a href="/terms-of-sale">terms of sale</a>.
+        and it can't send anything to HMRC. See our <a href="/refund-policy/">refund policy</a>
+        {' '}and <a href="/terms-of-sale/">terms of sale</a>.
       </p>
     </div>
   </div>

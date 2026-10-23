@@ -163,8 +163,8 @@ export default function MortgageOverpaymentWidget() {
       )}
 
       <div className="tool-actions">
-        <a className="card" href="/mortgage-calculator">← Single mortgage calculator</a>
-        <a className="card" href="/mortgage-comparison-calculator">Compare mortgages →</a>
+        <a className="card" href="/mortgage-calculator/">← Single mortgage calculator</a>
+        <a className="card" href="/mortgage-comparison-calculator/">Compare mortgages →</a>
       </div>
     </div>
   );

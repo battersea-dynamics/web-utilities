@@ -12,6 +12,7 @@ const pdfTools = publishedTools.filter((t) => t.category === 'pdf');
 ---
 <Base
   title="Offline | gazza.ltd"
+  noindex
   description="You're offline. The PDF tools still work — they run entirely on your own device."
 >
   <div class="wrap">
@@ -27,7 +28,7 @@ const pdfTools = publishedTools.filter((t) => t.category === 'pdf');
       <ul class="card-grid">
         {pdfTools.map((t) => (
           <li>
-            <a class="card" href={`/${t.slug}`}>
+            <a class="card" href={`/${t.slug}/`}>
               <span class="name">{t.title}</span>
               <span class="desc">{t.metaDescription.slice(0, 70)}…</span>
             </a>

@@ -49,7 +49,7 @@ const faqSchema = faq.length
 <Base title={metaTitle} description={tool.metaDescription} category={tool.category}>
   <div class="wrap">
     <Breadcrumbs trail={[
-      { name: category.name, href: `/${category.slug}` },
+      { name: category.name, href: `/${category.slug}/` },
       { name: tool.title },
     ]} />
 
@@ -99,7 +99,7 @@ const faqSchema = faq.length
         <ul class="card-grid">
           {related.map((r) => (
             <li>
-              <a class="card" href={`/${r.slug}`}>
+              <a class="card" href={`/${r.slug}/`}>
                 <span class="name">{r.title}</span>
                 <span class="desc">{r.metaDescription.slice(0, 70)}…</span>
               </a>
@@ -115,7 +115,7 @@ const faqSchema = faq.length
     {tool.category === 'pdf' && (
       <p class="embed-offer-inline">
         <strong>Your file is not uploaded.</strong> Everything happens on your
-        own device — <a href="/pdf-without-uploading">here's how to check that
+        own device — <a href="/pdf-without-uploading/">here's how to check that
         for yourself</a>, and where upload-based tools are genuinely better.
       </p>
     )}
@@ -126,7 +126,7 @@ const faqSchema = faq.length
     {tool.embeddable && (
       <p class="embed-offer-inline">
         <strong>Want this calculator on your own website?</strong>{' '}
-        <a href="/embed">Copy one line of HTML</a> — free, no sign-up, and it
+        <a href="/embed/">Copy one line of HTML</a> — free, no sign-up, and it
         updates itself when tax rates change.
       </p>
     )}
