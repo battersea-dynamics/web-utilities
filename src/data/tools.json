@@ -285,10 +285,10 @@
     {
       "slug": "word-unscrambler",
       "title": "Word Unscrambler",
-      "titleSuffix": "Find Words From Letters",
+      "titleSuffix": "Every Word From Your Letters",
       "h1": "Word Unscrambler",
       "category": "text",
-      "metaDescription": "Unscramble letters into every word they can make, grouped by length from two letters upwards. Free, instant, and built on an everyday English dictionary.",
+      "metaDescription": "List every word you can make from a jumble of letters, from two letters up, grouped by length. Best when you don't need to use all the letters.",
       "keywords": [
         "word unscrambler",
         "unscramble words",
@@ -306,10 +306,10 @@
     {
       "slug": "anagram-solver",
       "title": "Anagram Solver",
-      "titleSuffix": "Rearrange Any Letters",
+      "titleSuffix": "Words Using All Your Letters",
       "h1": "Anagram Solver",
       "category": "text",
-      "metaDescription": "Find every anagram of your letters, plus the shorter words hidden inside them. Type the letters in any order and get results instantly, with no sign-up.",
+      "metaDescription": "Find full anagrams that use every one of your letters exactly once, like LISTEN to SILENT, then the shorter words inside. Best for puzzles, crosswords and wordplay.",
       "keywords": [
         "anagram solver",
         "anagram finder",
@@ -348,18 +348,19 @@
     {
       "slug": "scrabble-word-finder",
       "title": "Scrabble Word Finder",
-      "titleSuffix": "Best Scoring Plays",
+      "titleSuffix": "Scored With Scrabble Tile Values",
       "h1": "Scrabble Word Finder",
       "category": "text",
-      "metaDescription": "Find the highest-scoring words from your Scrabble tiles, with letter values worked out for you. Sort by score or by length.",
+      "metaDescription": "Find the highest-scoring words from your Scrabble rack, scored with standard Scrabble tile values (Q and Z are 10). Blanks supported, ENABLE word list.",
       "keywords": [
         "scrabble word finder",
         "scrabble helper",
         "scrabble solver"
       ],
       "related": [
-        "word-unscrambler",
-        "words-with-friends-word-finder"
+        "words-with-friends-word-finder",
+        "anagram-solver",
+        "word-unscrambler"
       ],
       "published": true,
       "contentStatus": "full"
@@ -367,18 +368,19 @@
     {
       "slug": "words-with-friends-word-finder",
       "title": "Words With Friends Word Finder",
-      "titleSuffix": "Best Scoring Plays",
+      "titleSuffix": "Scored With WWF Tile Values",
       "h1": "Words With Friends Word Finder",
       "category": "text",
-      "metaDescription": "Find the best Words With Friends plays from your letters, with each word's tile score worked out. Sort by score or length.",
+      "metaDescription": "Find the best Words With Friends plays, scored with WWF's own tile values (J, Q, Z are 10, B is 4, L and U are 2), which differ from Scrabble's.",
       "keywords": [
         "words with friends word finder",
         "words with friends helper",
         "wwf word finder"
       ],
       "related": [
-        "word-unscrambler",
-        "scrabble-word-finder"
+        "scrabble-word-finder",
+        "anagram-solver",
+        "word-unscrambler"
       ],
       "published": true,
       "contentStatus": "full"
@@ -670,7 +672,7 @@
     {
       "slug": "merge-pdf",
       "title": "Merge PDF",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Combine Files Privately",
       "h1": "Merge PDF Files",
       "category": "pdf",
       "metaDescription": "Combine PDF files in your browser. Nothing is uploaded — your documents never leave your device, so it's safe for contracts, payslips and anything confidential.",
@@ -693,7 +695,7 @@
     {
       "slug": "split-pdf",
       "title": "Split PDF",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Extract Pages Privately",
       "h1": "Split PDF — Extract Pages",
       "category": "pdf",
       "metaDescription": "Extract pages from a PDF without uploading it. Everything runs on your own device, so confidential documents never leave your computer.",
@@ -715,7 +717,7 @@
     {
       "slug": "delete-pdf-pages",
       "title": "Delete PDF Pages",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Remove Pages Privately",
       "h1": "Delete Pages from a PDF",
       "category": "pdf",
       "metaDescription": "Remove pages from a PDF privately. The file is processed in your browser and never uploaded — safe for documents you can't send to a stranger.",
@@ -736,10 +738,10 @@
     {
       "slug": "rotate-pdf",
       "title": "Rotate PDF",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Fix Sideways or Upside-Down Pages",
       "h1": "Rotate PDF Pages",
       "category": "pdf",
-      "metaDescription": "Turn sideways PDF pages the right way up without uploading the file. Runs entirely in your browser, offline if you like.",
+      "metaDescription": "Fix sideways or upside-down scanned pages by rotating just the pages you list, or the whole PDF, by 90° or 180°. Lossless: only the page's rotation value changes.",
       "keywords": [
         "rotate pdf",
         "rotate pdf without uploading",
@@ -747,9 +749,10 @@
         "turn pdf pages no upload"
       ],
       "related": [
+        "reorder-pdf-pages",
+        "delete-pdf-pages",
         "split-pdf",
-        "merge-pdf",
-        "delete-pdf-pages"
+        "merge-pdf"
       ],
       "published": true,
       "contentStatus": "complete"
@@ -757,10 +760,10 @@
     {
       "slug": "reorder-pdf-pages",
       "title": "Reorder PDF Pages",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Type a New Page Order",
       "h1": "Reorder PDF Pages",
       "category": "pdf",
-      "metaDescription": "Rearrange PDF pages into any order without uploading. Everything happens on your own device, so private documents stay private.",
+      "metaDescription": "Put PDF pages in a new order by typing it, e.g. 3, 1, 2, 4-10. Fixes scans fed in out of sequence and moves appendices, without re-encoding the pages.",
       "keywords": [
         "reorder pdf pages",
         "rearrange pdf without uploading",
@@ -768,9 +771,10 @@
         "organise pdf privately"
       ],
       "related": [
+        "rotate-pdf",
         "merge-pdf",
-        "split-pdf",
-        "delete-pdf-pages"
+        "delete-pdf-pages",
+        "split-pdf"
       ],
       "published": true,
       "contentStatus": "complete"
@@ -778,7 +782,7 @@
     {
       "slug": "images-to-pdf",
       "title": "Images to PDF",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "JPG & PNG to One PDF",
       "h1": "Convert Images to PDF",
       "category": "pdf",
       "metaDescription": "Turn JPG and PNG images into a PDF without uploading them. Photos of documents, receipts and ID stay on your device.",
@@ -800,7 +804,7 @@
     {
       "slug": "add-page-numbers",
       "title": "Add Page Numbers to PDF",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Number Pages in Your Browser",
       "h1": "Add Page Numbers to a PDF",
       "category": "pdf",
       "metaDescription": "Add page numbers to a PDF without uploading it. Processed in your browser, so contracts and reports never leave your computer.",
@@ -820,7 +824,7 @@
     {
       "slug": "watermark-pdf",
       "title": "Watermark PDF",
-      "titleSuffix": "No Upload, Works Offline",
+      "titleSuffix": "Stamp Draft or Confidential",
       "h1": "Add a Watermark to a PDF",
       "category": "pdf",
       "metaDescription": "Stamp DRAFT or CONFIDENTIAL across a PDF without uploading it. The document is watermarked on your own device and never sent anywhere.",

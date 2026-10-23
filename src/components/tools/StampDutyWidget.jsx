@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { propertyTax, gbp } from './taxEngine.js';
-import { PROPERTY_TAX, LAST_VERIFIED } from './taxData.js';
+import { PROPERTY_TAX, PROPERTY_LAST_VERIFIED as LAST_VERIFIED } from './taxData.js';
 import { useNumber } from './useNumber.js';
 
 const REGIONS = ['england', 'scotland', 'wales'];

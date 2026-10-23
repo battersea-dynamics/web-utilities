@@ -4,3 +4,7 @@
 # unchanged, so only the hub needs redirecting.
 /files      /pdf/     301
 /files/*    /pdf/:splat  301
+
+# Search Console reported this mistyped variant of the UK comparison page.
+/stamp-duty-england-and-scotland-wales   /stamp-duty-england-scotland-wales/   301
+/stamp-duty-england-and-scotland-wales/  /stamp-duty-england-scotland-wales/   301

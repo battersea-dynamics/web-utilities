@@ -4,6 +4,18 @@ import PdfPagesWidget from '../components/tools/PdfPagesWidget.jsx';
 
 const faq = [
   {
+    q: 'How is this different from the split, delete and rotate tools?',
+    a: 'Reorder changes the sequence of the pages. Split pulls pages out into a new file, delete removes the ones you name, and rotate turns pages without moving them. Reorder is the one to use when every page is right but they are in the wrong place.',
+  },
+  {
+    q: 'What happens to pages I leave out of the list?',
+    a: 'They are dropped from the new file. That is deliberate, because it lets you reorder and trim in one step, but it means you should list every page you want to keep. Your original file is not changed.',
+  },
+  {
+    q: 'Can I reverse a range by writing it backwards, like 10-1?',
+    a: 'No. A range has to run from low to high, and a backwards one is ignored. To reverse pages, list them individually, for example 10, 9, 8, 7.',
+  },
+  {
     q: 'How do I describe the new order?',
     a: 'List every page in the order you want it to appear — for example "3, 1, 2" puts the third page first. You can use ranges too, so "5-8, 1-4" swaps two halves of an eight-page document.',
   },
@@ -41,13 +53,19 @@ const faq = [
       so the list you write <em>is</em> the output order.
     </p>
     <p>
-      Ranges are expanded in the direction you write them, and the shorthand
+      Ranges run from low to high, and the shorthand
       "9-" means "page 9 through to the end" — handy for putting one page at the
       front without listing everything else individually.
     </p>
     <p>
       Pages are copied intact, so text stays selectable and image quality is
       unchanged. Your original file isn't modified.
+    </p>
+    <p>
+      Any page you leave out of the list is not copied, so the same box can
+      reorder and trim at once. If pages are also sideways, run the file
+      through <a href="/rotate-pdf/">rotate PDF</a> afterwards. To join files
+      together before reordering, start with <a href="/merge-pdf/">merge PDF</a>.
     </p>
   </div>
 
@@ -58,9 +76,10 @@ const faq = [
       to the front and keeps everything else in its existing order.
     </p>
     <p>
-      Another case: a double-sided scan that came out with all the odd pages
-      first and all the even pages after. Listing the pages in interleaved order
-      rebuilds the document correctly.
+      Another case: a double-sided scan of a 6-page letter that came out with
+      the front sides first (pages 1 to 3 of the file) and the back sides after
+      (pages 4 to 6). Entering <code>1, 4, 2, 5, 3, 6</code> interleaves them
+      back into reading order.
     </p>
   </div>
 </ToolPage>
