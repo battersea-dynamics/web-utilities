@@ -29,7 +29,7 @@ export const SELLER = {
   name: 'Battersea Dynamics Limited',
   companyNumber: '15356775',
   registeredOffice: '[REGISTERED OFFICE ADDRESS]',
-  email: 'battersea.dynamics@gmail.com',
+  email: 'hello@gazza.ltd',
 };
 
 export const LEGAL_LAST_UPDATED = '[DATE]';
