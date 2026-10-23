@@ -145,7 +145,8 @@
       "related": [
         "mortgage-calculator",
         "compound-interest-calculator",
-        "stamp-duty-calculator"
+        "stamp-duty-calculator",
+        "mtd-checker"
       ],
       "published": true,
       "contentStatus": "complete",
@@ -172,6 +173,28 @@
       "contentStatus": "complete",
       "embeddable": true,
       "embedHeight": 640
+    },
+    {
+      "slug": "mtd-checker",
+      "title": "MTD Income Tax Checker",
+      "titleSuffix": "Do I Need to Join?",
+      "h1": "Do I Need to Join MTD for Income Tax?",
+      "category": "finance",
+      "metaDescription": "Check whether you need to join Making Tax Digital for Income Tax and when — April 2026, 2027 or 2028 — from your self-employment and property income.",
+      "keywords": [
+        "mtd for income tax checker",
+        "making tax digital income tax",
+        "do i need mtd",
+        "mtd threshold"
+      ],
+      "related": [
+        "take-home-pay-calculator",
+        "compound-interest-calculator",
+        "stamp-duty-calculator"
+      ],
+      "published": true,
+      "contentStatus": "complete",
+      "embeddable": false
     },
     {
       "slug": "bmi-calculator",

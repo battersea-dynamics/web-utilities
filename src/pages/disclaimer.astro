@@ -1,0 +1,61 @@
+---
+// DRAFT — have a solicitor review before launch.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { PRODUCT, SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
+---
+<Base
+  title="Disclaimer — MTD Tracker and Checker | gazza.ltd"
+  description="Important information about the MTD Income Tax checker and readiness tracker: not tax advice, not MTD software, and what they are based on."
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[{ name: 'Disclaimer' }]} />
+
+    <h1>Important information</h1>
+    <p class="standfirst">Last updated {LEGAL_LAST_UPDATED}.</p>
+
+    <div class="prose">
+      <p>
+        <strong>Not advice.</strong> The {PRODUCT.name} and the free MTD checker are
+        record-keeping and planning aids. They aren't tax, legal, accounting or financial
+        advice. They don't take your personal circumstances into account, and they don't
+        work out how much tax you owe. If you're unsure about your position, speak to
+        HMRC, an accountant or a tax adviser.
+      </p>
+      <p>
+        <strong>Not MTD software.</strong> The workbook can't send quarterly updates or
+        tax returns to HMRC. Under Making Tax Digital for Income Tax these must be sent
+        using HMRC-recognised software. A spreadsheet can only be used for MTD if you
+        link it to HMRC-compatible bridging software, and this product doesn't include
+        any. Use HMRC's software finder on GOV.UK to find compatible software.
+      </p>
+      <p>
+        <strong>What it's based on.</strong> The content is based on GOV.UK guidance as at
+        19 October 2026 and is set up for the 2027/28 tax year (6 April 2027 to 5 April
+        2028). Rules, thresholds and deadlines can change. Always check the latest GOV.UK
+        guidance before you rely on a date or figure. We don't promise to update the
+        workbook for later changes or later tax years.
+      </p>
+      <p>
+        <strong>What it doesn't cover.</strong> Exemptions and deferrals from MTD, foreign
+        property income, partnerships, and more than one business of the same type. If
+        any of these apply to you, the threshold check and summaries may not reflect your
+        position.
+      </p>
+      <p>
+        <strong>Your records are your responsibility.</strong> You're responsible for the
+        figures you enter, for checking what your software sends to HMRC, and for meeting
+        HMRC deadlines. The totals in the workbook are only as accurate as the entries
+        you make.
+      </p>
+      <p>
+        <strong>If something's wrong.</strong> We've taken care to make the workbook
+        accurate. If you spot an error, please tell us at
+        {' '}<a href={`mailto:${SELLER.email}`}>{SELLER.email}</a> and we'll look into it.
+        This doesn't affect your legal rights if the workbook is faulty. See our
+        {' '}<a href="/refund-policy">refund policy</a> and <a href="/terms-of-sale">terms of sale</a>.
+      </p>
+      <p>Contains public sector information licensed under the Open Government Licence v3.0.</p>
+    </div>
+  </div>
+</Base>

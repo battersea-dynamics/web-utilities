@@ -1,0 +1,123 @@
+---
+// The one paid product. Not a tool, so it has no tools.json entry and uses
+// Base rather than ToolPage, the same way the stamp duty guide does.
+//
+// The Buy button is gated by BuyBox: it stays disabled until the buyer ticks
+// the instant-download consent (CCR 2013 reg 37). Don't link straight to the
+// Stripe Payment Link from anywhere else on the site — that would skip it.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import BuyBox from '../components/BuyBox.jsx';
+import { PRODUCT, checkoutUrl } from '../data/shop.js';
+
+const sheets = [
+  ['Start Here', 'What MTD means for you and how to use the workbook.'],
+  ['Am I In', 'The same qualifying-income check as the free checker, kept with your records.'],
+  ['Sign-up Checklist', 'Each step to sign up and choose software, ticked off as you go.'],
+  ['Deadlines 2027-28', 'Every quarterly update and final declaration date for the year.'],
+  ['Income & Expense Log', 'One row per transaction, with category and quarter filled in for you.'],
+  ['Quarterly Summary', 'Totals by quarter and category, ready to copy into bridging or MTD software.'],
+  ['Categories', 'HMRC-aligned income and expense categories.'],
+];
+
+const faq = [
+  {
+    q: 'Is this MTD software?',
+    a: 'No. It is a record-keeping and planning workbook. You still need HMRC-recognised software, or bridging software, to send the quarterly updates.',
+  },
+  {
+    q: 'What do I need to open it?',
+    a: 'Excel 2016 or later, or Excel for the web. It also opens in LibreOffice and Google Sheets.',
+  },
+  {
+    q: 'How do I get the file?',
+    a: 'Straight after payment you are taken to a download page, and we email you the same link. The link works for 72 hours and for up to 5 downloads — save the file somewhere safe.',
+  },
+  {
+    q: 'Is this tax advice?',
+    a: 'No. It summarises published GOV.UK guidance. Check your own position with HMRC or an accountant.',
+  },
+];
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: PRODUCT.name,
+  description: 'An Excel workbook for sole traders and landlords joining Making Tax Digital for Income Tax in April 2027.',
+  brand: { '@type': 'Brand', name: 'gazza.ltd' },
+  offers: {
+    '@type': 'Offer',
+    price: String(PRODUCT.price),
+    priceCurrency: PRODUCT.currency,
+    availability: 'https://schema.org/InStock',
+    url: 'https://gazza.ltd/mtd-tracker',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title="MTD Income Tax Readiness Tracker 2027-28 — Excel Workbook | gazza.ltd"
+  description="An Excel workbook for sole traders and landlords joining Making Tax Digital in April 2027: threshold check, sign-up checklist, deadlines and quarterly totals. £9."
+  category="finance"
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[
+      { name: 'Financial Calculators', href: '/finance' },
+      { name: 'MTD Readiness Tracker' },
+    ]} />
+
+    <h1>{PRODUCT.name}</h1>
+    <p class="standfirst">
+      An Excel workbook for sole traders and landlords joining Making Tax Digital
+      in April 2027: threshold check, sign-up checklist, deadlines and quarterly totals.
+    </p>
+
+    <h2>What's inside</h2>
+    <ul class="card-grid">
+      {sheets.map(([name, desc]) => (
+        <li><div class="card"><span class="name">{name}</span><span class="desc">{desc}</span></div></li>
+      ))}
+    </ul>
+
+    <div class="product-cta">
+      <h2>Get the tracker</h2>
+      <BuyBox client:load href={checkoutUrl()} priceLabel={PRODUCT.priceLabel}
+        termsHref="/terms-of-sale" refundHref="/refund-policy" />
+      <p class="muted-block">
+        A planning and record-keeping aid, not tax advice. It can't send anything to
+        HMRC: you'll need HMRC-recognised software, or bridging software if you keep
+        records in a spreadsheet. For the 2027/28 tax year, based on GOV.UK guidance
+        as at 19 October 2026. Doesn't cover exemptions, foreign property,
+        partnerships or multiple businesses of the same type.
+      </p>
+      <p><a href="/mtd-checker">Check if you need MTD first (free)</a></p>
+    </div>
+
+    <section class="prose">
+      <h2>Good to know</h2>
+      {faq.map((f) => (
+        <div class="faq-item">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+      <p>
+        Full details: <a href="/disclaimer">important information</a>,
+        {' '}<a href="/terms-of-sale">terms of sale</a> and
+        {' '}<a href="/refund-policy">refund policy</a>.
+      </p>
+    </section>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Base>

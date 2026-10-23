@@ -1,0 +1,40 @@
+// The one paid product on the site, and the URLs the shop pages depend on.
+//
+// Everything a person has to fill in after setting up Stripe and the
+// delivery Worker lives here, so it is changed in one place rather than
+// hunted for across several pages.
+
+export const PRODUCT = {
+  slug: 'mtd-tracker',
+  name: 'MTD Income Tax Readiness Tracker 2027-28',
+  price: 9,
+  priceLabel: '£9',
+  currency: 'GBP',
+};
+
+// Stripe Payment Link (Dashboard → Payment Links → Copy link).
+// Looks like https://buy.stripe.com/xxxxxxxx. TODO: replace before launch.
+export const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_ME';
+
+// Consent wording version, sent to Stripe as client_reference_id so each
+// order records which version of the instant-download wording the buyer saw.
+// Bump it whenever the tick-box text changes.
+export const CONSENT_VERSION = 'ccr-2026-10-v1';
+
+// Public URL of the delivery Worker (see worker/ in the update pack).
+export const DELIVERY_API = 'https://shop.gazza.ltd';
+
+// Seller details shown on the legal pages. TODO: fill in before launch.
+export const SELLER = {
+  name: 'Battersea Dynamics Limited',
+  companyNumber: '15356775',
+  registeredOffice: '[REGISTERED OFFICE ADDRESS]',
+  email: 'hello@gazza.ltd',
+};
+
+export const LEGAL_LAST_UPDATED = '[DATE]';
+export const TERMS_VERSION = '1.0';
+
+/** Checkout URL with the consent version attached. */
+export const checkoutUrl = () =>
+  `${STRIPE_PAYMENT_LINK}?client_reference_id=${encodeURIComponent(CONSENT_VERSION)}`;

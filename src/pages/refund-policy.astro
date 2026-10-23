@@ -1,0 +1,70 @@
+---
+// DRAFT — have a solicitor review before launch.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
+---
+<Base
+  title="Refund Policy | gazza.ltd"
+  description="Refunds for the MTD Income Tax Readiness Tracker: your legal rights, instant download and the 14-day right to cancel, and our 14-day goodwill refund."
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[{ name: 'Refund Policy' }]} />
+
+    <h1>Refund Policy</h1>
+    <p class="standfirst">Last updated {LEGAL_LAST_UPDATED}.</p>
+
+    <div class="prose">
+      <h2>Your legal rights</h2>
+      <p>
+        Nothing in this policy affects your legal rights. Under the Consumer Rights Act
+        2015, digital content must be of satisfactory quality, fit for purpose and as
+        described. If the workbook you receive is faulty or not as described:
+      </p>
+      <ul>
+        <li>you're entitled to a <strong>repair or replacement</strong>, for example a corrected file</li>
+        <li>if we can't repair or replace it, or don't do so within a reasonable time and without significant inconvenience to you, you're entitled to a <strong>price reduction</strong>, which can be a <strong>full refund</strong></li>
+        <li>if the workbook damages your device or other digital content because we didn't use reasonable care and skill, we'll <strong>repair the damage or compensate you</strong></li>
+      </ul>
+      <p>
+        We'll give any refund within 14 days of agreeing that you're entitled to it, to
+        the payment method you used, and without charging you a fee. For more about your
+        rights, contact <a href="https://www.citizensadvice.org.uk" target="_blank" rel="noopener noreferrer">Citizens Advice</a>.
+      </p>
+
+      <h2>Instant download and the 14-day right to cancel</h2>
+      <p>
+        Online purchases usually come with a 14-day right to cancel. For digital
+        downloads, that right ends once the download is made available, but only if
+        you've asked for immediate access and confirmed that you understand you'll lose
+        the right. Before checkout we ask you to do both, and we confirm them in the
+        email that carries your download link.
+      </p>
+
+      <h2>Our goodwill refund (14 days)</h2>
+      <p>
+        Even though the right to cancel ends once you download, we want you to be happy
+        with your purchase. If the workbook isn't right for you, email us within
+        <strong> 14 days of purchase</strong> and we'll normally refund you in full. You
+        don't have to give a reason.
+      </p>
+      <ul>
+        <li>Email <a href={`mailto:${SELLER.email}`}>{SELLER.email}</a> with your order reference, or the email address you used to buy.</li>
+        <li>Please delete any copies of the workbook once you've been refunded.</li>
+        <li>This goodwill refund is at our discretion. We may refuse it where we reasonably think it's being misused, for example repeated purchase-and-refund. This <strong>doesn't</strong> limit your legal rights above, which apply whatever this section says.</li>
+      </ul>
+
+      <h2>How refunds are paid</h2>
+      <p>
+        Payments are processed by Stripe, so refunds go back through Stripe to your
+        original payment method. They can take 5–10 working days to show on your statement.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        {SELLER.name}, {SELLER.registeredOffice}. Email:
+        {' '}<a href={`mailto:${SELLER.email}`}>{SELLER.email}</a>.
+      </p>
+    </div>
+  </div>
+</Base>

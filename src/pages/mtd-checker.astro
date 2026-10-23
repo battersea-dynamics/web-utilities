@@ -1,0 +1,80 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import MtdCheckerWidget from '../components/tools/MtdCheckerWidget.jsx';
+import { PRODUCT } from '../data/shop.js';
+
+const faq = [
+  {
+    q: 'What counts as qualifying income?',
+    a: 'Your total self-employment turnover plus your total property income, before expenses are taken off. If you have more than one business or property, add them all together. Employment income, pensions, dividends and savings interest do not count.',
+  },
+  {
+    q: 'What if my income is exactly £30,000?',
+    a: 'The test is more than the threshold. Exactly £30,000 is not over it, so you would not be brought in from April 2027 on that figure.',
+  },
+  {
+    q: 'Which year does HMRC look at?',
+    a: 'The Self Assessment return two tax years before the start date: 2024/25 for April 2026, 2025/26 for April 2027 and 2026/27 for April 2028.',
+  },
+  {
+    q: 'Can I use a spreadsheet for MTD?',
+    a: 'Only together with HMRC-compatible bridging software, which links the spreadsheet to HMRC. A spreadsheet on its own cannot send quarterly updates.',
+  },
+  {
+    q: 'Is this tax advice?',
+    a: 'No. It applies the published thresholds to the figures you enter. Exemptions and deferrals exist, so check GOV.UK or an accountant if you are near a threshold.',
+  },
+];
+---
+<ToolPage slug="mtd-checker" faq={faq}>
+  <MtdCheckerWidget client:load slot="tool" />
+
+  <div slot="intro">
+    <p>
+      Making Tax Digital for Income Tax means keeping digital records and sending
+      HMRC a quarterly update. Whether — and when — you have to join depends on
+      your <em>qualifying income</em>. Enter your figures for each tax year to see
+      your start date.
+    </p>
+    <div class="product-cta">
+      <h2>Joining in April 2027? Get organised in one spreadsheet</h2>
+      <p>
+        The <strong>{PRODUCT.name}</strong> is an Excel workbook with this
+        threshold check, a sign-up checklist, every 2027-28 quarterly deadline, an
+        income and expense log that totals itself into quarterly summaries, and
+        HMRC-aligned categories.
+      </p>
+      <p><span class="price">{PRODUCT.priceLabel}</span> one-off · instant download · no account</p>
+      <p><a class="btn" href="/mtd-tracker">See what's inside</a></p>
+    </div>
+  </div>
+
+  <div slot="how-it-works">
+    <p>
+      <strong>Qualifying income = self-employment turnover + property income</strong>,
+      both before expenses. Each start date is tested against an earlier tax year:
+    </p>
+    <ul>
+      <li>2024/25 qualifying income <strong>over £50,000</strong> → join from 6 April 2026</li>
+      <li>2025/26 qualifying income <strong>over £30,000</strong> → join from 6 April 2027</li>
+      <li>2026/27 qualifying income <strong>over £20,000</strong> → join from 6 April 2028</li>
+    </ul>
+    <p>
+      Your start date is the earliest one whose test you pass. The comparison is
+      strictly “more than”, so a figure exactly on the threshold does not bring you in.
+    </p>
+  </div>
+
+  <div slot="example">
+    <p>
+      A sole trader turns over £20,000 in 2024/25 and has £13,000 of rent:
+      £33,000, under £50,000, so not April 2026. In 2025/26 turnover is £22,000
+      and rent £14,000: £36,000, over £30,000 — so they join on
+      <strong>6 April 2027</strong>.
+    </p>
+    <p>
+      GOV.UK's own example: £25,000 of rent plus £27,000 of self-employment
+      turnover is £52,000, which is over £50,000, so that person joins in April 2026.
+    </p>
+  </div>
+</ToolPage>
