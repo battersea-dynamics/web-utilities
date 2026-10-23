@@ -3,7 +3,7 @@
 // src/data/shop.js (SELLER, LEGAL_LAST_UPDATED, TERMS_VERSION).
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { PRODUCT, SELLER, LEGAL_LAST_UPDATED, TERMS_VERSION } from '../data/shop.js';
+import { PRODUCT, SELLER, LEGAL_LAST_UPDATED, TERMS_VERSION, NOT_HMRC_NOTICE } from '../data/shop.js';
 ---
 <Base
   title="Terms of Sale | gazza.ltd"
@@ -14,6 +14,8 @@ import { PRODUCT, SELLER, LEGAL_LAST_UPDATED, TERMS_VERSION } from '../data/shop
 
     <h1>Terms of Sale</h1>
     <p class="standfirst">Last updated {LEGAL_LAST_UPDATED} · Version {TERMS_VERSION}</p>
+
+    <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
 
     <div class="prose">
       <p>

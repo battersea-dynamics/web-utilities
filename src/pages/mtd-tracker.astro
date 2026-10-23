@@ -8,7 +8,7 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BuyBox from '../components/BuyBox.jsx';
-import { PRODUCT, checkoutUrl } from '../data/shop.js';
+import { PRODUCT, checkoutUrl, NOT_HMRC_NOTICE } from '../data/shop.js';
 
 const sheets = [
   ['Start Here', 'What MTD means for you and how to use the workbook.'],
@@ -80,6 +80,7 @@ const faqSchema = {
       An Excel workbook for sole traders and landlords joining Making Tax Digital
       in April 2027: threshold check, sign-up checklist, deadlines and quarterly totals.
     </p>
+    <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
 
     <h2>What's inside</h2>
     <ul class="card-grid">
@@ -90,6 +91,7 @@ const faqSchema = {
 
     <div class="product-cta">
       <h2>Get the tracker</h2>
+      <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
       <BuyBox client:load href={checkoutUrl()} priceLabel={PRODUCT.priceLabel}
         termsHref="/terms-of-sale" refundHref="/refund-policy" />
       <p class="muted-block">

@@ -2,7 +2,7 @@
 // DRAFT — have a solicitor review before launch.
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { PRODUCT, SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
+import { PRODUCT, SELLER, LEGAL_LAST_UPDATED, NOT_HMRC_NOTICE } from '../data/shop.js';
 ---
 <Base
   title="Disclaimer — MTD Tracker and Checker | gazza.ltd"
@@ -13,6 +13,8 @@ import { PRODUCT, SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
 
     <h1>Important information</h1>
     <p class="standfirst">Last updated {LEGAL_LAST_UPDATED}.</p>
+
+    <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
 
     <div class="prose">
       <p>

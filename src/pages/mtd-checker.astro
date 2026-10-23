@@ -1,7 +1,7 @@
 ---
 import ToolPage from '../layouts/ToolPage.astro';
 import MtdCheckerWidget from '../components/tools/MtdCheckerWidget.jsx';
-import { PRODUCT } from '../data/shop.js';
+import { PRODUCT, NOT_HMRC_NOTICE_CHECKER, NOT_HMRC_NOTICE } from '../data/shop.js';
 
 const faq = [
   {
@@ -30,6 +30,7 @@ const faq = [
   <MtdCheckerWidget client:load slot="tool" />
 
   <div slot="intro">
+    <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE_CHECKER}</p>
     <p>
       Making Tax Digital for Income Tax means keeping digital records and sending
       HMRC a quarterly update. Whether — and when — you have to join depends on
@@ -37,6 +38,7 @@ const faq = [
       your start date.
     </p>
     <div class="product-cta">
+      <p class="note note-warn not-hmrc" role="note"><strong>Not an official HMRC tool.</strong> {NOT_HMRC_NOTICE}</p>
       <h2>Joining in April 2027? Get organised in one spreadsheet</h2>
       <p>
         The <strong>{PRODUCT.name}</strong> is an Excel workbook with this

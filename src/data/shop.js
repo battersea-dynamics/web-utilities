@@ -29,7 +29,7 @@ export const SELLER = {
   name: 'Battersea Dynamics Limited',
   companyNumber: '15356775',
   registeredOffice: '[REGISTERED OFFICE ADDRESS]',
-  email: 'hello@gazza.ltd',
+  email: 'battersea.dynamics@gmail.com',
 };
 
 export const LEGAL_LAST_UPDATED = '[DATE]';
@@ -38,3 +38,7 @@ export const TERMS_VERSION = '1.0';
 /** Checkout URL with the consent version attached. */
 export const checkoutUrl = () =>
   `${STRIPE_PAYMENT_LINK}?client_reference_id=${encodeURIComponent(CONSENT_VERSION)}`;
+
+// Shown on every product, legal and checker page. Keep wording in sync with the workbook and delivery email.
+export const NOT_HMRC_NOTICE = 'This is an independent spreadsheet from Battersea Dynamics Ltd to help you organise your records and prepare for Making Tax Digital. It is not affiliated with or endorsed by HMRC, it does not submit anything to HMRC, and it is not MTD-compatible software; you will still need HMRC-recognised software or bridging software to file.';
+export const NOT_HMRC_NOTICE_CHECKER = 'This is an independent checker from Battersea Dynamics Ltd to help you prepare for Making Tax Digital. It is not affiliated with or endorsed by HMRC, it does not submit anything to HMRC, and it is not MTD-compatible software; you will still need HMRC-recognised software or bridging software to file.';
