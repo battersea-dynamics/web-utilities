@@ -24,5 +24,5 @@ EMAIL_FROM = "gazza.ltd <orders@gazza.ltd>"
 LINK_TTL_HOURS = "72"
 MAX_DOWNLOADS = "5"
 # Optional fallback if a Payment Link has no "product" metadata: its plink_ ID.
-PAYMENT_LINK_MTD = "plink_1UUsQoEuDvpSdpTfMNqvjTXH"
+PAYMENT_LINK_MTD = "plink_1UUsQoEuDvpSdpTfMNqvjTXH,plink_1UUsi4EuDvpSdpTfVt09Gd6B"
 PAYMENT_LINK_WINTER_ARC = "plink_1UUo9SEuDvpSdpTf34nYo1cs,plink_1UUpBLEuDvpSdpTf97WxK9pt"
