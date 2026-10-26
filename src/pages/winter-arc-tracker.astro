@@ -1,0 +1,171 @@
+---
+// A paid printable for the health hub. Like /mtd-tracker it is not a tool, so
+// it has no tools.json entry and uses Base rather than ToolPage. It is listed
+// on the health hub through categoryContent.health.products.
+//
+// The Buy button is gated by BuyBox, which shows a disabled "Coming soon"
+// button until WINTER_ARC_PAYMENT_LINK is a real Stripe Payment Link. The
+// paid PDFs are not in public/ and must never be — they are delivered only
+// after payment.
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import BuyBox from '../components/BuyBox.jsx';
+import { WINTER_ARC, WINTER_ARC_PAYMENT_LINK, SELLER, checkoutUrl, WELLBEING_NOTICE } from '../data/shop.js';
+
+const IMG = '/products/winter-arc';
+
+const pages = [
+  ['Cover', 'Your name and Day 1 / Day 90 fields.'],
+  ['How to use', 'Printing tips and a list of habit ideas.'],
+  ['My why and 3 goals', 'Goal, why it matters, how you’ll measure it, first step and target day.'],
+  ['Rules of the arc', 'Six non-negotiables, your minimum day, and what to do if you miss one.'],
+  ['90-day habit tracker', 'Three pages: up to 8 habits of your choice, a daily score out of 8, and week markers every 7 days.'],
+  ['Body and movement log', 'Three pages: steps, strength sessions, stretching minutes, sleep hours, glasses of water and notes.'],
+  ['13 weekly reviews', 'Wins, lessons, next week’s focus, and energy, sleep and mood scored 1–10.'],
+  ['3 monthly reflections', 'Keep, tweak or drop each habit; what worked, what didn’t, what you’ll change.'],
+  ['Day 30, 60 and 90 checkpoints', 'Each with a progress ring to fill in.'],
+  ['Finish line and next arc', 'A certificate of completion and a page to plan what comes next.'],
+];
+
+const gallery = [
+  ['02-whats-inside', 'A spread of six pages from the tracker: cover, goals, habit grid, body log, weekly review and day-30 checkpoint.'],
+  ['03-90-day-grid', 'The 90-day habit grid page, with eight habit columns and a daily score.'],
+  ['04-weekly-review', 'The week 1 review page, with energy, sleep and mood scores, wins and lessons.'],
+  ['05-print-options', 'The colour and ink-saver editions side by side at A4, and a page scaled to A5.'],
+];
+
+const faq = [
+  {
+    q: 'What do I get?',
+    a: 'Two PDF files of 30 A4 pages each: a colour edition (dark navy and ice blue, which still prints clearly in black and white) and an ink-saver edition with line art and no heavy fills.',
+  },
+  {
+    q: 'Is it dated?',
+    a: 'No. It’s undated, so you can start on any day of the year.',
+  },
+  {
+    q: 'How do I print it?',
+    a: 'For A4, print at 100% or “Actual size” on A4 paper, portrait. For an A5 binder or planner, choose “Fit to page” with A5 paper, or print “2 pages per sheet” on A4 and cut in half. Print it all, or just the pages you need — you can reprint a tracker page if you change your habits partway through.',
+  },
+  {
+    q: 'Will anything be posted to me?',
+    a: 'No. It’s a digital download only. Colours can look slightly different depending on your screen and printer.',
+  },
+  {
+    q: 'Is this medical or fitness advice?',
+    a: 'No. It’s a general wellbeing and habit tracker. It doesn’t diagnose, treat or prevent any condition. If you have a health condition or an injury, check with a qualified professional before changing your activity.',
+  },
+  {
+    q: 'Can I share it?',
+    a: 'It’s for personal use only. Please don’t resell, share or redistribute the files.',
+  },
+];
+
+const description = 'A printable, undated 90-day habit tracker and goal planner for A4: habit grid, weekly reviews, monthly reflections and checkpoints. 30 pages plus an ink-saver edition. £4.50.';
+
+// Product structured data, as on /mtd-tracker. Availability is PreOrder
+// rather than InStock while sales aren't open, so the markup doesn't promise
+// something the page can't sell yet. Switch to InStock when the link is live.
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: WINTER_ARC.name,
+  description,
+  image: `https://gazza.ltd${IMG}/og-winter-arc.jpg`,
+  brand: { '@type': 'Brand', name: 'gazza.ltd' },
+  offers: {
+    '@type': 'Offer',
+    price: WINTER_ARC.price.toFixed(2),
+    priceCurrency: WINTER_ARC.currency,
+    availability: checkoutUrl(WINTER_ARC_PAYMENT_LINK) ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+    url: 'https://gazza.ltd/winter-arc-tracker/',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base
+  title="Winter Arc 90-Day Habit Tracker — Printable A4 Goal Planner (PDF) | gazza.ltd"
+  description={description}
+  category="health"
+  ogImage={`${IMG}/og-winter-arc.jpg`}
+>
+  <div class="wrap">
+    <Breadcrumbs trail={[
+      { name: 'Health & Fitness Calculators', href: '/health/' },
+      { name: 'Winter Arc Habit Tracker' },
+    ]} />
+
+    <h1>{WINTER_ARC.name}</h1>
+    <p class="standfirst">
+      A printable, undated habit tracker and goal planner for A4. One place to plan,
+      track and review 90 days of training, sleep, routines or study — so you arrive
+      in the new year already moving.
+    </p>
+    <p class="note" role="note"><strong>{WELLBEING_NOTICE}</strong></p>
+
+    <figure class="product-hero">
+      <img src={`${IMG}/01-hero-cover.webp`} width="1200" height="900"
+        alt="The Winter Arc tracker cover: mountains under a moon on a dark navy page, with fields for your name, Day 1 and Day 90." />
+    </figure>
+
+    <section class="prose">
+      <p>
+        The Winter Arc is the stretch at the end of the year when you put your head down
+        and work on yourself. You don’t announce it, you just do the reps. Because the
+        tracker is undated you can start it on any day, and it’s laid out for A4, the
+        standard UK paper size, rather than US Letter.
+      </p>
+    </section>
+
+    <h2>The 30 pages</h2>
+    <ul class="card-grid">
+      {pages.map(([name, desc]) => (
+        <li><div class="card"><span class="name">{name}</span><span class="desc">{desc}</span></div></li>
+      ))}
+    </ul>
+
+    <h2>A look inside</h2>
+    <ul class="product-gallery">
+      {gallery.map(([file, alt]) => (
+        <li><img src={`${IMG}/${file}.webp`} width="1200" height="900" alt={alt} decoding="async" /></li>
+      ))}
+    </ul>
+
+    <div class="product-cta">
+      <h2>Get the tracker</h2>
+      <p>Launch price. Two PDFs (colour and ink-saver), 30 A4 pages each, also prints at A5.</p>
+      <BuyBox client:load href={checkoutUrl(WINTER_ARC_PAYMENT_LINK)} contactEmail={SELLER.email}
+        priceLabel={WINTER_ARC.priceLabel} item="tracker" buyLabel="Buy the tracker"
+        termsHref="/terms-of-sale/" refundHref="/refund-policy/" />
+      <p class="muted-block">{WELLBEING_NOTICE} For personal use only.</p>
+    </div>
+
+    <section class="prose">
+      <h2>Good to know</h2>
+      {faq.map((f) => (
+        <div class="faq-item">
+          <h3>{f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+      <p>
+        Want the numbers behind your habits? Try the free
+        {' '}<a href="/protein-intake-calculator/">protein intake calculator</a> or
+        {' '}<a href="/calorie-calculator/">daily calorie calculator</a>, or see all
+        {' '}<a href="/health/">health and fitness tools</a>.
+      </p>
+    </section>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Base>

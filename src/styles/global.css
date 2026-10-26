@@ -1001,3 +1001,12 @@ h3 { font-size: var(--text-body); margin: var(--sp-5) 0 0.4rem; }
   cursor: pointer;
 }
 .consent input { margin-top: 0.25rem; flex: none; width: 1.1rem; height: 1.1rem; }
+
+/* Product cards on a hub, and the gallery on a product page. */
+.hub-products { margin-top: var(--sp-4); }
+.product-card img,
+.product-gallery img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.product-card img { margin-bottom: var(--sp-2); }
+.product-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0.875rem; margin: var(--sp-3) 0; padding: 0; list-style: none; }
+.product-hero { margin: var(--sp-3) 0; }
+.product-hero img { display: block; width: 100%; max-width: 48rem; height: auto; border-radius: var(--radius); }

@@ -1,4 +1,4 @@
-// The one paid product on the site, and the URLs the shop pages depend on.
+// The paid products on the site, and the URLs the shop pages depend on.
 //
 // Everything a person has to fill in after setting up Stripe and the
 // delivery Worker lives here, so it is changed in one place rather than
@@ -11,6 +11,22 @@ export const PRODUCT = {
   priceLabel: '£9',
   currency: 'GBP',
 };
+
+// Second product: a printable PDF for the health (wellbeing) hub. It has its
+// own Payment Link so each product can go on sale independently. While this
+// is the REPLACE_ME placeholder its page shows a disabled "Coming soon"
+// button. The paid PDF is NOT in public/ — it is delivered after payment only.
+export const WINTER_ARC = {
+  slug: 'winter-arc-tracker',
+  name: 'Winter Arc 90-Day Habit Tracker',
+  price: 4.5,
+  priceLabel: '£4.50',
+  currency: 'GBP',
+};
+export const WINTER_ARC_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_ME';
+
+// Shown on the Winter Arc page and its hub card. Keep in sync with the PDF footer.
+export const WELLBEING_NOTICE = 'General wellbeing tracker, not medical advice.';
 
 // Stripe Payment Link (Dashboard → Payment Links → Copy link).
 // Looks like https://buy.stripe.com/xxxxxxxx. TODO: replace before launch.
@@ -32,8 +48,8 @@ export const SELLER = {
   email: 'hello@gazza.ltd',
 };
 
-export const LEGAL_LAST_UPDATED = '[DATE]';
-export const TERMS_VERSION = '1.0';
+export const LEGAL_LAST_UPDATED = '26 October 2026';
+export const TERMS_VERSION = '1.1';
 
 /** Checkout URL with the consent version attached. */
 // Sales are "open" only once a real Payment Link is set. While the link is empty

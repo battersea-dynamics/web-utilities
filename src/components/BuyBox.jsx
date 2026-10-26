@@ -12,7 +12,9 @@ import { useState } from 'react';
 //
 // If href is null (no real Stripe Payment Link yet) the box shows a disabled
 // "Coming soon" button and a contact line, with no consent box and no link.
-export default function BuyBox({ href, priceLabel, termsHref, refundHref, contactEmail = 'hello@gazza.ltd' }) {
+// `item` names the thing being bought in the consent text and button, so the
+// same gate serves more than one product. It defaults to the MTD workbook.
+export default function BuyBox({ href, priceLabel, termsHref, refundHref, contactEmail = 'hello@gazza.ltd', item = 'workbook', buyLabel = 'Buy the tracker' }) {
   const [agreed, setAgreed] = useState(false);
   const [nudge, setNudge] = useState(false);
 
@@ -47,17 +49,17 @@ export default function BuyBox({ href, priceLabel, termsHref, refundHref, contac
         <input id="ccr-consent" type="checkbox" checked={agreed}
           onChange={(e) => { setAgreed(e.target.checked); setNudge(false); }} />
         <span>
-          <strong>I want to download the workbook straight away.</strong> I agree that
+          <strong>I want to download the {item} straight away.</strong> I agree that
           supply starts immediately and I understand that once the download is made
           available I lose my 14-day right to cancel. This doesn't affect my rights if
-          the workbook is faulty.
+          the {item} is faulty.
         </span>
       </label>
 
       <p>
         <a className={`btn btn-buy${agreed ? '' : ' is-disabled'}`} href={agreed ? href : undefined}
           role="button" aria-disabled={!agreed} onClick={go} rel="nofollow">
-          Buy the tracker — {priceLabel}
+          {buyLabel} — {priceLabel}
         </a>
       </p>
 
