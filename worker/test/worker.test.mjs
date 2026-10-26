@@ -28,6 +28,7 @@ test('tampered payload, wrong secret, missing header and old timestamp are rejec
 test('product is identified from metadata, payment link, or client_reference_id', () => {
   assert.equal(productForSession({ metadata: { product: 'winter-arc-tracker' } }), 'winter-arc-tracker');
   assert.equal(productForSession({ payment_link: 'plink_1' }, { PAYMENT_LINK_MTD: 'plink_1' }), 'mtd-tracker');
+  assert.equal(productForSession({ payment_link: 'plink_b' }, { PAYMENT_LINK_WINTER_ARC: 'plink_a, plink_b' }), 'winter-arc-tracker');
   assert.equal(productForSession({ client_reference_id: 'ccr-2026-10-v1' }), null);
   assert.equal(productForSession({ client_reference_id: 'mtd-tracker:ccr-2026-10-v1' }), 'mtd-tracker');
 });

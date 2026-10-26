@@ -35,7 +35,11 @@ export function productForSession(session, env = {}, products = PRODUCTS) {
   const plink = session?.payment_link;
   if (plink) {
     for (const [slug, p] of Object.entries(products)) {
-      if (p.paymentLinkVar && env[p.paymentLinkVar] && env[p.paymentLinkVar] === plink) return slug;
+      if (p.paymentLinkVar && env[p.paymentLinkVar]) {
+        // The variable may hold several Payment Link IDs separated by commas (e.g. test + live).
+        const ids = String(env[p.paymentLinkVar]).split(',').map((x) => x.trim()).filter(Boolean);
+        if (ids.includes(plink)) return slug;
+      }
     }
   }
   // client_reference_id carries the consent version (e.g. ccr-2026-10-v1), but
