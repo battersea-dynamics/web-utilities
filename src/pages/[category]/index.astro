@@ -99,6 +99,24 @@ const choosing = (content?.choosing ?? []).filter((c) =>
       </section>
     )}
 
+    {(content?.products ?? []).length > 0 && (
+      <section class="hub-products">
+        <h2>Wellbeing printables</h2>
+        <ul class="card-grid">
+          {content.products.map((p) => (
+            <li>
+              <a class="card product-card" href={p.href}>
+                <img src={p.image} alt="" width="1200" height="900" loading="lazy" decoding="async" />
+                <span class="name">{p.title}</span>
+                <span class="desc">{p.blurb}</span>
+                {p.note && <span class="desc">{p.note}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
     {content?.note && <p class="note hub-note">{content.note}</p>}
 
     {content?.offer && (

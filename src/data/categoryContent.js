@@ -89,6 +89,19 @@ export const categoryContent = {
       { when: 'Turn the official protein reference values into grams', slug: 'protein-intake-calculator' },
       { when: 'Estimate how much energy you use in a day', slug: 'calorie-calculator' },
     ],
+    // Paid printables for the wellbeing side of this hub. Like guides, these
+    // are pages, not tools, so they live outside `choosing` and tools.json.
+    products: [
+      {
+        href: '/winter-arc-tracker/',
+        title: 'Winter Arc 90-Day Habit Tracker',
+        blurb: `A printable, undated A4 habit tracker and goal planner: a 90-day
+                grid for up to 8 habits, weekly reviews and monthly check-ins.
+                30 pages, plus an ink-saver edition. £4.50.`,
+        image: '/products/winter-arc/01-hero-cover.webp',
+        note: 'General wellbeing tracker, not medical advice.',
+      },
+    ],
     note: `Nothing here is medical advice or a diagnosis. These are reference
            conversions and general population measures — a doctor interpreting your
            results has context that a calculator does not.`,

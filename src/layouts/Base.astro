@@ -12,6 +12,8 @@ const {
   // Sets <body data-cat="…">, which lets a category override design tokens
   // in global.css §2 without touching any component.
   category = null,
+  // Optional social preview image, as a site-root path (e.g. /products/x.jpg).
+  ogImage = null,
 } = Astro.props;
 
 const site = 'https://gazza.ltd';
@@ -34,6 +36,8 @@ const published = publishedTools;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, site).href} />}
+    {ogImage && <meta name="twitter:card" content="summary_large_image" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
