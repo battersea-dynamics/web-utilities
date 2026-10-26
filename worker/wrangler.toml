@@ -1,0 +1,28 @@
+# Delivery Worker for gazza.ltd paid downloads. No secrets in this file.
+# Secrets (set with `npx wrangler secret put NAME` or the dashboard):
+#   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, RESEND_API_KEY (optional)
+name = "gazza-shop"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+routes = [{ pattern = "shop.gazza.ltd", custom_domain = true }]
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "gazza-downloads"
+
+[[kv_namespaces]]
+binding = "DOWNLOADS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+SITE_ORIGIN = "https://gazza.ltd"
+PUBLIC_BASE_URL = "https://shop.gazza.ltd"
+SUPPORT_EMAIL = "hello@gazza.ltd"
+EMAIL_FROM = "gazza.ltd <orders@gazza.ltd>"
+LINK_TTL_HOURS = "72"
+MAX_DOWNLOADS = "5"
+# Optional fallback if a Payment Link has no "product" metadata: its plink_ ID.
+PAYMENT_LINK_MTD = ""
+PAYMENT_LINK_WINTER_ARC = ""
