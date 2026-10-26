@@ -23,14 +23,14 @@ export const WINTER_ARC = {
   priceLabel: '£4.50',
   currency: 'GBP',
 };
-export const WINTER_ARC_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_ME';
+export const WINTER_ARC_PAYMENT_LINK = 'https://buy.stripe.com/dRm4gzd3C61ZcrW9JbeIw00';
 
 // Shown on the Winter Arc page and its hub card. Keep in sync with the PDF footer.
 export const WELLBEING_NOTICE = 'General wellbeing tracker, not medical advice.';
 
 // Stripe Payment Link (Dashboard → Payment Links → Copy link).
 // Looks like https://buy.stripe.com/xxxxxxxx. TODO: replace before launch.
-export const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_ME';
+export const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gM8wP6Fe0HF4Zu6wZeIw01';
 
 // Consent wording version, sent to Stripe as client_reference_id so each
 // order records which version of the instant-download wording the buyer saw.

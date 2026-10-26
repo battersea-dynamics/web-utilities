@@ -96,7 +96,7 @@ async function renderBuyBox(props) {
 
 describe('BuyBox sales state', () => {
   test('placeholder or empty Payment Link counts as not live', () => {
-    for (const l of ['https://buy.stripe.com/REPLACE_ME', '', '  ', undefined]) {
+    for (const l of ['https://buy.stripe.com/REPLACE_ME', '', '  ', null]) {
       assert.equal(isPaymentLinkLive(l), false);
       assert.equal(checkoutUrl(l), null);
     }
