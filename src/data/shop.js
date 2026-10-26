@@ -48,8 +48,8 @@ export const SELLER = {
   email: 'hello@gazza.ltd',
 };
 
-export const LEGAL_LAST_UPDATED = '[DATE]';
-export const TERMS_VERSION = '1.0';
+export const LEGAL_LAST_UPDATED = '26 October 2026';
+export const TERMS_VERSION = '1.1';
 
 /** Checkout URL with the consent version attached. */
 // Sales are "open" only once a real Payment Link is set. While the link is empty

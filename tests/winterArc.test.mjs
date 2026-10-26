@@ -46,3 +46,22 @@ describe('Winter Arc tracker', () => {
     assert.doesNotMatch(page, /dynamic\s*grove|grok|chatgpt|\bAI\b/i);
   });
 });
+
+describe('legal pages cover both products', () => {
+  const read = (p) => fs.readFileSync(path.join(root, 'src/pages', `${p}.astro`), 'utf8');
+  for (const p of ['terms-of-sale', 'refund-policy', 'privacy-policy']) {
+    test(`${p} covers MTD and Winter Arc, no unrelated brands`, () => {
+      const src = read(p);
+      assert.match(src, /Making Tax Digital \(MTD\)/);
+      assert.match(src, /Winter Arc|WINTER_ARC/);
+      assert.doesNotMatch(src, /dynamic\s*grove|grok|chatgpt|\bAI\b/i);
+    });
+  }
+  test('terms: personal licence, no redistribution, not medical advice', () => {
+    const src = read('terms-of-sale');
+    assert.match(src, /personal, non-commercial use/);
+    assert.match(src, /redistribute/);
+    assert.match(src, /WELLBEING_NOTICE/);
+    assert.match(src, /not a substitute for professional advice/);
+  });
+});
