@@ -24,9 +24,9 @@ function linksFor(order, env, base) {
 
 /** Issue tokens for a paid session (shared by webhook and thank-you lookups). */
 async function deliver(session, env, ctx) {
-  if (session.payment_status !== 'paid' && session.payment_status !== 'no_payment_required') return null;
+  if (session.payment_status !== 'paid' && session.payment_status !== 'no_payment_required') { env.__reason = 'not_paid'; return null; }
   const product = productForSession(session, env);
-  if (!product) { console.error('Unknown product for session', session.id); return null; }
+  if (!product) { env.__reason = 'unknown_product'; console.error('Unknown product for session', session.id); return null; }
   const email = session.customer_details?.email || session.customer_email || null;
   const { order, created } = await issueOrder(env.DOWNLOADS, { sessionId: session.id, product, files: PRODUCTS[product].files, email }, env);
   if (created && email && env.RESEND_API_KEY) {
@@ -42,9 +42,9 @@ async function deliver(session, env, ctx) {
 async function orderForSessionId(sessionId, env, ctx) {
   const existing = await env.DOWNLOADS.get(`order:${sessionId}`, 'json');
   if (existing) return existing;
-  if (!env.STRIPE_SECRET_KEY) return null;
+  if (!env.STRIPE_SECRET_KEY) { env.__reason = 'no_stripe_key'; return null; }
   const session = await fetchSession(sessionId, env.STRIPE_SECRET_KEY);
-  if (!session) return null;
+  if (!session) { env.__reason = 'stripe_session_not_found'; return null; }
   return deliver(session, env, ctx);
 }
 
@@ -88,7 +88,12 @@ async function handleThanks(url, env, ctx) {
   if (!SESSION_RE.test(sid)) return htmlPage('Thank you', '<p>We could not find your order reference. Your download links have been emailed to you.</p>', 400);
   // The webhook may not have arrived yet; check with Stripe directly.
   const order = await orderForSessionId(sid, env, ctx);
-  if (!order) return htmlPage('Thank you', '<p>We are still confirming your payment. Refresh this page in a few seconds, or check your email.</p>', 202);
+  if (!order) {
+    const r = htmlPage('Thank you', '<p>We are still confirming your payment. Refresh this page in a few seconds, or check your email.</p>', 202);
+    // Non-sensitive reason code, visible only in response headers, to help support.
+    r.headers.set('X-Pending-Reason', env.__reason || 'unknown');
+    return r;
+  }
   const { ttlHours, maxDownloads } = limits(env);
   const links = linksFor(order, env, url.origin).map((l) => `<p><a class="btn" href="${esc(l.url)}">${esc(l.label)}</a></p>`).join('');
   return htmlPage('Thank you for your order', `<p>Your ${esc(PRODUCTS[order.product].name)} is ready.</p>${links}
