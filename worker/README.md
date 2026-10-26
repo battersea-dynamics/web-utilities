@@ -13,7 +13,7 @@ Delivers paid downloads after a Stripe payment. **Nothing here is live until you
 - Which product was bought is worked out from the Payment Link's **metadata `product`** (`mtd-tracker` or `winter-arc-tracker`). `client_reference_id` keeps carrying the consent version (`ccr-2026-10-v1`) and is copied into the email.
 - Products and their files are listed in `src/products.js`.
 - Delivery records live in KV and delete themselves after 72 hours (matches the privacy policy).
-- Email via Resend is **optional**: if `RESEND_API_KEY` is not set, no email is sent and the on-screen page still works. (Note: the site's terms and privacy policy say we *do* email the link, so set it up before going live, or ask for the wording to change.)
+- Email via Resend is **optional**: if `RESEND_API_KEY` is not set, no email is sent and the on-screen page still works. Policy decision: download links are shown on screen only and the site's legal pages say no download link is emailed, so leave `RESEND_API_KEY` unset in production. (`src/email.js` is kept but unused.)
 
 ## Files expected in R2 (bucket `gazza-downloads`)
 | Object key (type exactly, including the folder) | File |

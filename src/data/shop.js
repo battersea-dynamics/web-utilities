@@ -40,11 +40,11 @@ export const CONSENT_VERSION = 'ccr-2026-10-v1';
 // Public URL of the delivery Worker (see worker/ in the update pack).
 export const DELIVERY_API = 'https://shop.gazza.ltd';
 
-// Seller details shown on the legal pages. TODO: fill in before launch.
+// Seller details shown on the legal pages.
 export const SELLER = {
   name: 'Battersea Dynamics Limited',
   companyNumber: '15356775',
-  registeredOffice: '[REGISTERED OFFICE ADDRESS]',
+  registeredOffice: '5th Floor, 167-169 Great Portland Street, London, W1W 5PF',
   email: 'hello@gazza.ltd',
 };
 
@@ -63,6 +63,6 @@ export const checkoutUrl = (link = STRIPE_PAYMENT_LINK) =>
     ? `${link}?client_reference_id=${encodeURIComponent(CONSENT_VERSION)}`
     : null;
 
-// Shown on every product, legal and checker page. Keep wording in sync with the workbook and delivery email.
+// Shown on every product, legal and checker page. Keep wording in sync with the workbook.
 export const NOT_HMRC_NOTICE = 'This is an independent spreadsheet from Battersea Dynamics Ltd to help you organise your records and prepare for Making Tax Digital (MTD). It is not affiliated with or endorsed by HMRC, it does not submit anything to HMRC, and it is not MTD-compatible software; you will still need HMRC-recognised software or bridging software to file.';
 export const NOT_HMRC_NOTICE_CHECKER = 'This is an independent checker from Battersea Dynamics Ltd to help you prepare for Making Tax Digital (MTD). It is not affiliated with or endorsed by HMRC, it does not submit anything to HMRC, and it is not MTD-compatible software; you will still need HMRC-recognised software or bridging software to file.';

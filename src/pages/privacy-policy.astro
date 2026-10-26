@@ -51,13 +51,9 @@ import { SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
         <li>
           <strong>Delivery — Cloudflare.</strong> To give you a download link we store
           your order reference, your email address and a download counter on
-          Cloudflare. That delivery record is deleted automatically after 72 hours.
-        </li>
-        <li>
-          <strong>Email — Resend.</strong> We send your download link and order
-          confirmation using Resend, an email delivery service, which processes your
-          email address and the message under its
-          {' '}<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">privacy policy</a>.
+          Cloudflare, which also hosts this site and stores the product files (Cloudflare R2).
+          That delivery record is deleted automatically after 72 hours. Download links are
+          shown on screen after payment; we don't email them.
           Some of these providers are based in the USA; transfers are covered by
           the UK–US data bridge or standard contractual clauses.
         </li>
@@ -65,8 +61,9 @@ import { SELLER, LEGAL_LAST_UPDATED } from '../data/shop.js';
       <p>
         <strong>Why:</strong> to perform our contract with you (taking payment,
         delivering the file, refunds and support) and to meet legal obligations
-        (tax and accounting records). We use your email address to deliver your
-        download and to support you with your order. We don't use your purchase details for
+        (tax and accounting records). Stripe uses your email address to send your
+        payment receipt, and we use it to support you with your order (for example, to send
+        you a new download link if you lose access). We don't use your purchase details for
         marketing and we don't sell them.
       </p>
       <p>
