@@ -65,3 +65,17 @@ describe('legal pages cover both products', () => {
     assert.match(src, /not a substitute for professional advice/);
   });
 });
+
+describe('legal pages: on-screen delivery and seller details', () => {
+  for (const p of ['terms-of-sale', 'refund-policy', 'privacy-policy']) {
+    test(`${p} does not mention Resend or a placeholder office address`, () => {
+      const src = fs.readFileSync(path.join(root, 'src/pages', `${p}.astro`), 'utf8');
+      assert.doesNotMatch(src, /resend/i);
+      assert.ok(!src.includes('[REGISTERED OFFICE ADDRESS]'));
+    });
+  }
+  test('seller registered office is filled in', async () => {
+    const { SELLER } = await import('../src/data/shop.js');
+    assert.ok(!SELLER.registeredOffice.includes('['));
+  });
+});

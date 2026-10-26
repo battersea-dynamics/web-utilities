@@ -85,11 +85,11 @@ function htmlPage(title, body, status = 200) {
 
 async function handleThanks(url, env, ctx) {
   const sid = url.searchParams.get('session_id') || '';
-  if (!SESSION_RE.test(sid)) return htmlPage('Thank you', '<p>We could not find your order reference. Your download links have been emailed to you.</p>', 400);
+  if (!SESSION_RE.test(sid)) return htmlPage('Thank you', '<p>We could not find your order reference. Please email hello@gazza.ltd with your order email and we will send a new link.</p>', 400);
   // The webhook may not have arrived yet; check with Stripe directly.
   const order = await orderForSessionId(sid, env, ctx);
   if (!order) {
-    const r = htmlPage('Thank you', '<p>We are still confirming your payment. Refresh this page in a few seconds, or check your email.</p>', 202);
+    const r = htmlPage('Thank you', '<p>We are still confirming your payment. Refresh this page in a few seconds.</p>', 202);
     // Non-sensitive reason code, visible only in response headers, to help support.
     r.headers.set('X-Pending-Reason', env.__reason || 'unknown');
     return r;
